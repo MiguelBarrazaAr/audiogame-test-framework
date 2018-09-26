@@ -31,6 +31,9 @@ class Iku(object):
   def __init__(self, ancho=640, alto=480, titulo='Iku engine', capturarErrores=True, habilitarMensajesLog=True, plugins=False, modoTest=False):
     self.alto = alto
     self.ancho = ancho
+    # guardamos los puntos centrales de la pantalla:
+    self.x = ancho/2
+    self.y = alto/2
     self.titulo = titulo
     self.capturarErrores = capturarErrores
     self.mensajesLog=habilitarMensajesLog
@@ -43,6 +46,11 @@ class Iku(object):
     self.reloj = pygame.time.Clock()
     self._winLoop = True
     
+    # creamos la ventana:
+    pygame.display.set_caption(self.titulo)
+    self.ventana = pygame.display.set_mode((self.ancho, self.alto))
+    pygame.display.flip()
+    
     # cargamos los objetos de iku:
     self.audio = iniciarAudio(self)
     self.camara = Camara()
@@ -53,11 +61,6 @@ class Iku(object):
     self.log("motor 'iku' iniciado")
   
   def ejecutar(self):
-    # creamos la ventana:
-    pygame.display.set_caption(self.titulo)
-    self.ventana = pygame.display.set_mode((self.ancho, self.alto))
-    pygame.display.flip()
-    
     while self._winLoop:
       # esperamos por un evento:
       #self.reloj.tick(25)
@@ -87,6 +90,12 @@ class Iku(object):
     self._winLoop = False
     sys.exit(0)
   
+  def imagen(self, rutaImagen):
+    if rutaImagen:
+      return pygame.image.load(rutaImagen)
+    else:
+      return None
+  
   def log(self, *mensaje):
     """Si mensajeLog está habilitado, muestra los mensajes por consola."""
     if self.mensajesLog:
@@ -111,5 +120,5 @@ class Iku(object):
     """ carga un archivo de sonido y devuelve un objeto sound3d"""
     return self.audio.sonido3d(ruta)
 
-def iniciar(titulo='IkuEngine', capturarErrores=True, habilitarMensajesLog=True, plugins=False, modoTest=False):
-  return Iku(titulo=titulo, capturarErrores=capturarErrores, habilitarMensajesLog=habilitarMensajesLog, plugins=plugins, modoTest=modoTest)
+def iniciar(titulo='IkuEngine', ancho=640, alto=480, capturarErrores=True, habilitarMensajesLog=True, plugins=False, modoTest=False):
+  return Iku(titulo=titulo, ancho=640, alto=480, capturarErrores=capturarErrores, habilitarMensajesLog=habilitarMensajesLog, plugins=plugins, modoTest=modoTest)
