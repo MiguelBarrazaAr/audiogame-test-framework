@@ -17,7 +17,6 @@ class Actor(object):
     
     self.iku = iku
     
-    self.imagen = iku.imagen(kv.get('imagen', None))
     x = kv.get('x', 0)
     y = kv.get('y', 0)
     z = kv.get('z', 0)
@@ -29,6 +28,8 @@ class Actor(object):
     self.activo = False
     
     self.anexados = []
+    
+    self.imagen = iku.imagen(kv.get('imagen', None))
     self._acciones = self.iku.eventos.crear()
     self._iniciar(*k, **kv)
   
@@ -41,7 +42,7 @@ class Actor(object):
     return self.iku.escenas.escenaActual
   
   @property
-  def         posicion(self):
+  def posicion(self):
     return self._posicion
   
   @posicion.setter

@@ -63,23 +63,28 @@ class Iku(object):
   
   def ejecutar(self):
     while self._winLoop:
-      # esperamos por un evento:
-      #self.reloj.tick(25)
-      event = pygame.event.wait()
+      # monitorizamos eventos:
+      for event in pygame.event.get():
+        self._procesarEventoPygame(event)
       
-      # si pulsa en cerrar emitimos pulsaEscape
-      if event.type == pygame.QUIT:
-        self.eventos.pulsaEscape.emitir(tecla=pygame.K_ESCAPE, tipo=event.type  )
-      # si pulsa una tecla:
-      if event.type == pygame.KEYDOWN:
-        self.eventos.pulsaTecla.emitir(tecla=event.key, representacion=event.unicode)
-        # si pulsa escape, emitimos pulsaEscape
-        if event.key == pygame.K_ESCAPE:
-          self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
-      
+      # revisamos el refresco de la pantalla.
       if self.ventanaActualizar:
-        pygame.display.update()
+        pygame.display.flip()
         self.ventanaActualizar = False
+      
+      # controlamos el tiempo de refresco.
+      self.reloj.tick(25)
+  
+  def _procesarEventoPygame(self, event):
+    # si pulsa en cerrar emitimos pulsaEscape
+    if event.type == pygame.QUIT:
+      self.eventos.pulsaEscape.emitir(tecla=pygame.K_ESCAPE, tipo=event.type  )
+    # si pulsa una tecla:
+    if event.type == pygame.KEYDOWN:
+      self.eventos.pulsaTecla.emitir(tecla=event.key, representacion=event.unicode)
+      # si pulsa escape, emitimos pulsaEscape
+      if event.key == pygame.K_ESCAPE:
+        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
   
   def dibujar(self, imagen, posicion):
     self.ventana.blit(imagen, (self.x + posicion.x, self.y + posicion.y))
