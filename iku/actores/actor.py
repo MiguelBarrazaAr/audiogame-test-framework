@@ -104,7 +104,7 @@ class Actor(object):
   def dibujar(self):
     """Dibujamos el actor en pantalla"""
     if self.imagen:
-      self.iku.ventana.blit(self.imagen, (self.iku.x+self.posicion.x, self.iku.y+self.posicion.y))
+      self.iku.dibujar(self.imagen, self.posicion)
   
   def eliminar(self):
     self.iku.escenas.escenaActual.eliminarActor(self)

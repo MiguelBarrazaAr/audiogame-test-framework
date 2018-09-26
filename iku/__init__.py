@@ -50,6 +50,7 @@ class Iku(object):
     pygame.display.set_caption(self.titulo)
     self.ventana = pygame.display.set_mode((self.ancho, self.alto))
     pygame.display.flip()
+    self.ventanaActualizar = False
     
     # cargamos los objetos de iku:
     self.audio = iniciarAudio(self)
@@ -66,12 +67,23 @@ class Iku(object):
       #self.reloj.tick(25)
       event = pygame.event.wait()
       
+      # si pulsa en cerrar emitimos pulsaEscape
+      if event.type == pygame.QUIT:
+        self.eventos.pulsaEscape.emitir(tecla=pygame.K_ESCAPE, tipo=event.type  )
       # si pulsa una tecla:
       if event.type == pygame.KEYDOWN:
         self.eventos.pulsaTecla.emitir(tecla=event.key, representacion=event.unicode)
-        # si pulsa escape o clickea en cerrar, emitimos pulsaEscape
-        if event.key == pygame.K_ESCAPE or event.type == pygame.QUIT:
+        # si pulsa escape, emitimos pulsaEscape
+        if event.key == pygame.K_ESCAPE:
           self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
+      
+      if self.ventanaActualizar:
+        pygame.display.update()
+        self.ventanaActualizar = False
+  
+  def dibujar(self, imagen, posicion):
+    self.ventana.blit(imagen, (self.x + posicion.x, self.y + posicion.y))
+    self.ventanaActualizar = True
   
   def aleatorio(self, x, y):
     """Hace una tirada de random aleatorio."""
