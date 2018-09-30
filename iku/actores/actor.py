@@ -30,7 +30,8 @@ class Actor(object):
     
     self.anexados = []
     
-    self.imagen = iku.imagen(kv.get('imagen', None))
+    self._image = None
+    self.imagen = kv.get('imagen', None)
     self._acciones = self.iku.eventos.crear()
     self._iniciar(*k, **kv)
   
@@ -43,13 +44,32 @@ class Actor(object):
     return self.iku.escenas.escenaActual
   
   @property
+  def imagen(self):
+    return self._image
+  
+  @imagen.setter
+  def imagen(self, ruta):
+    print("configurando imagen", ruta)
+    if ruta is None:
+      self._image = None
+    else:
+      self._image = self.iku.imagen(ruta)
+      self.rect = self._image.get_rect()
+      self.rect.centerx = self.iku.x
+      self.rect.centery = self.iku.y
+      print("coordenadas", self.rect.centerx, self.rect.centery)
+      print("pantalla", self.iku.x, self.iku.y)
+  
+  @property
   def posicion(self):
-    return self._posicion
+    return self.iku.posicion(self.rect.centerx-self.iku.x, self.rect.centery-self.iku.y, self._z)
   
   @posicion.setter
   def posicion(self, pos):
     """Asigna la posición."""
-    self._posicion = pos
+    self.rect.centerx = pos.x
+    self.rect.centery = pos.y
+    self._z = pos.z
   
   @property
   def tipo(self):
@@ -57,19 +77,19 @@ class Actor(object):
   
   @property
   def x(self):
-    return self._posicion.x
+    return self.rect.centerx
   
   @x.setter
   def x(self, n):
-    self._posicion.actualizar(x=n)
+    self.rect.centerx = n
   
   @property
   def y(self):
-    return self._posicion.y
+    return self.rect.centery
   
   @y.setter
   def y(self, n):
-    self._posicion.actualizar(y=n)
+    self.rect.centery = n
   
   @property
   def z(self):
@@ -144,3 +164,10 @@ class Actor(object):
   
   def desconectar(self, respuesta):
     self._acciones.desconectar(respuesta)
+
+  def redimencionar(self,ancho,alto):
+    self._image = self.iku.grafica.escalar(self._image, (ancho, alto))
+
+
+  #def escala(self,escala):
+    #self._image = self.iku.grafica.escalar(self._image,(self._image. *escala,*escala) )

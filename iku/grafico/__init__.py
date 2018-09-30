@@ -24,16 +24,19 @@ class PygameVideo(object):
   
   def dibujar(self, escena):
     self.ventana.fill(escena.colorFondo)
-    if escena.fondo is not None:
-      self.ventana.blit(escena.fondo, (0,0))
+    if escena._imagenFondo is not None:
+      self.ventana.blit(escena._imagenFondo, (0,0))
     # dibujamos actores:
     for actor in escena.actores:
       if (actor.imagen is not None) and actor.visible:
-        self.ventana.blit(actor.imagen, self.centrar(actor.posicion))
+        r = actor.rect.move(self.iku.x, self.iku.y)
+        #print(self.iku.x, self.iku.y)
+        #print("dibujando", r.centerx, r.centery)
+        self.ventana.blit(actor.imagen, r)
     pygame.display.flip()
   
-  def centrar(self, posicion):
-    return (self.x + posicion.x, self.y + posicion.y)
+  def escalar(self,imagen, dimenciones):
+    return pygame.transform.scale(imagen, dimenciones)
 
 def iniciar(iku, titulo, dimension):
   return PygameVideo(iku, titulo, dimension)

@@ -20,7 +20,8 @@ class Escena():
     # iniciamos las propiedades comunes de todas las escenas:
     self.iku = iku
     self.colorFondo = (0,0,0)
-    self.fondo = None
+    self._imagenFondo = None
+    self._rutaFondo = None
     self.camara = iku.camara
     self.actores = []
     
@@ -37,6 +38,20 @@ class Escena():
   
   def __str__(self):
     return self.nombre
+  
+  @property
+  def fondo(self):
+    return self._rutaFondo
+  
+  @fondo.setter
+  def fondo(self, ruta):
+    if ruta is None:
+      # elimina el fondo.
+      self._imagenFondo = None
+      self._rutaFondo = None
+    else:
+      self._imagenFondo = self.iku.imagen(ruta)
+      self._rutaFondo = ruta
   
   def alPulsarEscape(self, evento):
     self.iku.finalizar()

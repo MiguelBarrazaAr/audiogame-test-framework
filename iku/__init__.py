@@ -129,4 +129,4 @@ class Iku(object):
     return self.audio.sonido3d(ruta)
 
 def iniciar(titulo='IkuEngine', ancho=640, alto=480, capturarErrores=True, habilitarMensajesLog=True, plugins=False, modoTest=False):
-  return Iku(titulo=titulo, ancho=640, alto=480, capturarErrores=capturarErrores, habilitarMensajesLog=habilitarMensajesLog, plugins=plugins, modoTest=modoTest)
+  return Iku(titulo=titulo, ancho=ancho, alto=alto, capturarErrores=capturarErrores, habilitarMensajesLog=habilitarMensajesLog, plugins=plugins, modoTest=modoTest)
