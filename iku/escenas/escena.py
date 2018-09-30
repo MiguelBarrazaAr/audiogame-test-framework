@@ -19,6 +19,8 @@ class Escena():
     
     # iniciamos las propiedades comunes de todas las escenas:
     self.iku = iku
+    self.colorFondo = (0,0,0)
+    self.fondo = None
     self.camara = iku.camara
     self.actores = []
     

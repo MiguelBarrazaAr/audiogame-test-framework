@@ -17,6 +17,7 @@ from pygame.locals import *
 from .camara import Camara
 from .escenas import *
 from .eventos import *
+from .grafico import iniciar as iniciarVideo
 from .sonido import iniciar as iniciarAudio
 from .tecla import Tecla
 from .utiles import *
@@ -44,13 +45,11 @@ class Iku(object):
     # iniciamos el motor pygame:
     pygame.init()
     self.reloj = pygame.time.Clock()
+    self.frame=25
     self._winLoop = True
     
-    # creamos la ventana:
-    pygame.display.set_caption(self.titulo)
-    self.ventana = pygame.display.set_mode((self.ancho, self.alto))
-    pygame.display.flip()
-    self.ventanaActualizar = False
+    # iniciamos el motor gráfico:
+    self.grafica = iniciarVideo(self, self.titulo, (self.ancho, self.alto))
     
     # cargamos los objetos de iku:
     self.audio = iniciarAudio(self)
@@ -65,17 +64,13 @@ class Iku(object):
     while self._winLoop:
       # monitorizamos eventos:
       for event in pygame.event.get():
-        self._procesarEventoPygame(event)
-      
-      # revisamos el refresco de la pantalla.
-      if self.ventanaActualizar:
-        pygame.display.flip()
-        self.ventanaActualizar = False
+        self._procesarEvento(event)
       
       # controlamos el tiempo de refresco.
-      self.reloj.tick(25)
+      self.reloj.tick(self.frame)
+      self.grafica.dibujar(self.escenas.escenaActual)
   
-  def _procesarEventoPygame(self, event):
+  def _procesarEvento(self, event):
     # si pulsa en cerrar emitimos pulsaEscape
     if event.type == pygame.QUIT:
       self.eventos.pulsaEscape.emitir(tecla=pygame.K_ESCAPE, tipo=event.type  )
@@ -85,10 +80,6 @@ class Iku(object):
       # si pulsa escape, emitimos pulsaEscape
       if event.key == pygame.K_ESCAPE:
         self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
-  
-  def dibujar(self, imagen, posicion):
-    self.ventana.blit(imagen, (self.x + posicion.x, self.y + posicion.y))
-    self.ventanaActualizar = True
   
   def aleatorio(self, x, y):
     """Hace una tirada de random aleatorio."""

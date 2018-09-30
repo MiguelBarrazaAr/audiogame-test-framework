@@ -24,6 +24,7 @@ class Actor(object):
     self._posicion = iku.posicion(x=x, y=y, z=z)
     self.radio_de_colision = 2
     self._vivo = True
+    self.visible = True
     self.actualizable = True
     self.activo = False
     
@@ -49,7 +50,6 @@ class Actor(object):
   def posicion(self, pos):
     """Asigna la posición."""
     self._posicion = pos
-    self.dibujar()
   
   @property
   def tipo(self):
@@ -62,7 +62,6 @@ class Actor(object):
   @x.setter
   def x(self, n):
     self._posicion.actualizar(x=n)
-    self.dibujar()
   
   @property
   def y(self):
@@ -71,7 +70,6 @@ class Actor(object):
   @y.setter
   def y(self, n):
     self._posicion.actualizar(y=n)
-    self.dibujar()
   
   @property
   def z(self):
@@ -80,7 +78,6 @@ class Actor(object):
   @z.setter
   def z(self, n):
     self._posicion.actualizar(z=n)
-    self.dibujar()
   
   
   def actualizar(self):
@@ -91,7 +88,6 @@ class Actor(object):
     self.iniciar(*k, **kv)
     self.posIniciar(*k, **kv)
     self.iku.escenas.escenaActual.agregarActor(self)
-    self.dibujar()
   
   def preIniciar(self, *k, **kv):
     pass
@@ -101,11 +97,6 @@ class Actor(object):
   
   def posIniciar(self, *k, **kv):
     pass
-  
-  def dibujar(self):
-    """Dibujamos el actor en pantalla"""
-    if self.imagen:
-      self.iku.dibujar(self.imagen, self.posicion)
   
   def eliminar(self):
     self.iku.escenas.escenaActual.eliminarActor(self)
