@@ -19,6 +19,7 @@ from .escenas import *
 from .eventos import *
 from .sonido import iniciar as iniciarAudio
 from .tecla import Tecla
+from .tts import TTS
 from .utiles import *
 
 VERSION = "0.1"
@@ -56,6 +57,7 @@ class Iku(object):
     self.escenas = escenas.Escenas(self)
     self.eventos = Eventos(self)
     self.tecla = Tecla()
+    self.tts = TTS()
     self.log("motor 'iku' iniciado")
   
   def ejecutar(self):
@@ -98,10 +100,11 @@ class Iku(object):
     sys.exit(0)
   
   def imagen(self, rutaImagen):
-    if rutaImagen:
-      return pygame.image.load(rutaImagen)
-    else:
-      return None
+    return pygame.image.load(rutaImagen)
+  
+  def leer(self, texto, interrumpir=True, registrar=True):
+    """Envia un texto al tts para ser verbalizado"""
+    self.tts.hablar(texto, interrumpir, registrar)
   
   def log(self, *mensaje):
     """Si mensajeLog está habilitado, muestra los mensajes por consola."""
