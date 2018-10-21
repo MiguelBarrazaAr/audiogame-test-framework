@@ -17,7 +17,6 @@ from pygame.locals import *
 from .camara import Camara
 from .escenas import *
 from .eventos import *
-from .grafico import iniciar as iniciarVideo
 from .sonido import iniciar as iniciarAudio
 from .tecla import Tecla
 from .utiles import *
@@ -30,12 +29,7 @@ class Iku(object):
   """
   
   def __init__(self, ancho=640, alto=480, titulo='Iku engine', capturarErrores=True, habilitarMensajesLog=True, plugins=False, modoTest=False):
-    self.alto = alto
-    self.ancho = ancho
-    # guardamos los puntos centrales de la pantalla:
-    self.x = ancho/2
-    self.y = alto/2
-    self.titulo = titulo
+    # configuración:
     self.capturarErrores = capturarErrores
     self.mensajesLog=habilitarMensajesLog
     self.plugins=plugins
@@ -45,11 +39,15 @@ class Iku(object):
     # iniciamos el motor pygame:
     pygame.init()
     self.reloj = pygame.time.Clock()
-    self.frame=25
+    self.fps =25
     self._winLoop = True
     
     # iniciamos el motor gráfico:
-    self.grafica = iniciarVideo(self, self.titulo, (self.ancho, self.alto))
+    self.dimension = (ancho, alto)
+    self.centro = (ancho/2, alto/2)
+    pygame.display.set_caption(titulo)
+    self.ventana = pygame.display.set_mode(self.dimension)
+    pygame.display.flip()
     
     # cargamos los objetos de iku:
     self.audio = iniciarAudio(self)
@@ -67,8 +65,9 @@ class Iku(object):
         self._procesarEvento(event)
       
       # controlamos el tiempo de refresco.
-      self.reloj.tick(self.frame)
-      self.grafica.dibujar(self.escenas.escenaActual)
+      self.reloj.tick(self.fps)
+      self.escenas.escenaActual.dibujarEn(self.ventana)
+      pygame.display.flip()
   
   def _procesarEvento(self, event):
     # si pulsa en cerrar emitimos pulsaEscape
@@ -115,6 +114,9 @@ class Iku(object):
   def posicion(self, x=0, y=0, z=0):
     return Posicion(x=x, y=y, z=z)
   
+  def rectangulo(self, x=0, y=0, ancho=1, alto=1):
+    return pygame.Rect(x,y,ancho,alto)
+    
   def sonido(self, ruta=None):
     """ carga un archivo de sonido y devuelve un objeto sound
     

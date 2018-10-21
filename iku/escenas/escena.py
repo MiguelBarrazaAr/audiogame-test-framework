@@ -103,3 +103,12 @@ class Escena():
   
   def recuperarPosicionCamara(self):
     self.camara.posicion = self.posicionCamara
+  
+  def dibujarEn(self, ventana):
+    ventana.fill(self.colorFondo)
+    if self._imagenFondo is not None:
+      ventana.blit(self._imagenFondo, (0,0))
+    # dibujamos actores:
+    for actor in self.actores:
+      actor.dibujarEn(ventana)
+  
