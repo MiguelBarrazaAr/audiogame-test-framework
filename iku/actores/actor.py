@@ -3,7 +3,6 @@
 # IkuEngine: Motor para videojuegos en python
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
-import iku as ikuEngine
 from .sprite import Sprite
 
 class Actor(Sprite):
@@ -22,21 +21,21 @@ class Actor(Sprite):
   
   @property
   def imagen(self):
-    return self._image
+    return self._surface
   
   @imagen.setter
   def imagen(self, ruta):
-    self._image = self.iku.imagen(ruta)
-    self.figura = self._image.get_rect()
+    self._surface = self.iku.imagen(ruta)
+    self.figura = self._surface.get_rect()
   
   def redimensionar(self,ancho,alto):
-    self._image = self.iku.escalarImagen(self._image, (ancho, alto))
-    self.figura.size = self._image.get_rect().size
+    self._surface = self.iku.escalarSuperficie(self._surface, ancho=ancho, alto=alto)
+    self.figura.size = self._surface.get_rect().size
   
   def dibujarEn(self, superficie):
     if self.visible:
       r = self.figura.move(self.iku.centro)
-      superficie.blit(self._image, r)
-
+      superficie.blit(self._surface, r)
+  
   def escala(self,escala):
-    self._image = self.iku.escalarImagen(self._image,(self.figura.w*escala, self.figura.h*escala) )
+    self._surface = self.iku.escalarSuperficie(self._surface, self.figura.w*escala, self.figura.h*escala)

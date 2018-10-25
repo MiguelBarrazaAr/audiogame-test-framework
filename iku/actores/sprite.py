@@ -18,6 +18,7 @@ class Sprite(object):
     self.iku = iku
     
     self._vivo = True
+    self.visible = False
     self.actualizable = True
     self.activo = False
     self.colisionable = True
@@ -103,6 +104,21 @@ class Sprite(object):
   
   def desconectar(self, respuesta):
     self._acciones.desconectar(respuesta)
+  
+  def dibujarEn(self, superficie):
+    pass
+  
+  @property
+  def x(self):
+    return self.figura.centerx
+  
+  @property
+  def y(self):
+    return self.figura.centery
+  
+  @property
+  def posicion(self):
+    return self.figura.topleft
   
   def mover(self, x=0, y=0):
     self.figura.move_ip(x,y)

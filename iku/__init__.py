@@ -99,7 +99,11 @@ class Iku(object):
     self._winLoop = False
     sys.exit(0)
   
+  def escalarSuperficie(self,superficie, ancho, alto):
+    return pygame.transform.scale(superficie, (int(ancho), int(alto)))
+  
   def imagen(self, rutaImagen):
+    """Carga una imagen y retorna una superficie."""
     return pygame.image.load(rutaImagen)
   
   def leer(self, texto, interrumpir=True, registrar=True):
