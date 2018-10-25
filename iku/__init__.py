@@ -3,6 +3,7 @@
 # iku engine: Motor para videojuegos en python (3.7)
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
+# Copyright 2018 - 2019  -:Miguel Barraza
 
 import datetime
 import os
@@ -14,7 +15,9 @@ import traceback
 import pygame
 from pygame.locals import *
 
+from .actores import Actores
 from .camara import Camara
+from .complementos import Complementos
 from .escenas import *
 from .eventos import *
 from .sonido import iniciar as iniciarAudio
@@ -22,18 +25,17 @@ from .tecla import Tecla
 from .tts import TTS
 from .utiles import *
 
-VERSION = "0.1"
+VERSION = "0.1.01"
 
 class Iku(object):
   """Representa el area de juego de IkuEngine, el componente principal.
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, ancho=640, alto=480, titulo='Iku engine', capturarErrores=True, habilitarMensajesLog=True, plugins=False, modoTest=False):
+  def __init__(self, ancho=640, alto=480, titulo='Iku engine', capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, *k, **kv):
     # configuración:
     self.capturarErrores = capturarErrores
     self.mensajesLog=habilitarMensajesLog
-    self.plugins=plugins
     self.modoTest=modoTest
     self.log("iniciando el motor 'iku'")
     
@@ -49,10 +51,14 @@ class Iku(object):
     pygame.display.set_caption(titulo)
     self.ventana = pygame.display.set_mode(self.dimension)
     pygame.display.flip()
+    # cargamos una fuente default:
+    self.fuente = pygame.font.Font(None, 30)
     
     # cargamos los objetos de iku:
+    self.actores = Actores(self)
     self.audio = iniciarAudio(self)
     self.camara = Camara()
+    self.complementos = Complementos(self, complementos)
     self.datos = {}
     self.escenas = escenas.Escenas(self)
     self.eventos = Eventos(self)
@@ -110,6 +116,9 @@ class Iku(object):
     """Envia un texto al tts para ser verbalizado"""
     self.tts.hablar(texto, interrumpir, registrar)
   
+  def listarDirectorio(self, ruta):
+    return os.listdir(ruta)
+  
   def log(self, *mensaje):
     """Si mensajeLog está habilitado, muestra los mensajes por consola."""
     if self.mensajesLog:
@@ -137,5 +146,5 @@ class Iku(object):
     """ carga un archivo de sonido y devuelve un objeto sound3d"""
     return self.audio.sonido3d(ruta)
 
-def iniciar(titulo='IkuEngine', ancho=640, alto=480, capturarErrores=True, habilitarMensajesLog=True, plugins=False, modoTest=False):
-  return Iku(titulo=titulo, ancho=ancho, alto=alto, capturarErrores=capturarErrores, habilitarMensajesLog=habilitarMensajesLog, plugins=plugins, modoTest=modoTest)
+def iniciar(*k, **kv):
+  return Iku(*k, **kv)
