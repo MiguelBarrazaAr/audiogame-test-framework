@@ -40,3 +40,7 @@ class Complementos(object):
       if os.path.isdir(ruta+"/"+nombre) and nombre[0:2] != "__":
         modulo = importlib.import_module("iku.complementos."+nombre)
         self.activar(nombre, modulo)
+  
+  def instalar(self, nombre):
+    modulo = importlib.import_module("iku.complementos."+nombre)
+    self.activar(nombre, modulo)
