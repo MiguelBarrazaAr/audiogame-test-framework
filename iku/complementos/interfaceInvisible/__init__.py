@@ -7,9 +7,11 @@
 
 from .dialogo import Dialogo
 from .menu import Menu
+from .ejecutarConFlechas import EjecutarConFlechas
 
 class Complemento(object):
   def __init__(self, iku):
     iku.actores.vincular(Dialogo)
+    iku.actores.vincular(EjecutarConFlechas)
     iku.actores.vincular(Menu)
   

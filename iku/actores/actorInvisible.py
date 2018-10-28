@@ -3,6 +3,8 @@
 # IkuEngine: Motor para videojuegos en python
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
+# Copyright 2018 - Miguel Barraza
+
 from .sprite import Sprite
 
 class ActorInvisible(Sprite):
@@ -14,7 +16,7 @@ class ActorInvisible(Sprite):
       y=kv.get('y', 0),
       alto=kv.get('alto', 1),
       ancho=kv.get('ancho', 1))
-    Sprite.__init__(self, iku, **kv)
+    Sprite.__init__(self, iku, visible=False, **kv)
   
   def redimensionar(self,ancho,alto):
     self.figura.size = (ancho, alto)
