@@ -3,15 +3,15 @@
 # IkuEngine: Motor para videojuegos en python
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
+# Copyright 2018 - Miguel Barraza
+
 from .sprite import Sprite
 
 class Actor(Sprite):
   """Representa un objeto del juego que es parte de una escena, algo que se puede interactuar y tiene una posicion.
   """
   def __init__(self, iku, *k, **kv):
-    self.visible = True
-    self.iku = iku
-    
+    self.iku=iku
     # cargamos la imagen:
     self.imagen = kv.get('imagen', "")
     # ajustamos el posicionamiento:
@@ -24,8 +24,11 @@ class Actor(Sprite):
     return self._surface
   
   @imagen.setter
-  def imagen(self, ruta):
-    self._surface = self.iku.imagen(ruta)
+  def imagen(self, img):
+    if type(img) == str:
+      self._surface = self.iku.imagen(ruta)
+    else:
+      self._surface=img
     self.figura = self._surface.get_rect()
   
   def redimensionar(self,ancho,alto):
@@ -37,5 +40,6 @@ class Actor(Sprite):
       r = self.figura.move(self.iku.centro)
       superficie.blit(self._surface, r)
   
-  def escala(self,escala):
-    self._surface = self.iku.escalarSuperficie(self._surface, self.figura.w*escala, self.figura.h*escala)
+  def escala(self, x):
+    self.figura.w*=x
+    self.figura.h*=x

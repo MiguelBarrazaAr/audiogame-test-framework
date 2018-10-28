@@ -3,12 +3,14 @@
 # IkuEngine: Motor para videojuegos en python
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
+# Copyright 2018 - Miguel Barraza
+
 import iku as ikuEngine
 
 class Sprite(object):
   """Representa un objeto del juego que es parte de una escena, algo que se puede interactuar y tiene una posicion.
   """
-  def __init__(self, iku, *k, **kv):
+  def __init__(self, iku, visible=True, actualizable=False, colisionable=False, *k, **kv):
     if not iku:
       raise Exception(u"tienes que enviar 'iku' como argumento del actor al crearlo.")
     
@@ -18,10 +20,10 @@ class Sprite(object):
     self.iku = iku
     
     self._vivo = True
-    self.visible = False
-    self.actualizable = True
+    self.visible = visible
+    self.actualizable = actualizable
     self.activo = False
-    self.colisionable = True
+    self.colisionable = colisionable
     
     self.anexados = []
     

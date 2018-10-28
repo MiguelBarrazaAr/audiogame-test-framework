@@ -3,9 +3,13 @@
 # IkuEngine: Motor para videojuegos en python
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
+# Copyright 2018 - Miguel Barraza
+
 import inspect
 
 from .actor import Actor
+from .actorInvisible  import ActorInvisible
+from .texto import Texto
 
 class Actores():
   """Representa la propiedad iku.actores
@@ -39,9 +43,11 @@ class Actores():
       cls.nombresDeActoresPersonalizados.append(nombre)
   
   def iniciarActoresDefault(self):
-    self.vincular(Dialogo)
-    self.vincular(Menu)
-    self.vincular(NavegadorDeElementos)
+    self.vincular(ActorInvisible)
+    self.vincular(Texto)
+    #self.vincular(Dialogo)
+    #self.vincular(Menu)
+    #self.vincular(NavegadorDeElementos)
   
   def limpiar(self):
     """Elimina todos los actores personalizados."""
