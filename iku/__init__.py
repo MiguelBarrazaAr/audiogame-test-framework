@@ -25,7 +25,7 @@ from .tecla import Tecla
 from .tts import TTS
 from .utiles import *
 
-VERSION = "0.1.01"
+VERSION = "0.1"
 
 class Iku(object):
   """Representa el area de juego de IkuEngine, el componente principal.
@@ -35,24 +35,17 @@ class Iku(object):
   def __init__(self, ancho=640, alto=480, titulo='Iku engine', capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, *k, **kv):
     # configuración:
     self.capturarErrores = capturarErrores
-    self.mensajesLog=habilitarMensajesLog
     self.modoTest=modoTest
-    self.log("iniciando el motor 'iku'")
-    
-    # iniciamos el motor pygame:
-    pygame.init()
-    self.reloj = pygame.time.Clock()
+    self.mensajesLog=False
     self.fps =25
-    self._winLoop = True
-    
-    # iniciamos el motor gráfico:
+    self._winLoop = False
     self.dimension = (ancho, alto)
     self.centro = (ancho/2, alto/2)
-    pygame.display.set_caption(titulo)
-    self.ventana = pygame.display.set_mode(self.dimension)
-    pygame.display.flip()
-    # cargamos una fuente default:
-    self.fuente = pygame.font.Font(None, 30)
+    
+    if not self.modoTest:
+      self.mensajesLog=habilitarMensajesLog
+      self.log("iniciando el motor 'iku'")
+      self._iniciarGrafica()
     
     # cargamos los objetos de iku:
     self.actores = Actores(self)
@@ -65,6 +58,19 @@ class Iku(object):
     self.tecla = Tecla()
     self.tts = TTS()
     self.log("motor 'iku' iniciado")
+  
+  def _iniciarGrafica(self):
+    # iniciamos el motor pygame:
+    pygame.init()
+    self.reloj = pygame.time.Clock()
+    self._winLoop = True
+    
+    # iniciamos el motor gráfico:
+    pygame.display.set_caption(titulo)
+    self.ventana = pygame.display.set_mode(self.dimension)
+    pygame.display.flip()
+    # cargamos una fuente default:
+    self.fuente = pygame.font.Font(None, 30)
   
   def ejecutar(self):
     while self._winLoop:
