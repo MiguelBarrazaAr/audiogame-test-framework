@@ -1,0 +1,4 @@
+pygame
+libaudioverse
+accessible_output2
+pywin32
