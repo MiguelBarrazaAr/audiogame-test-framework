@@ -36,7 +36,7 @@ class Tareas(object):
     :param funcion: Función a ejecutar para lanzar la tarea.
     :param parametros: Parámetros que tiene que recibir la función a ejecutar.
     """
-    tarea = TareaUnaVez(self, tiempo*1000, funcion, *args, **kwargs)
+    tarea = TareaUnaVez(self, tiempo*1000, 0, funcion, *args, **kwargs)
     self._agregar(tarea)
     return tarea
   

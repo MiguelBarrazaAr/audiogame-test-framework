@@ -22,7 +22,7 @@ class Tarea(object):
   
   def eliminar(self):
     "Quita la tarea del gestor para que no se vuelva a ejecutar."
-    self.planificador.eliminar(self)
+    self.gestor.eliminar(self)
   
   def terminar(self):
     "Termina la tarea (alias de eliminar)."
