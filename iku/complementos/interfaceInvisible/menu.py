@@ -5,18 +5,18 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - Miguel Barraza
 
-from iku.actores.actorInvisible import ActorInvisible
+import iku
 
-class Menu(ActorInvisible):
+class Menu(iku.actores.ActorInvisible):
   """Representa un menu invisible de opciones navegable con flechas.
   """
-  def __init__(self, iku, nombre="menú", opciones=[], mensaje= "(pulse flechas para navegar por el menú)", habilitado=True):
+  def __init__(self, nombre="menú", opciones=[], mensaje= "(pulse flechas para navegar por el menú)", habilitado=True):
     self._opciones = opciones
     self.nombre = nombre
     self.mensajeBienvenida = mensaje
     self.cantOpciones = len(opciones)
     self.indice = 0
-    ActorInvisible.__init__(self, iku=iku)
+    iku.actores.ActorInvisible.__init__(self)
     if habilitado:
       self.habilitar()
   

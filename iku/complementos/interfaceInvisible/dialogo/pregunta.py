@@ -17,7 +17,7 @@ class Pregunta(object):
     dialogo.deshabilitar()
     self.dialogo = dialogo
     mensaje=self.texto+". (pulse las flechas para seleccionar una opción y enter para confirmar)."
-    self.menu = dialogo.iku.actores.Menu(dialogo.iku, "Pregunta", self.opciones, mensaje=mensaje)
+    self.menu = dialogo.iku.actores.Menu("Pregunta", self.opciones, mensaje=mensaje)
   
   def finalizar(self, respuesta):
     respuesta()
