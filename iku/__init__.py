@@ -39,6 +39,8 @@ class SingletonDecorator:
 
 VERSION = "0.1.2"
 
+ikuEngine = None
+
 @SingletonDecorator
 class Iku(object):
   """Representa el area de juego de IkuEngine, el componente principal.
@@ -166,8 +168,13 @@ class Iku(object):
     return self.audio.sonido3d(ruta)
 
 def instancia():
-  # retorna la instancia activa de iku engine:
-  return Iku()
+  # retorna la instancia activa de iku engine, si hay alguna:
+  return ikuEngine  
 
 def iniciar(*k, **kv):
-  return Iku(*k, **kv)
+  global ikuEngine
+  if ikuEngine  is None:
+    ikuEngine  = Iku(*k, **kv)
+  return ikuEngine
+  #else:
+  #raise Exception("Ya hay una instancia de ikuEngine Inicializada.")

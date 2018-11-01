@@ -4,6 +4,7 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
+import iku as ikuEngine
 from .escena import Escena
 from .normal import EscenaNormal
 
@@ -34,7 +35,7 @@ class Escenas():
       raise Exception("Error, ya existe una escena vinculada con el nombre: " + nombre)
     else:
       def crearEscena(self, *k, **kw):
-        nuevaEscena = escenaClass(*k, **kw)
+        nuevaEscena = escenaClass(ikuEngine.instancia(), *k, **kw)
         self.apilar(nuevaEscena)
         nuevaEscena.iniciar(*k, **kw)
       

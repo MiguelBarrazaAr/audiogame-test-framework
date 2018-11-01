@@ -4,19 +4,12 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
-#from ..Iku import Iku
 from ..eventos.evento import *
 
 class Escena():
   """Representa una escena del juego"""
   
   def __init__(self, iku, *k, **kw):
-    if not iku:
-      raise Exception(u"tienes que enviar 'iku' como argumento de la escena al crearla.")
-    
-    #if not isinstance(iku, Iku):
-      #raise Exception(u"Tienes que enviar el objeto 'iku' a la escena al crearla, pero llego esto: " +str(iku))
-    
     # iniciamos las propiedades comunes de todas las escenas:
     self.iku = iku
     self.colorFondo = (0,0,0)

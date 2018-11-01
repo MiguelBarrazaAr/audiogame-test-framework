@@ -26,7 +26,7 @@ class Actor(Sprite):
   @imagen.setter
   def imagen(self, img):
     if type(img) == str:
-      self._surface = iku.instancia().imagen(ruta)
+      self._surface = iku.instancia().imagen(img)
     else:
       self._surface=img
     self.figura = self._surface.get_rect()
