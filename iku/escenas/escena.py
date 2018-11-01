@@ -56,7 +56,7 @@ class Escena():
   def nombre(self):
     return self.__class__.__name__
   
-  def actualizar(self):
+  def actualizar(self, tick):
     pass
   
   def iniciar(self, *k, **kw):

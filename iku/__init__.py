@@ -3,7 +3,7 @@
 # iku engine: Motor para videojuegos en python (3.7)
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
-# Copyright 2018 - 2019  -:Miguel Barraza
+# Copyright 2018 - 2019: Miguel Barraza
 
 import datetime
 import os
@@ -21,6 +21,7 @@ from .complementos import Complementos
 from .escenas import *
 from .eventos import *
 from .sonido import iniciar as iniciarAudio
+from .tareas import Tareas
 from .tecla import Tecla
 from .tts import TTS
 from .utiles import *
@@ -70,6 +71,7 @@ class Iku(object):
     self.datos = {}
     self.escenas = escenas.Escenas(self)
     self.eventos = Eventos(self)
+    self.tareas = Tareas()
     self.tecla = Tecla()
     self.tts = TTS()
     self.log("motor 'iku' iniciado")
@@ -85,7 +87,7 @@ class Iku(object):
     self.ventana = pygame.display.set_mode(self.dimension)
     pygame.display.flip()
     # cargamos una fuente default:
-    self.fuente = pygame.font.Font(None, 30)
+    self.fuente = pygame.font.Font("freesansbold.ttf", 30)
   
   def ejecutar(self):
     while self._winLoop:
@@ -94,7 +96,9 @@ class Iku(object):
         self._procesarEvento(event)
       
       # controlamos el tiempo de refresco.
-      self.reloj.tick(self.fps)
+      tick=self.reloj.tick(self.fps)
+      self.tareas.actualizar(tick)
+      self.escenas.escenaActual.actualizar(tick)
       self.escenas.escenaActual.dibujarEn(self.ventana)
       pygame.display.flip()
   
