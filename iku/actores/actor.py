@@ -5,19 +5,19 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - Miguel Barraza
 
+import iku
 from .sprite import Sprite
 
 class Actor(Sprite):
   """Representa un objeto del juego que es parte de una escena, algo que se puede interactuar y tiene una posicion.
   """
-  def __init__(self, iku, *k, **kv):
-    self.iku=iku
+  def __init__(self, *k, **kv):
     # cargamos la imagen:
     self.imagen = kv.get('imagen', "")
     # ajustamos el posicionamiento:
     self.figura.centerx = kv.get('x', 0)
     self.figura.centery = kv.get('y', 0)
-    Sprite.__init__(self, iku, **kv)
+    Sprite.__init__(self, **kv)
   
   @property
   def imagen(self):
@@ -26,7 +26,7 @@ class Actor(Sprite):
   @imagen.setter
   def imagen(self, img):
     if type(img) == str:
-      self._surface = self.iku.imagen(ruta)
+      self._surface = iku.instancia().imagen(ruta)
     else:
       self._surface=img
     self.figura = self._surface.get_rect()

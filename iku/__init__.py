@@ -25,19 +25,32 @@ from .tecla import Tecla
 from .tts import TTS
 from .utiles import *
 
-VERSION = "0.1"
+class SingletonDecorator:
+  def __init__(self, klass):
+    self.klass = klass
+    self.instance = None
+  
+  def __call__(self, *args, **kwds):
+    if self.instance == None:
+      self.instance = self.klass(*args, **kwds)
+    return self.instance
 
+
+
+VERSION = "0.1.2"
+
+@SingletonDecorator
 class Iku(object):
   """Representa el area de juego de IkuEngine, el componente principal.
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, ancho=640, alto=480, titulo='Iku engine', capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, *k, **kv):
+  def __init__(self, ancho=640, alto=480, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, *k, **kv):
     # configuración:
     self.capturarErrores = capturarErrores
     self.modoTest=modoTest
     self.mensajesLog=False
-    self.fps =25
+    self.fps =fps
     self._winLoop = False
     self.dimension = (ancho, alto)
     self.centro = (ancho/2, alto/2)
@@ -45,7 +58,7 @@ class Iku(object):
     if not self.modoTest:
       self.mensajesLog=habilitarMensajesLog
       self.log("iniciando el motor 'iku'")
-      self._iniciarGrafica()
+      self._iniciarGrafica(titulo, ancho, alto)
     
     # cargamos los objetos de iku:
     self.actores = Actores(self)
@@ -59,7 +72,7 @@ class Iku(object):
     self.tts = TTS()
     self.log("motor 'iku' iniciado")
   
-  def _iniciarGrafica(self):
+  def _iniciarGrafica(self, titulo, ancho, alto):
     # iniciamos el motor pygame:
     pygame.init()
     self.reloj = pygame.time.Clock()
@@ -151,6 +164,10 @@ class Iku(object):
   def sonido3d(self, ruta):
     """ carga un archivo de sonido y devuelve un objeto sound3d"""
     return self.audio.sonido3d(ruta)
+
+def instancia():
+  # retorna la instancia activa de iku engine:
+  return Iku()
 
 def iniciar(*k, **kv):
   return Iku(*k, **kv)

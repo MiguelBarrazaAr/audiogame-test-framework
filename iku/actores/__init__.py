@@ -45,7 +45,6 @@ class Actores():
   def iniciarActoresDefault(self):
     self.vincular(ActorInvisible)
     self.vincular(Texto)
-    #self.vincular(Dialogo)
     #self.vincular(Menu)
     #self.vincular(NavegadorDeElementos)
   

@@ -5,20 +5,13 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - Miguel Barraza
 
-import iku as ikuEngine
+import iku
 
 class Sprite(object):
   """Representa un objeto del juego que es parte de una escena, algo que se puede interactuar y tiene una posicion.
   """
-  def __init__(self, iku, visible=True, actualizable=False, colisionable=False, *k, **kv):
-    if not iku:
-      raise Exception(u"tienes que enviar 'iku' como argumento del actor al crearlo.")
-    
-    if not isinstance(iku, ikuEngine.Iku):
-      raise Exception(u"Tienes que enviar el objeto 'iku' al actor al crearlo, pero llego esto: " +str(iku))
-    
-    self.iku = iku
-    
+  def __init__(self, visible=True, actualizable=False, colisionable=False, *k, **kv):
+    self.iku = iku.instancia()
     self._vivo = True
     self.visible = visible
     self.actualizable = actualizable
