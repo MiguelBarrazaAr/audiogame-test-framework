@@ -32,7 +32,7 @@ class Eventos(object):
   
   @property
   def pulsaEscape(self):
-    return self.iku.escenas.escenaActual.pulsaTecla
+    return self.iku.escenas.escenaActual.pulsaEscape
   
   @property
   def clickMouse(self):
