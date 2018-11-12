@@ -24,8 +24,13 @@ class Escena():
     
     # iniciamos los eventos:
     self.mueveCamara = EventoControl()
-    self.pulsaEscape = EventoControl()
     self.pulsaTecla = EventoControl()
+    self.sueltaTecla = EventoControl()
+    self.pulsaEscape = EventoControl()
+    self.clickMouse = EventoControl()
+    self.finalizaClickMouse = EventoControl()
+    self.mueveMouse = EventoControl()
+    self.cuandoActualiza = EventoControl()
     # conectamos el cerrar con escape
     self.pulsaEscape.conectar(self.alPulsarEscape)
   
@@ -57,7 +62,8 @@ class Escena():
     return self.__class__.__name__
   
   def actualizar(self, tick):
-    pass
+    for actor in self.actores:
+      actor.actualizar(tick)
   
   def iniciar(self, *k, **kw):
     pass

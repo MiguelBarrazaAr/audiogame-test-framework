@@ -21,9 +21,10 @@ class Complementos(object):
     if cargarComplementos:
       self._cargarComplementos()
   
-  def activar(self, nombre, modulo):
+  def activar(self, modulo):
     """Registra y activa un complemento."""
     # Se asegura de que el plugin no fue vinculado anteriormente.
+    nombre = modulo.__name__
     if nombre in self.plugins:
       raise Exception("Error, ya existe un complemento vinculado con el nombre: " + nombre)
     else:
@@ -39,8 +40,11 @@ class Complementos(object):
     for nombre in self.iku.listarDirectorio(ruta):
       if os.path.isdir(ruta+"/"+nombre) and nombre[0:2] != "__":
         modulo = importlib.import_module("iku.complementos."+nombre)
-        self.activar(nombre, modulo)
+        self.activar(modulo)
   
-  def instalar(self, nombre):
-    modulo = importlib.import_module("iku.complementos."+nombre)
-    self.activar(nombre, modulo)
+  def instalar(self, complemento):
+    if type(complemento) == str:
+      modulo = importlib.import_module("iku.complementos."+nombre)
+    else:
+      modulo = complemento
+    self.activar(modulo)

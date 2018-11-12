@@ -6,11 +6,10 @@ class TestEngine(unittest.TestCase):
   """
   Validamos la inicialización del engine
   """
-  def setUp(self):
-    self.iku = iku.iniciar(modoTest=True, ancho=1280, alto=960)
+  iku = iku.iniciar(modoTest=True)
   
-  def test_alIniciarSeDeterminoUnAnchoDe1280YUnAltoDe960(self):
-    self.assertEquals(self.iku.dimension, (1280, 960), "Iku inicia con una pantalla redimensionada en los parametros indicados 1280x960.")
+  def test_AlIniciarTienePorDefaultUnAnchoDe640YUnAltoDe480(self):
+    self.assertEquals(self.iku.dimension, (640, 480), "Iku inicia con una pantalla redimensionada en 640x480.")
   
   def test_ikuGuardaUnaReferenciaAlCentroDeLaPantalla(self):
     ancho, alto = self.iku.dimension

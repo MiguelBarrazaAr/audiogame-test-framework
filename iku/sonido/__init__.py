@@ -61,8 +61,10 @@ class Audio(object):
   def finalizar(self):
     self.shutdown()
   
-  def emitir(self, ruta, posicion=None, loop=False):
-    self.pool.reproducir(ruta)    
+  def reproducirEvento(self, evento):
+    # recibe un evento con info del audio y lo reproduce utilizando el pool de iku engine.
+    if evento.tipo == "sonido":
+      self.pool.reproducir(evento.ruta)    
 
 
 class SonidoNulo(object):

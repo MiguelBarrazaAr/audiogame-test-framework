@@ -106,12 +106,24 @@ class Iku(object):
     # si pulsa en cerrar emitimos pulsaEscape
     if event.type == pygame.QUIT:
       self.eventos.pulsaEscape.emitir(tecla=pygame.K_ESCAPE, tipo=event.type  )
-    # si pulsa una tecla:
+    # pulsa una tecla:
     if event.type == pygame.KEYDOWN:
       self.eventos.pulsaTecla.emitir(tecla=event.key, representacion=event.unicode)
       # si pulsa escape, emitimos pulsaEscape
       if event.key == pygame.K_ESCAPE:
         self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
+    # suelta una tecla:
+    if event.type == pygame.KEYUP:
+      self.eventos.sueltaTecla.emitir(tecla=event.key)
+    # si algún botón del mouse es presionado
+    if event.type == pygame.MOUSEBUTTONDOWN:
+      self.eventos.clickMouse.emitir(boton=event.button, posicion=event.pos)
+    # si algún botón del mouse es soltado
+    if event.type == pygame.MOUSEBUTTONUP:
+      self.eventos.finalizaClickMouse.emitir(boton=event.button, posicion=event.pos)
+    # si el mouse es movido
+    if event.type == pygame.MOUSEMOTION:
+      self.eventos.mueveMouse.emitir(botones=event.buttons, posicion=event.pos, movimiento=event.rel)
   
   def aleatorio(self, x, y):
     """Hace una tirada de random aleatorio."""

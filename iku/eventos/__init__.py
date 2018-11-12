@@ -21,14 +21,36 @@ class Eventos(object):
   def crear(self):
     """Crea un nuevo evento"""
     return EventoControl()
-
+  
   @property
   def pulsaTecla(self):
     return self.iku.escenas.escenaActual.pulsaTecla
   
   @property
+  def sueltaTecla(self):
+    return self.iku.escenas.escenaActual.sueltaTecla
+  
+  @property
   def pulsaEscape(self):
-    return self.iku.escenas.escenaActual.pulsaEscape
+    return self.iku.escenas.escenaActual.pulsaTecla
+  
+  @property
+  def clickMouse(self):
+    return self.iku.escenas.escenaActual.clickMouse
+  
+  @property
+  def finalizaClickMouse(self):
+    return self.iku.escenas.escenaActual.finalizaClickMouse
+  
+  @property
+  def mueveMouse(self):
+    return self.iku.escenas.escenaActual.mueveMouse
+  
+  @property
+  def cuandoActualiza(self):
+    return self.iku.escenas.escenaActual.cuandoActualiza
   
   def __getattr__(self, at):
     print("recibo: "+at)
+
+

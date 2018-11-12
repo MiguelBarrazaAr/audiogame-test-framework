@@ -35,7 +35,7 @@ class Sprite(object):
   def tipo(self):
     return     self.__class__.__name__
   
-  def actualizar(self):
+  def actualizar(self, tick):
     pass
   
   def _iniciar(self, *k, **kv):
@@ -115,6 +115,12 @@ class Sprite(object):
   def posicion(self):
     return self.figura.topleft
   
+  @posicion.setter
+  def posicion(self, tupla):
+    self.figura.topleft = tupla   
+  
   def mover(self, x=0, y=0):
     self.figura.move_ip(x,y)
   
+  def coordenadaAlMover(self, x=0, y=0):
+    return (self.x+x, self.y+y)
