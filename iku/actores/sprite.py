@@ -17,7 +17,6 @@ class Sprite(object):
     self.actualizable = actualizable
     self.activo = False
     self.colisionable = colisionable
-    
     self.anexados = []
     
     self._acciones = self.iku.eventos.crear()

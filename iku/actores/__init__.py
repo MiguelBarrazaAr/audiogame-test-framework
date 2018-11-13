@@ -7,9 +7,11 @@
 
 import inspect
 
+
 from .actor import Actor
 from .actorInvisible  import ActorInvisible
 from .texto import Texto
+from .boton import Boton
 
 class Actores():
   """Representa la propiedad iku.actores
@@ -45,6 +47,7 @@ class Actores():
   def iniciarActoresDefault(self):
     self.vincular(ActorInvisible)
     self.vincular(Texto)
+    self.vincular(Boton)
     #self.vincular(Menu)
     #self.vincular(NavegadorDeElementos)
   

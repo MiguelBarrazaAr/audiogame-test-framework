@@ -30,6 +30,8 @@ class Actor(Sprite):
     else:
       self._surface=img
     self.figura = self._surface.get_rect()
+
+
   
   def redimensionar(self,ancho,alto):
     self._surface = self.iku.escalarSuperficie(self._surface, ancho=ancho, alto=alto)
