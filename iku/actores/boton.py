@@ -4,13 +4,14 @@ from iku.actores.actor import Actor
 
 class Boton(Actor):
     def __init__(self,accion):
+
         """Un boton es un actor que al ser clickeado ejecuta una funcion.
         """
-            Actor.__init__(self, imagen="imagenes/boton-estatico.png")
-            self.iku.eventos.clickMouse.conectar(self.alClickiquearMouse)
-            self.iku.eventos.mueveMouse.conectar(self.alEstarSobreElBoton)
-            self.iku.eventos.finalizaClickMouse.conectar(self.alSoltarClick)
-            self.accionAEjecutar = accion
+        Actor.__init__(self, imagen="imagenes/boton-estatico.png")
+        self.iku.eventos.clickMouse.conectar(self.alClickiquearMouse)
+        self.iku.eventos.mueveMouse.conectar(self.alEstarSobreElBoton)
+        self.iku.eventos.finalizaClickMouse.conectar(self.alSoltarClick)
+        self.accionAEjecutar = accion
 
 
     def alSoltarClick(self, evento):
