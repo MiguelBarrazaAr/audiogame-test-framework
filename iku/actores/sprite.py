@@ -112,11 +112,11 @@ class Sprite(object):
   
   @property
   def posicion(self):
-    return self.figura.topleft
+    return self.figura.center
   
   @posicion.setter
   def posicion(self, tupla):
-    self.figura.topleft = tupla   
+    self.figura.center = tupla   
   
   def mover(self, x=0, y=0):
     self.figura.move_ip(x,y)

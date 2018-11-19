@@ -14,10 +14,11 @@ class Actor(Sprite):
   def __init__(self, *k, **kv):
     # cargamos la imagen:
     self.imagen = kv.get('imagen', "")
-    # ajustamos el posicionamiento:
-    self.figura.centerx = kv.get('x', 0)
-    self.figura.centery = kv.get('y', 0)
     Sprite.__init__(self, **kv)
+    # ajustamos el posicionamiento:
+    self.posicionar(x=kv.get('x', 0),
+      y=kv.get('y', 0),
+      absoluto=kv.get('absoluto', False))
   
   @property
   def imagen(self):
@@ -25,13 +26,25 @@ class Actor(Sprite):
   
   @imagen.setter
   def imagen(self, img):
+    try:
+      posicion=self.figura.center
+    except:
+      posicion=(0,0)
+    
     if type(img) == str:
       self._surface = iku.instancia().imagen(img)
     else:
       self._surface=img
     self.figura = self._surface.get_rect()
-
-
+    self.figura.center = posicion
+  
+  def posicionar(self, x, y, absoluto=False):
+    if absoluto:
+     self.posicion = (x,y)
+    else:
+      #  en posicionamiento relativo toma como centro (0,0) el centro de la pantalla.
+      cx, cy = self.iku.centro
+      self.posicion = (cx+x, cy-y)
   
   def redimensionar(self,ancho,alto):
     self._surface = self.iku.escalarSuperficie(self._surface, ancho=ancho, alto=alto)
@@ -39,8 +52,7 @@ class Actor(Sprite):
   
   def dibujarEn(self, superficie):
     if self.visible:
-      r = self.figura.move(self.iku.centro)
-      superficie.blit(self._surface, r)
+      superficie.blit(self._surface, self.figura)
   
   def escala(self, x):
     self.figura.w*=x
