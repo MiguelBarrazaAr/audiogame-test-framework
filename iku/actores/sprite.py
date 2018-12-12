@@ -118,6 +118,14 @@ class Sprite(object):
   def posicion(self, tupla):
     self.figura.center = tupla   
   
+  @property
+  def ancho(self):
+    return self.figura.w
+  
+  @property
+  def alto(self):
+    return self.figura.h
+  
   def mover(self, x=0, y=0):
     self.figura.move_ip(x,y)
   

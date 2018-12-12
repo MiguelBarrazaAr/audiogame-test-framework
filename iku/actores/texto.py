@@ -12,6 +12,7 @@ class Texto(Actor):
   """Representa un texto en pantalla.
   """
   def __init__(self, texto, *k, **kv):
+    self.texto=texto
     superficie = iku.instancia().fuente.render(texto, 0, (255, 255, 255))
     Actor.__init__(self, iku, imagen=superficie, **kv)
   

@@ -19,6 +19,7 @@ class Actor(Sprite):
     self.posicionar(x=kv.get('x', 0),
       y=kv.get('y', 0),
       absoluto=kv.get('absoluto', False))
+    self._escala = 1 
   
   @property
   def imagen(self):
@@ -54,6 +55,12 @@ class Actor(Sprite):
     if self.visible:
       superficie.blit(self._surface, self.figura)
   
+  @property
+  def escala(self):
+    return self._escala
+  
+  @escala.setter
   def escala(self, x):
     self.figura.w*=x
     self.figura.h*=x
+    self._escala*=x
