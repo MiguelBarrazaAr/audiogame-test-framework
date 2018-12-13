@@ -61,6 +61,9 @@ class Actor(Sprite):
   
   @escala.setter
   def escala(self, x):
+    ancho=self.figura.w*x
+    alto=self.figura.h*x
     self.figura.w*=x
     self.figura.h*=x
     self._escala*=x
+    self.redimensionar(ancho, alto)
