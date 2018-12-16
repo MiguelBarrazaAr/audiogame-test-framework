@@ -129,6 +129,14 @@ class Iku(object):
     """Hace una tirada de random aleatorio."""
     return random.randint(x, y)
   
+  def elegir(self, lista):
+    """Elige un elemento aleatorio en una lista."""
+    return random.choice(lista)
+  
+  def mezclar(self, lista):
+    """Mezcla los elementos de una lista."""
+    return random.shuffle(lista)
+  
   def esperar(self, tiempo):
     """Realiza una espera de cierto tiempo."""
     time.sleep(tiempo)
