@@ -55,8 +55,8 @@ class Audio(object):
     else:
       return Sonido(ruta)
   
-  def sonido3d(self, ruta):
-    return Sonido3d(self.server, self.world, ruta)
+  def sonido3d(self, ruta, posicion):
+    return Sonido3d(self.server, self.world, ruta, posicion)
   
   def finalizar(self):
     self.shutdown()
@@ -64,8 +64,7 @@ class Audio(object):
   def reproducirEvento(self, evento):
     # recibe un evento con info del audio y lo reproduce utilizando el pool de iku engine.
     if evento.tipo == "sonido":
-      self.pool.reproducir(evento.ruta)    
-
+      self.pool.reproducir(evento.ruta, evento.posicion)
 
 class SonidoNulo(object):
   def reproducir(self):

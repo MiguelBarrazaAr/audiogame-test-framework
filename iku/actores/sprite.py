@@ -114,6 +114,10 @@ class Sprite(object):
   def posicion(self):
     return self.figura.center
   
+  @property
+  def posicion3d(self):
+    return (self.figura.centerx, self.figura.centery, 0)
+  
   @posicion.setter
   def posicion(self, tupla):
     self.figura.center = tupla   

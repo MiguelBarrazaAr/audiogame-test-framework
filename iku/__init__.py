@@ -64,16 +64,16 @@ class Iku(object):
       self._iniciarGrafica(titulo, ancho, alto)
     
     # cargamos los objetos de iku:
+    self.eventos = Eventos(self)
+    self.camara = Camara(self)
+    self.escenas = escenas.Escenas(self)
     self.actores = Actores(self)
-    self.audio = iniciarAudio(self)
-    self.camara = Camara()
     self.complementos = Complementos(self, complementos)
     self.datos = {}
-    self.escenas = escenas.Escenas(self)
-    self.eventos = Eventos(self)
     self.tareas = Tareas()
     self.tecla = Tecla()
     self.tts = TTS()
+    self.audio = iniciarAudio(self)
     self.log("motor 'iku' iniciado")
   
   def _iniciarGrafica(self, titulo, ancho, alto):
@@ -187,9 +187,9 @@ class Iku(object):
     """
     return self.audio.sonido(ruta)
   
-  def sonido3d(self, ruta):
+  def sonido3d(self, ruta, posicion):
     """ carga un archivo de sonido y devuelve un objeto sound3d"""
-    return self.audio.sonido3d(ruta)
+    return self.audio.sonido3d(ruta, posicion)
 
 def instancia():
   # retorna la instancia activa de iku engine, si hay alguna:

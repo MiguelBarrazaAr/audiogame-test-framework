@@ -6,7 +6,7 @@
 import libaudioverse
 
 class Sonido3d(object):
-  def __init__(self, server, world, fileRoute):
+  def __init__(self, server, world, fileRoute, position):
     self.server=server
     self.world = world
     self.source = libaudioverse.SourceNode(server, world)
@@ -15,6 +15,7 @@ class Sonido3d(object):
     b.load_from_file(fileRoute)
     self.buffer.buffer = b
     self.buffer.state = libaudioverse.NodeStates.paused
+    self.posicion = position
   
   def l(self):
     self.buffer.disconnect()
@@ -44,7 +45,7 @@ class Sonido3d(object):
   
   @posicion.setter
   def posicion(self, pos):
-    self.source.position = pos.toTuple()
+    self.source.position = pos
   
   @property
   def pitch(self):

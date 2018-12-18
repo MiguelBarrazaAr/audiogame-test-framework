@@ -50,6 +50,10 @@ class Eventos(object):
   def cuandoActualiza(self):
     return self.iku.escenas.escenaActual.cuandoActualiza
   
+  @property
+  def mueveCamara(self):
+    return self.iku.camara.evento
+  
   def __getattr__(self, at):
     print("recibo: "+at)
 
