@@ -16,7 +16,6 @@ class SoundPool(object):
     """carga y reproduce un sonido"""
     px, py, pz = posicion
     pos = (px-self.camx, py-self.camy, pz-self.camz)
-    self.iku.leer(str(pos))
     self.lista[self.x] = self.iku.sonido3d(ruta, pos)
     self.lista[self.x].reproducir()
     self.x = (self.x+1)%self.cantidadDeSonidos
