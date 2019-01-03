@@ -17,8 +17,10 @@ class SoundPool(object):
     px, py, pz = posicion
     pos = (px-self.camx, py-self.camy, pz-self.camz)
     self.lista[self.x] = self.iku.sonido3d(ruta, pos)
-    self.lista[self.x].reproducir()
+    sonido= self.lista[self.x]
+    sonido.reproducir()
     self.x = (self.x+1)%self.cantidadDeSonidos
+    return sonido
   
   def _alMoverCamara(self, evento):
     print("mueve camara", evento)
