@@ -4,6 +4,7 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 import libaudioverse
+from libaudioverse._lav import buffer_get_duration
 
 class Sonido3d(object):
   def __init__(self, server, world, fileRoute, position):
@@ -16,6 +17,9 @@ class Sonido3d(object):
     self.buffer.buffer = b
     self.buffer.state = libaudioverse.NodeStates.paused
     self.posicion = position
+    self.buffer.set_end_callback(self.fin)
+    self.duracion = buffer_get_duration(b)
+
   
   def l(self):
     self.buffer.disconnect()
@@ -27,6 +31,9 @@ class Sonido3d(object):
       self.buffer.position=0
       self.buffer.looping = continuo
       self.buffer.state = libaudioverse.NodeStates.playing
+  
+  def fin(self):
+    print("fin del audio")
   
   def reproducirContinuo(self):
     self.reproducir(True)

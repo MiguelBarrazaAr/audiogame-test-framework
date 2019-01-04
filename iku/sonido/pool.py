@@ -12,7 +12,7 @@ class SoundPool(object):
     self.x = 0
     self.lista = [None]*cantidadDeSonidos
   
-  def reproducir(self, ruta, posicion=(0,0,0)):
+  def reproducir(self, ruta, posicion=(0,0,0), respuesta=None, espera=0):
     """carga y reproduce un sonido"""
     px, py, pz = posicion
     pos = (px-self.camx, py-self.camy, pz-self.camz)
@@ -20,6 +20,9 @@ class SoundPool(object):
     sonido= self.lista[self.x]
     sonido.reproducir()
     self.x = (self.x+1)%self.cantidadDeSonidos
+    # si tiene callback agregamos una tarea:
+    if respuesta is not None:
+      self.iku.tareas.unaVez(sonido.duracion+espera, respuesta)
     return sonido
   
   def _alMoverCamara(self, evento):
