@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-# IkuEngine: Motor para videojuegos en python (3.6)
+# IkuEngine: Motor para videojuegos en python (3.7)
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
+# Copyright 2018 - 2019: Miguel Barraza
 import libaudioverse
 from libaudioverse._lav import buffer_get_duration
 
 class Sonido3d(object):
-  def __init__(self, server, world, fileRoute, position):
+  def __init__(self, server, world, fileRoute, position, respuesta=None):
     self.server=server
     self.world = world
     self.source = libaudioverse.SourceNode(server, world)
@@ -17,7 +18,8 @@ class Sonido3d(object):
     self.buffer.buffer = b
     self.buffer.state = libaudioverse.NodeStates.paused
     self.posicion = position
-    self.buffer.set_end_callback(self.fin)
+    self.respuesta = respuesta
+    self.buffer.set_end_callback(self._lanzarRespuesta)
     self.duracion = buffer_get_duration(b)
   
   def transcurrido(self):
@@ -34,8 +36,9 @@ class Sonido3d(object):
       self.buffer.looping = continuo
       self.buffer.state = libaudioverse.NodeStates.playing
   
-  def fin(self):
-    print("fin del audio")
+  def _lanzarRespuesta(self, buffer):
+    if self.respuesta is not None:
+      self.respuesta()
   
   def reproducirContinuo(self):
     self.reproducir(True)
