@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 # IkuEngine: Motor para videojuegos en python (3.7)
 #
@@ -45,6 +45,13 @@ class Sonido3d(object):
   
   def estaReproduciendo(self):
     return self.buffer.state.value is libaudioverse.NodeStates.playing
+  
+  def finalizar(self):
+    """Finaliza la reproducción, lanza el callback y se elimina."""
+    if self.estaReproduciendo():
+      self.buffer.state = libaudioverse.NodeStates.paused
+    self._lanzarRespuesta(self.buffer)
+    del self
   
   def detener(self):
     if self.estaReproduciendo():

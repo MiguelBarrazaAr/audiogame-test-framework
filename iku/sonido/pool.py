@@ -18,10 +18,13 @@ class SoundPool(object):
     pos = (px-self.camx, py-self.camy, pz-self.camz)
     sonido = self.iku.sonido3d(ruta, pos)
     # si tiene callback agregamos una tarea:
-    if respuesta is not None:
-      def alFinalizar():
+    def alFinalizar():
+      if respuesta is not None:
         self.iku.tareas.unaVez(espera, respuesta, *args, **kwargs)
-      sonido.respuesta = alFinalizar
+      s=self.lista[self.x]
+      self.lista[self.x] = None
+      del s
+    sonido.respuesta = alFinalizar
     sonido.reproducir()
     self.lista[self.x] = sonido
     self.x = (self.x+1)%self.cantidadDeSonidos
