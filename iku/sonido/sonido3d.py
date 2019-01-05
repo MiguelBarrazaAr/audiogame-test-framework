@@ -19,7 +19,9 @@ class Sonido3d(object):
     self.posicion = position
     self.buffer.set_end_callback(self.fin)
     self.duracion = buffer_get_duration(b)
-
+  
+  def transcurrido(self):
+    return       self.buffer.position
   
   def l(self):
     self.buffer.disconnect()

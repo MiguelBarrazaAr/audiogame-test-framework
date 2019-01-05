@@ -22,7 +22,8 @@ class SoundPool(object):
     self.x = (self.x+1)%self.cantidadDeSonidos
     # si tiene callback agregamos una tarea:
     if respuesta is not None:
-      self.iku.tareas.unaVez(sonido.duracion+espera, respuesta)
+      self.iku.tareas.condicional(2, FinalizaSonido(self.iku, sonido, respuesta, espera))
+      #self.iku.tareas.unaVez(sonido.duracion+espera, respuesta)
     return sonido
   
   def _alMoverCamara(self, evento):
@@ -30,5 +31,17 @@ class SoundPool(object):
   
   def ajustarPosicion(self):
     self.camx, self.camy, self.camz = self.iku.camara.posicion
-    print("ajjustada", self.iku.camara.posicion)
 
+class FinalizaSonido():
+  def __init__(self, iku, sonido, respuesta, espera):
+    self.iku = iku
+    self.sonido = sonido
+    self.espera = espera
+    self.respuesta = respuesta
+  
+  def __call__(self):
+    if self.sonido.duracion == self.sonido.transcurrido():
+      self.iku.tareas.unaVez(self.espera, self.respuesta)
+      return False
+    else:
+      return True
