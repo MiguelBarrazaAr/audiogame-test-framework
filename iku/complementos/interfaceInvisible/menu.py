@@ -55,7 +55,7 @@ class Menu(iku.actores.ActorInvisible):
         indice=self.indice,
         opcion=self._opciones[self.indice][0])
       if len(self._opciones[self.indice]) == 3:
-        self._opciones[self.indice][1](*self._opciones[self.indice][2])
+        self._opciones[self.indice][1](*self._opciones[self.indice][2:])
       else:
         self._opciones[self.indice][1]()
   

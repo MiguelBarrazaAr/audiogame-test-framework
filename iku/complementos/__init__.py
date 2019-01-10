@@ -44,7 +44,7 @@ class Complementos(object):
   
   def instalar(self, complemento):
     if type(complemento) == str:
-      modulo = importlib.import_module("iku.complementos."+nombre)
+      modulo = importlib.import_module("iku.complementos."+complemento)
     else:
       modulo = complemento
     self.activar(modulo)
