@@ -12,8 +12,23 @@ class SoundPool(object):
     self.x = 0
     self.lista = [None]*cantidadDeSonidos
   
-  def reproducir(self, ruta, posicion=(0,0,0), respuesta=None, espera=0, *args, **kwargs):
+  def reproducir(self, ruta, posicion=(0,0), respuesta=None, espera=0, *args, **kwargs):
     """carga y reproduce un sonido"""
+    if len(posicion) == 2:
+      return self._reproducir2d(ruta, posicion, respuesta, espera, *args, **kwargs)
+    else:
+      return self._reproducir3d(ruta, posicion, respuesta, espera, *args, **kwargs)
+  
+  def _reproducir2d(self, ruta, posicion=(0,0), respuesta=None, espera=0, *args, **kwargs):
+    #print("sonido 2d")
+    sonido = self.iku.sonido(ruta)
+    sonido.reproducir()
+    self.lista[self.x] = sonido
+    self.x = (self.x+1)%self.cantidadDeSonidos
+    return sonido
+  
+  def _reproducir3d(self, ruta, posicion=(0,0), respuesta=None, espera=0, *args, **kwargs):
+    #print("sonido 3d")
     px, py, pz = posicion
     pos = (px-self.camx, py-self.camy, pz-self.camz)
     sonido = self.iku.sonido3d(ruta, pos)
