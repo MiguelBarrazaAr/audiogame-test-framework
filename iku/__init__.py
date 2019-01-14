@@ -5,6 +5,7 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - 2019: Miguel Barraza
 
+import asyncio
 import datetime
 import os
 import random
@@ -63,6 +64,7 @@ class Iku(object):
       self.log("iniciando el motor 'iku'")
       self._iniciarGrafica(titulo, ancho, alto)
     
+    self.loop = asyncio.new_event_loop()
     # cargamos los objetos de iku:
     self.eventos = Eventos(self)
     self.camara = Camara(self)
@@ -75,6 +77,13 @@ class Iku(object):
     self.tts = TTS()
     self.audio = iniciarAudio(self)
     self.log("motor 'iku' iniciado")
+  
+  @property
+  def escena(self):
+    return self.escenas.escenaActual
+  
+  def reproducir(self, *args, **kwargs):
+    return self.audio.pool.reproducir(*args, **kwargs)
   
   def _iniciarGrafica(self, titulo, ancho, alto):
     # iniciamos el motor pygame:
@@ -90,6 +99,7 @@ class Iku(object):
     self.fuente = pygame.font.Font("freesansbold.ttf", 30)
   
   def ejecutar(self):
+    #self.loop.run_forever()
     while self._winLoop:
       # monitorizamos eventos:
       for event in pygame.event.get():
@@ -143,6 +153,7 @@ class Iku(object):
 
   def finalizar(self):
     """Finaliza la ejecución  de iku"""
+    self.loop.close()
     pygame.quit()
     self.audio.finalizar()
     self.eventos.finalizaMotor.emitir(modo="okey", mensaje="")
@@ -190,6 +201,7 @@ class Iku(object):
   def sonido3d(self, ruta, posicion):
     """ carga un archivo de sonido y devuelve un objeto sound3d"""
     return self.audio.sonido3d(ruta, posicion)
+
 
 def instancia():
   # retorna la instancia activa de iku engine, si hay alguna:
