@@ -111,3 +111,5 @@ class Escena():
     for actor in self.actores:
       actor.dibujarEn(ventana)
   
+  def __getattr__(self, nombre):
+    return eval(f"self.iku.{nombre}")

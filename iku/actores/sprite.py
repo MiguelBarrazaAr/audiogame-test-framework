@@ -135,3 +135,6 @@ class Sprite(object):
   
   def coordenadaAlMover(self, x=0, y=0):
     return (self.x+x, self.y+y)
+  
+  def __getattr__(self, nombre):
+    return eval(f"self.iku.{nombre}")

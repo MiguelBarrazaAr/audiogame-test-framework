@@ -46,7 +46,7 @@ class SoundPool(object):
     return sonido
   
   def _alMoverCamara(self, evento):
-    print("mueve camara", evento)
+    pass#print("mueve camara", evento)
   
   def ajustarPosicion(self):
     self.camx, self.camy, self.camz = self.iku.camara.posicion

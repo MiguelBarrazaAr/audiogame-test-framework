@@ -71,7 +71,7 @@ class Iku(object):
     self.escenas = escenas.Escenas(self)
     self.actores = Actores(self)
     self.complementos = Complementos(self, complementos)
-    self.datos = {}
+    self.datos = AttrDict()
     self.tareas = Tareas()
     self.tecla = Tecla()
     self.tts = TTS()
