@@ -12,22 +12,22 @@ class SoundPool(object):
     self.x = 0
     self.lista = [None]*cantidadDeSonidos
   
-  def reproducir(self, ruta, posicion=(0,0), respuesta=None, espera=0, *args, **kwargs):
+  def reproducir(self, ruta, posicion=(0,0), respuesta=None, espera=0, continuo=False, *args, **kwargs):
     """carga y reproduce un sonido"""
     if len(posicion) == 2:
-      return self._reproducir2d(ruta, posicion, respuesta, espera, *args, **kwargs)
+      return self._reproducir2d(ruta, posicion, respuesta, espera, continuo, *args, **kwargs)
     else:
-      return self._reproducir3d(ruta, posicion, respuesta, espera, *args, **kwargs)
+      return self._reproducir3d(ruta, posicion, respuesta, espera, continuo, *args, **kwargs)
   
-  def _reproducir2d(self, ruta, posicion=(0,0), respuesta=None, espera=0, *args, **kwargs):
+  def _reproducir2d(self, ruta, posicion=(0,0), respuesta=None, espera=0, continuo=False, *args, **kwargs):
     #print("sonido 2d")
     sonido = self.iku.sonido(ruta)
-    sonido.reproducir()
+    sonido.reproducir(continuo)
     self.lista[self.x] = sonido
     self.x = (self.x+1)%self.cantidadDeSonidos
     return sonido
   
-  def _reproducir3d(self, ruta, posicion=(0,0), respuesta=None, espera=0, *args, **kwargs):
+  def _reproducir3d(self, ruta, posicion=(0,0), respuesta=None, espera=0, continuo=False, *args, **kwargs):
     #print("sonido 3d")
     px, py, pz = posicion
     pos = (px-self.camx, py-self.camy, pz-self.camz)
@@ -40,7 +40,7 @@ class SoundPool(object):
       self.lista[self.x] = None
       del s
     sonido.respuesta = alFinalizar
-    sonido.reproducir()
+    sonido.reproducir(continuo)
     self.lista[self.x] = sonido
     self.x = (self.x+1)%self.cantidadDeSonidos
     return sonido
