@@ -8,6 +8,9 @@ import iku as ikuEngine
 from .escena import Escena
 from .normal import EscenaNormal
 
+class EscenaNoCargada(Exception):
+  pass
+
 class Escenas():
   """Representa la propiedad iku.escenas
   
@@ -23,7 +26,6 @@ class Escenas():
     self._escenaActual = None
     
     # inicia las escenas base:
-    #self.iniciarEscenasBase()
     self.iniciarEscenaDefault()
     
   @classmethod
@@ -35,46 +37,48 @@ class Escenas():
       raise Exception("Error, ya existe una escena vinculada con el nombre: " + nombre)
     else:
       def crearEscena(self, *k, **kw):
-        nuevaEscena = escenaClass(ikuEngine.instancia(), *k, **kw)
-        self.apilar(nuevaEscena)
-        nuevaEscena.iniciar(*k, **kw)
+        try:
+          self.activar(escenaClass.__name__)
+        except EscenaNoCargada as e:
+          # si la escena no esta cargada, la iniciamos:
+          nuevaEscena = escenaClass(ikuEngine.instancia(), *k, **kw)
+          self.apilar(nuevaEscena)
+          nuevaEscena.iniciar(*k, **kw)
       
       # Vincula la clase anexando el metodo constructor.
       setattr(cls, nombre, crearEscena)
     
     cls.nombresDeEscenasPersonalizadas.append(nombre)
   
-  def activar(self, id):
-    """Activa una escena pasando la id de registro
-    Si se pasan valores negativos contará desde atrás,
-    por ejemplo: id=-1 activará la ultima escena de la listaEscenas."""
-    if abs(id) >= len(self._listaEscenas):
-      pass#raise Exception("La Id de la escena es invalida.")
-    
-    self._definirComoEscenaActual(self._listaEscenas[id])
+  def buscar(self, nombreDeLaEscena):
+    """busca por nombre una escena apilada."""
+    for escena in self._listaEscenas:
+      if escena.nombre == nombreDeLaEscena:
+        return escena
+
+    raise EscenaNoCargada(f"no existe ninguna escena cargada con el nombre '{nombreDeLaEscena}'")
   
-  def buscarId(self, nombreDeLaEscena):
-    """busca la ID de una escena apilada.
-    se debe pasar el nombre de una escena previamente activada."""
-    for id in range(len(self._listaEscenas)):
-      if self._listaEscenas[id].nombre == nombreDeLaEscena:
-        return id
-
-    raise Exception("no existe ninguna escena cargada con el nombre '"+nombreDeLaEscena+"'")
-
   def actualizar(self):
     # actualiza la escena actual:
     self._escenaActual.actualizar()
   
   def _definirComoEscenaActual(self, escena):
-    """Cambia de escena.
-    se debe pasar como escena una escena válida que esté cargada en la lista_escena.
-    este es un metodo privado. """
-    self._escenaActual.guardarPosicionCamara()
+    """Cambia de escena. (método parcial)
+    se debe pasar como escena una escena válida que esté cargada en la lista_escena."""
+    self._escenaActual.suspender()
     del self._escenaActual
     self._escenaActual = escena
-    self._escenaActual.recuperarPosicionCamara()
-    self.iku.log("Definiendo como activa la escena", escena)
+    self.iku.log(f"Definiendo como activa la escena: {escena}")
+    self.iku.log(f"Hay {len(self._listaEscenas)} escenas activas.")
+    self._escenaActual.activar()
+    return escena
+  
+  def activar(self, nombreDeLaEscena):
+    """Si la escena esta cargada, la pone como activa."""
+    for escena in self._listaEscenas:
+      if escena.nombre == nombreDeLaEscena:
+        return self._definirComoEscenaActual(escena)
+    raise EscenaNoCargada(f"no existe ninguna escena cargada con el nombre '{nombreDeLaEscena}'")
   
   @property
   def escenaActual(self):
@@ -103,7 +107,7 @@ class Escenas():
     """Apila y activa una escena"""
     self._listaEscenas.append(escena)
     self._definirComoEscenaActual(escena)
-    escena.alActivarEscena()
+    escena.alActivar()
   
   def desapilar(self, escena):
     """elimina la escena de la pila de escenas cargadas.
@@ -114,4 +118,4 @@ class Escenas():
     
     self._listaEscenas.remove(escena)
     if self._escenaActual is escena:
-      self.activar(-1)
+      self.activar(self._listaEscenas[-1])

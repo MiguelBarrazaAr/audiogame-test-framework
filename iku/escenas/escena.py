@@ -17,11 +17,6 @@ class Escena():
     self._rutaFondo = None
     self.camara = iku.camara
     self.actores = []
-    
-    # acomodamos la camara:
-    self.camara.reiniciar()
-    self.guardarPosicionCamara()
-    
     # iniciamos los eventos:
     self.mueveCamara = EventoControl()
     self.pulsaTecla = EventoControl()
@@ -71,17 +66,30 @@ class Escena():
   def eliminar(self):
     """elimina la escena de la pila de escenas cargadas
     queda como activa la ultima escena de la pila."""
-    self.iku.log("Eliminada la escena:", self.nombre)
+    self.eliminarActores()
+    self.iku.log(f"Eliminada la escena: '{self.nombre}'")
     self.iku.escenas.desapilar(self)
   
-  def alActivarEscena(self):
+  def eliminarActores(self):
+    """Elimina todos los actores de la escena."""
+    for actor in reversed(self.actores):
+      actor.eliminar()
+  
+  def activar(self):
+    self.alActivar()
+  
+  def suspender(self):
+    self.alSuspender()
+  
+  def limpiar(self):
+    self.eliminarActores()
+  
+  def alActivar(self):
     """Metodo que se ejecuta al activar la escena."""
     pass
   
-  def AlRecargarEscena(self):
-    """Metodo que se llama al retomar foco la escena
-    cuando vuelve a ser escena_actual.
-    nota: se debe redefinir."""
+  def alSuspender(self):
+    """Metodo que se ejecuta al cambiar de escena, y esta queda suspendida."""
     pass
   
   def agregarActor(self, actor):
@@ -93,15 +101,6 @@ class Escena():
     self.actores.remove(actor)
     self.iku.log("se elimina en", self, "el actor", actor)
     self.iku.log("hay", len(self.actores), "actores en la escena", self)
-  
-  def guardarPosicionCamara(self):
-    """ Este método se llama cuando se cambia de escena y así poder
-    recuperar la ubicación de la cámara en la escena actual
-    """
-    self.posicionCamara = self.camara.posicion
-  
-  def recuperarPosicionCamara(self):
-    self.camara.posicion = self.posicionCamara
   
   def dibujarEn(self, ventana):
     ventana.fill(self.colorFondo)
