@@ -19,6 +19,7 @@ from pygame.locals import *
 from .actores import Actores
 from .camara import Camara
 from .complementos import Complementos
+from .decoradores import SingletonDecorator
 from .escenas import *
 from .eventos import *
 from .sonido import iniciar as iniciarAudio
@@ -27,20 +28,9 @@ from .tecla import Tecla
 from .tts import TTS
 from .utiles import *
 
-class SingletonDecorator:
-  def __init__(self, klass):
-    self.klass = klass
-    self.instance = None
-  
-  def __call__(self, *args, **kwds):
-    if self.instance == None:
-      self.instance = self.klass(*args, **kwds)
-    return self.instance
 
 
-
-VERSION = "0.1.2"
-
+VERSION = "0.2.0"
 ikuEngine = None
 
 @SingletonDecorator
@@ -111,6 +101,7 @@ class Iku(object):
       self.escenas.escenaActual.actualizar(tick)
       self.escenas.escenaActual.dibujarEn(self.ventana)
       pygame.display.flip()
+      tick=self.reloj.tick(self.fps)
   
   def _procesarEvento(self, event):
     # si pulsa en cerrar emitimos pulsaEscape
