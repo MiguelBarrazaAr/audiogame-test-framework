@@ -8,19 +8,23 @@ import libaudioverse
 from libaudioverse._lav import buffer_get_duration
 
 class Sonido3d(object):
-  def __init__(self, server, world, fileRoute, position, respuesta=None):
+  def __init__(self, server, world, fileRoute, position, callback=None):
     self.server=server
     self.world = world
     self.source = libaudioverse.SourceNode(server, world)
     self.buffer = libaudioverse.BufferNode(server)
     b = libaudioverse.Buffer(server)
     b.load_from_file(fileRoute)
+    self.ruta = fileRoute
     self.buffer.buffer = b
     self.buffer.state = libaudioverse.NodeStates.paused
-    self.posicion = position
-    self.respuesta = respuesta
+    self.source.position = position
+    self.respuesta = callback
     self.buffer.set_end_callback(self._lanzarRespuesta)
     self.duracion = buffer_get_duration(b)
+  
+  def __str__(self):
+    return f"Sonido3d: {self.ruta}"
   
   def transcurrido(self):
     return       self.buffer.position
@@ -59,8 +63,7 @@ class Sonido3d(object):
   
   @property
   def posicion(self):
-    x,y,z=self.source.position
-    return self.iku.posicion(x=x, y=y, z=z)
+    return self.source.position.value
   
   @posicion.setter
   def posicion(self, pos):
