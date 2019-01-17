@@ -106,7 +106,6 @@ class Escenas():
     """Apila y activa una escena"""
     self._listaEscenas.append(escena)
     self._definirComoEscenaActual(escena)
-    escena.alActivar()
   
   def desapilar(self, escena):
     """elimina la escena de la pila de escenas cargadas.
