@@ -17,6 +17,7 @@ class Escena():
     self._rutaFondo = None
     self.camara = iku.camara
     self.actores = []
+    self.eliminable = False # si esta propiedad esta en True se auto elimina al perder el foco.
     # iniciamos los eventos:
     self.mueveCamara = EventoControl()
     self.pulsaTecla = EventoControl()
@@ -64,9 +65,8 @@ class Escena():
     pass
   
   def eliminar(self):
-    """elimina la escena de la pila de escenas cargadas
-    queda como activa la ultima escena de la pila."""
-    self.eliminarActores()
+    """limpia la escena y se elimina del gestor."""
+    self.limpiar()
     self.iku.log(f"Eliminada la escena: '{self.nombre}'")
     self.iku.escenas.desapilar(self)
   
@@ -79,7 +79,12 @@ class Escena():
     self.alActivar()
   
   def suspender(self):
+    """Suspende la escena.
+    Si 'eliminable' es True se auto elimina."""
     self.alSuspender()
+    if self.eliminable:
+      self.limpiar()
+      self.iku.escenas._eliminar(self)
   
   def limpiar(self):
     self.eliminarActores()
@@ -109,6 +114,9 @@ class Escena():
     # dibujamos actores:
     for actor in self.actores:
       actor.dibujarEn(ventana)
+  
+  def esEliminable(self):
+    return self.eliminable
   
   def __getattr__(self, nombre):
     return eval(f"self.iku.{nombre}")

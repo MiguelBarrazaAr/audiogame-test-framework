@@ -29,7 +29,7 @@ class Escenas():
     self.iniciarEscenaDefault()
     
   @classmethod
-  def registrar(cls, escenaClass):
+  def registrar(cls, escenaClass, eliminable=False):
     """Registra una escena personalizada"""
     # Se asegura de que la escena no fue vinculada anteriormente.
     nombre = escenaClass.__name__
@@ -66,7 +66,6 @@ class Escenas():
     """Cambia de escena. (método parcial)
     se debe pasar como escena una escena válida que esté cargada en la lista_escena."""
     self._escenaActual.suspender()
-    del self._escenaActual
     self._escenaActual = escena
     self.iku.log(f"Definiendo como activa la escena: {escena}")
     self.iku.log(f"Hay {len(self._listaEscenas)} escenas activas.")
@@ -116,6 +115,9 @@ class Escenas():
     if len(self._listaEscenas) <= 1:
       raise Exception("No puede ser eliminada la ultima escena de la pila.")
     
-    self._listaEscenas.remove(escena)
+    self._eliminar(escena)
     if self._escenaActual is escena:
-      self.activar(self._listaEscenas[-1])
+      self._definirComoEscenaActual(self._listaEscenas[-1])
+  
+  def _eliminar(self, escena):
+        self._listaEscenas.remove(escena)
