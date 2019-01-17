@@ -20,7 +20,6 @@ class SoundPool(object):
       return self._reproducir3d(ruta, posicion, respuesta, espera, continuo, *args, **kwargs)
   
   def _reproducir2d(self, ruta, posicion=(0,0), respuesta=None, espera=0, continuo=False, *args, **kwargs):
-    #print("sonido 2d")
     sonido = self.iku.sonido(ruta)
     sonido.reproducir(continuo)
     self.lista[self.x] = sonido
@@ -28,7 +27,6 @@ class SoundPool(object):
     return sonido
   
   def _reproducir3d(self, ruta, posicion=(0,0), respuesta=None, espera=0, continuo=False, *args, **kwargs):
-    #print("sonido 3d")
     px, py, pz = posicion
     pos = (px-self.camx, py-self.camy, pz-self.camz)
     sonido = self.iku.sonido3d(ruta, pos)
@@ -46,7 +44,7 @@ class SoundPool(object):
     return sonido
   
   def _alMoverCamara(self, evento):
-    pass#print("mueve camara", evento)
+    pass  
   
   def ajustarPosicion(self):
     self.camx, self.camy, self.camz = self.iku.camara.posicion

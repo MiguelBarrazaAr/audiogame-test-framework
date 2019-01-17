@@ -4,6 +4,7 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - 2019: Miguel Barraza
+import iku
 import libaudioverse
 from libaudioverse._lav import buffer_get_duration
 
@@ -39,13 +40,12 @@ class Sonido3d(object):
       self.buffer.position=0
       self.buffer.looping = continuo
       self.buffer.state = libaudioverse.NodeStates.playing
+      if continuo:
+        iku.instancia().escenas.escenaActual.registrarPausable(self)
   
   def _lanzarRespuesta(self, buffer):
     if self.respuesta is not None:
       self.respuesta()
-  
-  def reproducirContinuo(self):
-    self.reproducir(True)
   
   def estaReproduciendo(self):
     return self.buffer.state.value is libaudioverse.NodeStates.playing

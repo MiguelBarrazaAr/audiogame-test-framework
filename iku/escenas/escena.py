@@ -17,6 +17,7 @@ class Escena():
     self._rutaFondo = None
     self.camara = iku.camara
     self.actores = []
+    self.pausables = [] # elementos que se tienen que pausar al perder el foco.
     self.eliminable = False # si esta propiedad esta en True se auto elimina al perder el foco.
     # iniciamos los eventos:
     self.mueveCamara = EventoControl()
@@ -74,9 +75,14 @@ class Escena():
     """Elimina todos los actores de la escena."""
     for actor in reversed(self.actores):
       actor.eliminar()
+    for p in reversed(self.pausables):
+      p.pausar()
+      del p
   
   def activar(self):
     self.alActivar()
+    for ac in self.pausables:
+      ac.continuar()
   
   def suspender(self):
     """Suspende la escena.
@@ -85,6 +91,10 @@ class Escena():
     if self.eliminable:
       self.limpiar()
       self.iku.escenas._eliminar(self)
+    else:
+      # al suspender tiene que suspender sus elementos pausables:
+      for ac in self.pausables:
+        ac.pausar()
   
   def limpiar(self):
     self.eliminarActores()
@@ -117,6 +127,9 @@ class Escena():
   
   def esEliminable(self):
     return self.eliminable
+  
+  def registrarPausable(self, actor):
+    self.pausables.append(actor)
   
   def __getattr__(self, nombre):
     return eval(f"self.iku.{nombre}")
