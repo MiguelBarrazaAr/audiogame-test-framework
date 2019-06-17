@@ -7,14 +7,14 @@
 
 import iku
 
-class elemento(object):
+class Elemento(object):
   """Representa un elemento del juego que es parte de una escena, se actualiza en cada tick.
   """
   def __init__(self, actualizable=False, *k, **kv):
     self.iku = iku.instancia()
     self.actualizable = actualizable
     self._habilitado = False
-    self.anexados = []
+    self._anexados = []
     
     self._acciones = self.iku.eventos.crear()
     self._iniciar(*k, **kv)
@@ -30,6 +30,9 @@ class elemento(object):
   @property
   def tipo(self):
     return     self.__class__.__name__
+  
+  def dibujarEn(self, ventana):
+    pass
   
   def actualizar(self, tick):
     pass
@@ -52,51 +55,51 @@ class elemento(object):
   def eliminar(self):
     self.iku.escena.eliminarActor(self)
     # eliminamos los anexados:
-    for x in reversed(self.anexados):
+    for x in reversed(self._anexados):
       x.eliminar()
     del self
   
   def anexar(self, elemento):
-    self.anexados.append(elemento)
+    self._anexados.append(elemento)
   
   def desanexar(self, elemento):
-    self.anexados.remove(elemento)
+    self._anexados.remove(elemento)
   
   def eliminarAnexados(self):
-    for x in reversed(self.anexados):
+    for x in reversed(self._anexados):
       x.eliminar()
-    self.anexados = []
+    self._anexados = []
   
   def habilitar(self):
     """ un elemento al ser habilitado se conecta al pulsa tecla. """
     if not self._habilitado:
-      self.iku.eventos.pulsaTecla.conectar(self._alPulsarTecla)
+      self.iku.eventos.pulsaTecla.conectar(self.alPulsarTecla)
       self._habilitado = True
       self._acciones.emitir(tipo="habilitar", actor=self)
-      self._alHabilitar()
+      self.alHabilitar()
       self.iku.log("Actor {tipo} habilitado.".format(tipo=self.tipo))
     else:
       raise Exception("{tipo} no se puede habilitar porque ya está habilitado.".format(tipo=self.tipo))
   
-  def _alHabilitar(self):
+  def alHabilitar(self):
     """ metodo que se invoca despues de habilitarlo. """
     pass
   
   def deshabilitar(self):
     """ deshabilita un elemento. """
     if self._habilitado:
-      self.iku.eventos.pulsaTecla.desconectar(self._alPulsarTecla)
+      self.iku.eventos.pulsaTecla.desconectar(self.alPulsarTecla)
       self._habilitado = False
       self._acciones.emitir(tipo="deshabilitar", actor=self)
-      self._alDeshabilitar()
+      self.alDeshabilitar()
       self.iku.log("Actor {tipo} deshabilitado.".format(tipo=self.tipo))
     else:
       raise Exception("No se puede deshabilitar el elemento {tipo} porque no fue habilitado.".format(self.tipo))
   
-  def _alDeshabilitar(self):
+  def alDeshabilitar(self):
     pass
   
-  def _alPulsarTecla(self, evento):
+  def alPulsarTecla(self, evento):
     pass
   
   def conectar(self, respuesta):

@@ -6,15 +6,18 @@
 # Copyright 2018 - Miguel Barraza
 
 import iku
-from .sprite import Sprite
+from .actorAbstracto  import ActorAbstracto
 
-class Actor(Sprite):
+class Actor(ActorAbstracto):
   """Representa un objeto del juego que es parte de una escena, algo que se puede interactuar y tiene una posicion.
   """
-  def __init__(self, *k, **kv):
+  def __init__(self,   visible=True, actualizable=False, colisionable=False, *k, **kv):
+    self.iku = iku.instancia()
+    self.visible = visible
+    self.actualizable = actualizable
+    self.colisionable = colisionable
     # cargamos la imagen:
     self.imagen = kv.get('imagen', "")
-    Sprite.__init__(self, **kv)
     # ajustamos el posicionamiento:
     self.posicionar(x=kv.get('x', 0),
       y=kv.get('y', 0),
@@ -38,18 +41,6 @@ class Actor(Sprite):
       self._surface=img
     self.figura = self._surface.get_rect()
     self.figura.center = posicion
-  
-  def posicionar(self, x, y, absoluto=False):
-    if absoluto:
-     self.posicion = (x,y)
-    else:
-      #  en posicionamiento relativo toma como centro (0,0) el centro de la pantalla.
-      cx, cy = self.iku.centro
-      self.posicion = (cx+x, cy-y)
-  
-  def redimensionar(self,ancho,alto):
-    self._surface = self.iku.escalarSuperficie(self._surface, ancho=ancho, alto=alto)
-    self.figura.size = self._surface.get_rect().size
   
   def dibujarEn(self, superficie):
     if self.visible:
