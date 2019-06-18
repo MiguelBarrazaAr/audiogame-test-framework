@@ -109,4 +109,7 @@ class Elemento(object):
     self._acciones.desconectar(respuesta)
   
   def __getattr__(self, nombre):
-    return eval(f"self.iku.{nombre}")
+    try:
+      return eval(f"self.iku.{nombre}")
+    except AttributeError:
+      raise AttributeError("el elemento '{type}' no conoce el atributo '{name}'".format(type=self.tipo, name=nombre))    
