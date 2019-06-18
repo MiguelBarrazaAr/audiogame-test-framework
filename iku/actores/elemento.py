@@ -19,7 +19,12 @@ class Elemento(object):
     self._acciones = self.iku.eventos.crear()
     self._iniciar(*k, **kv)
   
+  def __repr__(self):
+    """ es la información que se utiliza para imprimir el actor en el log. """
+    return     self.__class__.__name__
+  
   def __str__(self):
+    """ es la información que se utiliza para que el tts lea el actor. """
     return     self.__class__.__name__
   
   @property

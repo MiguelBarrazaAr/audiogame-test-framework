@@ -31,7 +31,7 @@ class Escena():
     # conectamos el cerrar con escape
     self.pulsaEscape.conectar(self.alPulsarEscape)
   
-  def __str__(self):
+  def __repr__(self):
     return self.nombre
   
   @property

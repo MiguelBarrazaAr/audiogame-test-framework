@@ -170,7 +170,7 @@ class Iku(object):
     """Si mensajeLog está habilitado, muestra los mensajes por consola."""
     if self.mensajesLog:
       hora = datetime.datetime.now().strftime("%H:%M:%S")
-      mensaje = map(lambda x: str(x), mensaje)
+      mensaje = map(lambda x: repr(x), mensaje)
       texto = " ".join(mensaje)
       print(":: %s :: %s " % (hora, texto))
   
