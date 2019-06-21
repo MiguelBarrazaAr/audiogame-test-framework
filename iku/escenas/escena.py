@@ -4,8 +4,6 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
-from ..eventos.evento import *
-
 class Escena():
   """Representa una escena del juego"""
   
@@ -20,14 +18,14 @@ class Escena():
     self.pausables = [] # elementos que se tienen que pausar al perder el foco.
     self.eliminable = False # si esta propiedad esta en True se auto elimina al perder el foco.
     # iniciamos los eventos:
-    self.mueveCamara = EventoControl()
-    self.pulsaTecla = EventoControl()
-    self.sueltaTecla = EventoControl()
-    self.pulsaEscape = EventoControl()
-    self.clickMouse = EventoControl()
-    self.finalizaClickMouse = EventoControl()
-    self.mueveMouse = EventoControl()
-    self.cuandoActualiza = EventoControl()
+    self.mueveCamara = iku.eventos.crear()
+    self.pulsaTecla = iku.eventos.crear()
+    self.sueltaTecla = iku.eventos.crear()
+    self.pulsaEscape = iku.eventos.crear()
+    self.clickMouse = iku.eventos.crear()
+    self.finalizaClickMouse = iku.eventos.crear()
+    self.mueveMouse = iku.eventos.crear()
+    self.cuandoActualiza = iku.eventos.crear()
     # conectamos el cerrar con escape
     self.pulsaEscape.conectar(self.alPulsarEscape)
   

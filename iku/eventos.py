@@ -10,6 +10,55 @@ import inspect
 
 from iku.utiles import AttrDict
 
+class Eventos(object):
+  """Representa la propiedad iku.eventos
+  
+  Este objeto se encarga de gestionar y propagar eventos.
+  """
+  def __init__(self, iku):
+    self.iku = iku
+    # eventos genericos:
+    self.usuario = self.crear()
+    self.juego = self.crear()
+    self.servidor = self.crear()
+  
+  def crear(self):
+    """Crea un nuevo evento"""
+    return EventoControl()
+  
+  @property
+  def pulsaTecla(self):
+    return self.iku.escena.pulsaTecla
+  
+  @property
+  def sueltaTecla(self):
+    return self.iku.escena.sueltaTecla
+  
+  @property
+  def pulsaEscape(self):
+    return self.iku.escena.pulsaEscape
+  
+  @property
+  def clickMouse(self):
+    return self.iku.escena.clickMouse
+  
+  @property
+  def finalizaClickMouse(self):
+    return self.iku.escena.finalizaClickMouse
+  
+  @property
+  def mueveMouse(self):
+    return self.iku.escena.mueveMouse
+  
+  @property
+  def cuandoActualiza(self):
+    return self.iku.escena.cuandoActualiza
+  
+  @property
+  def mueveCamara(self):
+    return self.iku.camara.evento
+
+
 class EventoControl(object):
   """Representa a un controlador de evento, el objeto que gestiona la observación de un evento."""
   def __init__(self):
@@ -121,3 +170,4 @@ class ProxyMetodo(object):
 
 class Evento(AttrDict):
     pass
+

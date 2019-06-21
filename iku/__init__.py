@@ -113,6 +113,11 @@ class Iku(object):
       # si pulsa escape, emitimos pulsaEscape
       if event.key == pygame.K_ESCAPE:
         self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
+      if event.key == pygame.K_F4 and self.tecla.altPulsado():
+        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
+      if event.key == pygame.K_F9:
+        # si esta en modo desarrollador, se activa el depurador.
+        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
     # suelta una tecla:
     if event.type == pygame.KEYUP:
       self.eventos.sueltaTecla.emitir(tecla=event.key)
