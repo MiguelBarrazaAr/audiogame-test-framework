@@ -104,20 +104,21 @@ class Iku(object):
       tick=self.reloj.tick(self.fps)
   
   def _procesarEvento(self, event):
-    # si pulsa en cerrar emitimos pulsaEscape
     if event.type == pygame.QUIT:
-      self.eventos.pulsaEscape.emitir(tecla=pygame.K_ESCAPE, tipo=event.type  )
+      self.eventos.usuario.emitir(accion="salir")
+      self.finalizar()
     # pulsa una tecla:
     if event.type == pygame.KEYDOWN:
       self.eventos.pulsaTecla.emitir(tecla=event.key, representacion=event.unicode)
       # si pulsa escape, emitimos pulsaEscape
       if event.key == pygame.K_ESCAPE:
-        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
+        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type)
       if event.key == pygame.K_F4 and self.tecla.altPulsado():
-        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
+        self.eventos.usuario.emitir(accion="salir")
+        self.finalizar()
       if event.key == pygame.K_F9:
         # si esta en modo desarrollador, se activa el depurador.
-        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type  )
+        self.eventos.usuario.emitir(accion="depurador", escena=self.escena)
     # suelta una tecla:
     if event.type == pygame.KEYUP:
       self.eventos.sueltaTecla.emitir(tecla=event.key)
@@ -152,7 +153,6 @@ class Iku(object):
     self.loop.close()
     pygame.quit()
     self.audio.finalizar()
-    self.eventos.finalizaMotor.emitir(modo="okey", mensaje="")
     self.log("IkuEngine finalizado.")
     self._winLoop = False
     sys.exit(0)
