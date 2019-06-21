@@ -22,6 +22,7 @@ from .complementos import Complementos
 from .decoradores import SingletonDecorator
 from .escenas import *
 from .eventos import *
+from .juego import Juego
 from .sonido import iniciar as iniciarAudio
 from .tareas import Tareas
 from .tecla import Tecla
@@ -66,6 +67,7 @@ class Iku(object):
     self.tecla = Tecla()
     self.tts = TTS()
     self.audio = iniciarAudio(self)
+    self.juego = Juego(self)
     self.log("motor 'iku' iniciado")
   
   @property
