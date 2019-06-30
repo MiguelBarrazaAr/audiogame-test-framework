@@ -55,8 +55,8 @@ class Audio(object):
     else:
       return Sonido(ruta)
   
-  def sonido3d(self, ruta, posicion):
-    return Sonido3d(self.server, self.world, ruta, posicion)
+  def sonido3d(self, ruta, posicion, respuesta):
+    return Sonido3d(self.server, self.world, ruta, posicion, respuesta)
   
   def finalizar(self):
     self.shutdown()
