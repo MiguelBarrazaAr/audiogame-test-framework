@@ -199,6 +199,13 @@ class Iku(object):
   def sonido3d(self, ruta, posicion):
     """ carga un archivo de sonido y devuelve un objeto sound3d"""
     return self.audio.sonido3d(ruta, posicion)
+  
+  def llamadaAFuncion(self, funcion, *args, **kwargs):
+    """ Crea una funcion que se puede llamar despues y llamará a la función pasada por parametro. """  
+    def f():
+      funcion(*args, **kwargs)
+    return f
+  
 
 
 def instancia():
