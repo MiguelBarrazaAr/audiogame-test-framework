@@ -134,9 +134,19 @@ class Iku(object):
     if event.type == pygame.MOUSEMOTION:
       self.eventos.mueveMouse.emitir(botones=event.buttons, posicion=event.pos, movimiento=event.rel)
   
-  def aleatorio(self, x, y):
+  def definirSemilla(self, semilla):
+    """ determina una semilla para una tirada de random aleatoria. """
+    random.seed(semilla)
+  
+  def aleatorio(self, x, y, cantidad=1):
     """Hace una tirada de random aleatorio."""
-    return random.randint(x, y)
+    if cantidad == 1:
+      return random.randint(x, y)
+    else:
+      nums = []
+      for n in range(0, cantidad):
+        nums.append(random.randint(x, y))
+      return nums
   
   def elegir(self, lista):
     """Elige un elemento aleatorio en una lista."""
