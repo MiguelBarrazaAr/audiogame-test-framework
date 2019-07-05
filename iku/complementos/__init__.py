@@ -9,6 +9,9 @@ import inspect
 import os.path
 import importlib
 
+from .ModuloIku import ModuloIku
+
+
 class Complementos(object):
   """Representa la propiedad iku.complementos
   

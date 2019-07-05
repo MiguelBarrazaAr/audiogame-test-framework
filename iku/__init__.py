@@ -18,7 +18,7 @@ from pygame.locals import *
 
 from .actores import Actores
 from .camara import Camara
-from .complementos import Complementos
+from .complementos import Complementos, ModuloIku
 from .decoradores import SingletonDecorator
 from .escenas import *
 from .eventos import *
@@ -31,8 +31,9 @@ from .utiles import *
 
 
 
-VERSION = "0.2.1"
+VERSION = "0.3.1"
 ikuEngine = None
+plugins = {} # lista de complementos.
 
 @SingletonDecorator
 class Iku(object):
@@ -67,8 +68,14 @@ class Iku(object):
     self.tecla = Tecla()
     self.tts = TTS()
     self.audio = iniciarAudio(self)
+    self.__iniciarPlugins__()
     self.juego = Juego(self)
     self.log("motor 'iku' iniciado")
+  
+  def     __iniciarPlugins__(self):
+    for name, plug in plugins.items():
+      plugins[name].iku = self
+      self.log("activo el complemento: '{}'".format(name))
   
   @property
   def escena(self):
@@ -216,7 +223,23 @@ class Iku(object):
       funcion(*args, **kwargs)
     return f
   
+  def __getattr__(self, nombre):
+    """ cuando se llama a un metodo que no existe en iku lo busca entre sus plugins. """
+    if nombre in plugins:
+      return plugins[nombre]
+    else:
+      raise AttributeError("'Iku' object has no attribute '{nombre}'".format(nombre=nombre))
 
+def vincularComplemento(comp):
+  """ Agrega un complemento a iku. """
+  #if isinstance(comp, ModuloIku):
+  nombre = comp.__name__
+  if nombre in plugins:
+    raise Exception("Error, ya existe un complemento vinculado con el nombre: " + nombre)
+  else:
+    plugins[nombre]=comp(None)
+  #else:
+  #raise Exception("se intento vincular {obj} como un complemento de iku.".format(obj=comp))
 
 def instancia():
   # retorna la instancia activa de iku engine, si hay alguna:
