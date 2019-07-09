@@ -8,7 +8,7 @@ class Camara(object):
   """representa a la camara, a lo que se puede visualizar en pantalla"""
   def __init__(self, iku):
     self.iku = iku
-    self.evento = iku.eventos.crear()
+    self.evento = iku.eventos.crear('eventoCamara')
     self._x = 0
     self._y = 0
     self._z = 0

@@ -18,13 +18,13 @@ class Eventos(object):
   def __init__(self, iku):
     self.iku = iku
     # eventos genericos:
-    self.usuario = self.crear()
-    self.juego = self.crear()
-    self.servidor = self.crear()
+    self.usuario = self.crear('usuario')
+    self.juego = self.crear('juego')
+    self.servidor = self.crear('servidor')
   
-  def crear(self):
+  def crear(self, tipo):
     """Crea un nuevo evento"""
-    return EventoControl()
+    return EventoControl(tipo)
   
   @property
   def pulsaTecla(self):
@@ -61,8 +61,13 @@ class Eventos(object):
 
 class EventoControl(object):
   """Representa a un controlador de evento, el objeto que gestiona la observación de un evento."""
-  def __init__(self):
+  def __init__(self, tipo=None):
     self.respuestas = []
+    self._tipo = tipo
+  
+  @property
+  def tipo(self):
+    return self._tipo
   
   def conectar(self, respuesta, id=None):
     if inspect.isfunction(respuesta):
@@ -95,6 +100,7 @@ class EventoControl(object):
       self.eliminar(x)
   
   def emitir(self, **kwargs):
+    kwargs['tipo'] = self._tipo
     for respuesta in self.respuestas:
       try:
         respuesta(Evento(kwargs))

@@ -16,7 +16,7 @@ class Elemento(object):
     self._habilitado = False
     self._anexados = []
     
-    self._acciones = self.iku.eventos.crear()
+    self._acciones = self.iku.eventos.crear('accionActor')
     self._iniciar(*k, **kv)
   
   def __repr__(self):

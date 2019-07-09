@@ -8,7 +8,7 @@ class Juego(object):
   """representa al modelo del juego, todo lo que no es parte de una escena, pero puede ser consultado y es actualizable. """
   def __init__(self, iku):
     self.iku = iku
-    self.evento = iku.eventos.crear()
+    self.evento = iku.eventos.crear('eventoJuego')
     self.activo = False
   
   def actualizar(self):
