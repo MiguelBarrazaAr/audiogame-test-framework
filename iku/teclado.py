@@ -13,7 +13,7 @@ class KEY(Enum):
     arriba = pygame.K_UP
     derecha= pygame.K_RIGHT
     izquierda= pygame.K_LEFT
-    alt = pygame.K_RALT
+    alt = pygame.K_LALT
     altGr = pygame.K_RALT
     aplicacion = pygame.K_MENU
     controlDerecha = pygame.K_RCTRL
@@ -142,6 +142,7 @@ class KEY(Enum):
     limpiar = pygame.K_CLEAR
     pausa = pygame.K_PAUSE
     escape = pygame.K_ESCAPE
+    
 
 class Tecla():
   def __init__(self, tecla):
