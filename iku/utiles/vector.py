@@ -7,15 +7,33 @@
 class Vector(object):
   """Representa un vector tridimencional"""
   def __init__(self, x=0, y=0, z=0):
-    self.x = x
-    self.y = y
-    self.z = z
+    self._x = x
+    self._y = y
+    self._z = z
+  
+  @property
+  def x(self):
+    return self._x
+  
+  @property
+  def y(self):
+    return self._y
+  
+  @property
+  def z(self):
+    return self._z
   
   def toTuple(self):
     """Retorna una tupla con los datos del vector."""
-    return (self.x, self.y, self.z)
+    return (self._x, self._y, self._z)
   
   def toTuple2d(self):
     """Retorna una tupla con los datos del vector en 2d."""
-    return (self.x, self.y)
+    return (self._x, self._y)
+  
+  def mover(self, x=0, y=0, z=0):
+    self._x = self._x+x
+    self._y = self._y+y
+    self._z = self._z+z
+    return self
 

@@ -25,7 +25,7 @@ from .eventos import *
 from .juego import Juego
 from .sonido import iniciar as iniciarAudio
 from .tareas import Tareas
-from .tecla import Tecla
+from .teclado import Teclado
 from .tts import TTS
 from .utiles import *
 
@@ -65,7 +65,7 @@ class Iku(object):
     self.complementos = Complementos(self, complementos)
     self.datos = AttrDict()
     self.tareas = Tareas()
-    self.tecla = Tecla()
+    self.teclado = Teclado()
     self.tts = TTS()
     self.audio = iniciarAudio(self)
     self.__iniciarPlugins__()
@@ -118,7 +118,7 @@ class Iku(object):
       self.finalizar()
     # pulsa una tecla:
     if event.type == pygame.KEYDOWN:
-      self.eventos.pulsaTecla.emitir(tecla=event.key, representacion=event.unicode)
+      self.eventos.pulsaTecla.emitir(tecla=self.teclado.tecla(event.key), representacion=event.unicode)
       # si pulsa escape, emitimos pulsaEscape
       if event.key == pygame.K_ESCAPE:
         self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type)
@@ -130,7 +130,7 @@ class Iku(object):
         self.eventos.usuario.emitir(accion="depurador", escena=self.escena)
     # suelta una tecla:
     if event.type == pygame.KEYUP:
-      self.eventos.sueltaTecla.emitir(tecla=event.key)
+      self.eventos.sueltaTecla.emitir(tecla=self.teclado.tecla(event.key))
     # si algún botón del mouse es presionado
     if event.type == pygame.MOUSEBUTTONDOWN:
       self.eventos.clickMouse.emitir(boton=event.button, posicion=event.pos)
@@ -198,8 +198,8 @@ class Iku(object):
       texto = " ".join(mensaje)
       print(":: %s :: %s " % (hora, texto))
   
-  def posicion(self, x=0, y=0, z=0):
-    return Posicion(x=x, y=y, z=z)
+  def vector(self, x=0, y=0, z=0):
+    return Vector(x=x, y=y, z=z)
   
   def rectangulo(self, x=0, y=0, ancho=1, alto=1):
     return pygame.Rect(x,y,ancho,alto)
