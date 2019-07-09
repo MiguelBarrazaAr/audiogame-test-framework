@@ -4,6 +4,7 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 from .posicion import Posicion
+from .vector import Vector
 
 class AttrDict(dict):
   """Envoltorio para que el diccionario de eventos
