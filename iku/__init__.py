@@ -3,7 +3,7 @@
 # iku engine: Motor para videojuegos en python (3.7)
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
-# Copyright 2018 - 2019: Miguel Barraza
+# 2018 - 2019: Miguel Barraza
 
 import asyncio
 import datetime
@@ -26,7 +26,7 @@ from .juego import Juego
 from .sonido import iniciar as iniciarAudio
 from .tareas import Tareas
 from .teclado import Teclado
-from .tts import TTS
+from . import tts as ttsEngine
 from .utiles import *
 
 
@@ -35,13 +35,24 @@ VERSION = "0.3.1"
 ikuEngine = None
 plugins = {} # lista de complementos.
 
+def print_traceback(exc_type, exc_value, tb):
+  for i, (frame, _) in enumerate(traceback.walk_tb(tb)):
+    if os.path.basename(os.path.dirname(frame.f_code.co_filename)) == 'iku':
+      limit = i
+      break
+  else:
+    limit = None
+  traceback.print_exception(exc_type, exc_value, tb, limit=limit, chain=False)
+
+sys.excepthook = print_traceback
+
 @SingletonDecorator
 class Iku(object):
   """Representa el area de juego de IkuEngine, el componente principal.
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, ancho=640, alto=480, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, *k, **kv):
+  def __init__(self, ancho=640, alto=480, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, tts=None, *k, **kv):
     # configuración:
     self.capturarErrores = capturarErrores
     self.modoTest=modoTest
@@ -66,7 +77,7 @@ class Iku(object):
     self.datos = AttrDict()
     self.tareas = Tareas()
     self.teclado = Teclado()
-    self.tts = TTS()
+    self.tts = ttsEngine.iniciar(tts)
     self.audio = iniciarAudio(self)
     self.__iniciarPlugins__()
     self.juego = Juego(self)
