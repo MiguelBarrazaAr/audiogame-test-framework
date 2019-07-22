@@ -1,15 +1,14 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-# MajPy: Motor para Audio Juegos en python (3.7)
+# iku engine: Motor para videojuegos en python (3.7)
 #
-# Copyright 2017 - 2018 - Miguel Barraza
+# 2019 - Miguel Barraza
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
-import accessible_output2.outputs.auto
 
 class TTS(object):
   """Controlador del habla."""
-  def __init__(self):
-    self.engine = accessible_output2.outputs.auto.Auto()
+  def __init__(self, engine):
+    self.engine = engine
     self.historial = True
     self.limite = 3000
     self.eliminar = 1500
@@ -27,3 +26,17 @@ class TTS(object):
   
   def texto(self, indice):
     return self.msg[indice]
+
+def iniciar(tipo=None):
+  """ si no se pasa ningun tipo de engine se toma como determinado el accesible_output2. """
+  if tipo is None:
+    import accessible_output2.outputs.auto
+    engine = accessible_output2.outputs.auto.Auto()
+  elif tipo == 'tolk':
+    from .complementos  import tolk
+    tolk.load()
+    engine = tolk
+  else:
+    raise ValueError("'{tipo}' no es un motor válido para el habla.".format(tipo=tipo))
+  
+  return TTS(engine)
