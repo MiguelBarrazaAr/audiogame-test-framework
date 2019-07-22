@@ -3,7 +3,7 @@
 # iku engine: Motor para videojuegos en python (3.7)
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
-# 2018 - 2019: Miguel Barraza
+# Copyright    2018 - 2019: Miguel Barraza
 
 import asyncio
 import datetime
@@ -19,6 +19,7 @@ from pygame.locals import *
 from .actores import Actores
 from .camara import Camara
 from .complementos import Complementos, ModuloIku
+from .configuracion import *
 from .decoradores import SingletonDecorator
 from .escenas import *
 from .eventos import *
@@ -29,9 +30,6 @@ from .teclado import Teclado
 from . import tts as ttsEngine
 from .utiles import *
 
-
-
-VERSION = "0.3.1"
 ikuEngine = None
 plugins = {} # lista de complementos.
 
