@@ -119,4 +119,4 @@ class Elemento(object):
     try:
       return eval(f"self.iku.{nombre}")
     except AttributeError:
-      raise AttributeError("el elemento '{type}' no conoce el atributo '{name}'".format(type=self.tipo, name=nombre))    
+      raise AttributeError("el elemento '{type}' no conoce el atributo '{name}'".format(type=repr(self), name=nombre))    
