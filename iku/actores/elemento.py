@@ -66,9 +66,11 @@ class Elemento(object):
   
   def anexar(self, elemento):
     self._anexados.append(elemento)
+    return elemento
   
   def desanexar(self, elemento):
     self._anexados.remove(elemento)
+    return elemento
   
   def eliminarAnexados(self):
     for x in reversed(self._anexados):
