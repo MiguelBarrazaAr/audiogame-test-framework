@@ -194,6 +194,8 @@ class Iku(object):
   
   def leer(self, texto, interrumpir=True, registrar=True):
     """Envia un texto al tts para ser verbalizado"""
+    if isinstance(texto, str):
+      texto = str(texto)
     self.tts.hablar(texto, interrumpir, registrar)
   
   def listarDirectorio(self, ruta):
