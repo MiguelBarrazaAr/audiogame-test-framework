@@ -30,12 +30,11 @@ class TTS(object):
 def iniciar(tipo=None):
   """ si no se pasa ningun tipo de engine se toma como determinado el accesible_output2. """
   if tipo is None:
+    from . import tolk
+    engine = tolk
+  elif tipo == 'accessible_output2':
     import accessible_output2.outputs.auto
     engine = accessible_output2.outputs.auto.Auto()
-  elif tipo == 'tolk':
-    from .complementos  import tolk
-    tolk.load()
-    engine = tolk
   else:
     raise ValueError("'{tipo}' no es un motor válido para el habla.".format(tipo=tipo))
   

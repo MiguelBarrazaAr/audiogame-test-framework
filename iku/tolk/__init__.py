@@ -1,14 +1,20 @@
+#!/usr/bin/env python
+# -*- encoding: utf-8 -*-
 ###
  #  Product:        Tolk
  #  File:           Tolk.py
  #  Description:    Python wrapper module.
  #  Copyright:      (c) 2014, Davy Kager <mail@davykager.nl>
  #  License:        LGPLv3
+ #   web: https://davykager.com/projects/tolk/
+ #  Script modified by: miguel barraza (miguelbarraza2015@gmail.com)
  ##
 
 from ctypes import cdll, CFUNCTYPE, c_bool, c_wchar_p
+from os.path import join
 
-_tolk = cdll.Tolk
+DllFile = join(__path__[0], "Tolk.dll")
+_tolk = cdll.LoadLibrary(DllFile)
 
 _proto_load = CFUNCTYPE(None)
 load = _proto_load(("Tolk_Load", _tolk))
@@ -53,3 +59,5 @@ is_speaking = _proto_is_speaking(("Tolk_IsSpeaking", _tolk))
 
 _proto_silence = CFUNCTYPE(c_bool)
 silence = _proto_silence(("Tolk_Silence", _tolk))
+
+load()
