@@ -33,7 +33,7 @@ from .utiles import *
 ikuEngine = None
 plugins = {} # lista de complementos.
 
-def print_traceback(exc_type, exc_value, tb):
+def printTraceback(exc_type, exc_value, tb):
   for i, (frame, _) in enumerate(traceback.walk_tb(tb)):
     if os.path.basename(os.path.dirname(frame.f_code.co_filename)) == 'iku':
       limit = i
@@ -42,7 +42,8 @@ def print_traceback(exc_type, exc_value, tb):
     limit = None
   traceback.print_exception(exc_type, exc_value, tb, limit=limit, chain=False)
 
-sys.excepthook = print_traceback
+excepthook = sys.excepthook
+sys.excepthook = printTraceback
 
 @SingletonDecorator
 class Iku(object):
@@ -255,6 +256,12 @@ def vincularComplemento(comp):
 def instancia():
   # retorna la instancia activa de iku engine, si hay alguna:
   return ikuEngine  
+
+def debugIku(active=True):
+  if active:
+    sys.excepthook = excepthook
+  else:
+    sys.excepthook = printTraceback
 
 def iniciar(*k, **kv):
   global ikuEngine
