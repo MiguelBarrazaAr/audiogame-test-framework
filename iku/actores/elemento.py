@@ -17,6 +17,9 @@ class Elemento(object):
     self._anexados = []
     
     self._acciones = self.iku.eventos.crear('accionActor')
+    self.conectar = self._acciones.conectar
+    self.desconectar = self._acciones.desconectar
+    self.emitir= self._acciones.emitir
     self._iniciar(*k, **kv)
   
   def __repr__(self):
@@ -77,6 +80,12 @@ class Elemento(object):
       x.eliminar()
     self._anexados = []
   
+  def buscarAnexado(self, filtro):
+    for actor in self._anexados:
+      if filtro(actor):
+        return actor
+    raise ValueError("No se encontro ningun elemento que cumpla con el filtro.")
+  
   def habilitar(self):
     """ un elemento al ser habilitado se conecta al pulsa tecla. """
     if not self._habilitado:
@@ -106,14 +115,12 @@ class Elemento(object):
   def alDeshabilitar(self):
     pass
   
+  @property
+  def estaHabilitado(self):
+    return self._habilitado
+  
   def alPulsarTecla(self, evento):
     pass
-  
-  def conectar(self, respuesta):
-    self._acciones.conectar(respuesta)
-  
-  def desconectar(self, respuesta):
-    self._acciones.desconectar(respuesta)
   
   def __getattr__(self, nombre):
     try:
