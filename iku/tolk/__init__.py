@@ -14,7 +14,9 @@ from ctypes import cdll, CFUNCTYPE, c_bool, c_wchar_p
 from os.path import join
 
 DllFile = join(__path__[0], "Tolk.dll")
-_tolk = cdll.LoadLibrary(DllFile)
+DllFileNVDA = join(__path__[0], "nvdaControllerClient32.dll")
+_tolk = cdll[DllFile]
+_nvda = cdll[DllFileNVDA]
 
 _proto_load = CFUNCTYPE(None)
 load = _proto_load(("Tolk_Load", _tolk))
