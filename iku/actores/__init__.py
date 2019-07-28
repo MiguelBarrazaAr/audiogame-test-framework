@@ -12,6 +12,7 @@ from .actor import Actor
 from .actorInvisible import ActorInvisible
 from .texto import Texto
 from .boton import Boton
+from .energia import Energia
 
 class Actores():
   """Representa la propiedad iku.actores
@@ -48,6 +49,9 @@ class Actores():
     self.vincular(Texto)
     self.vincular(Boton)
     #self.vincular(Menu)
+    
+    # elementos:
+    self.vincular(Energia)
   
   def limpiar(self):
     """Elimina todos los actores personalizados."""
