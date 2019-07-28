@@ -73,13 +73,13 @@ def esCompuesto(c):
 def descomponer(c):
   """ dado un cardinal compuesto lo descompone en simples. """
   if c is Cardinal.noreste:
-    return (Cardinal.norte, Cardinal.este)
+    return (Cardinal.este, Cardinal.norte)
   elif c is Cardinal.sureste:
-    return (Cardinal.sur, Cardinal.este)
+    return (Cardinal.este, Cardinal.sur)
   elif c is Cardinal.suroeste:
-    return (Cardinal.sur, Cardinal.oeste)
+    return (Cardinal.oeste, Cardinal.sur)
   elif c is Cardinal.noroeste:
-    return (Cardinal.norte, Cardinal.oeste)
+    return (Cardinal.oeste, Cardinal.norte)
   else:
     raise ValueError("'{}' No es un cardinal compuesto.".format(c))
 
@@ -89,8 +89,28 @@ def puntosHacia(posicion, destino, pasos):
 def verbalizarDestino(p1, p2, distancia):
   """ dado 2 puntos, retorna un texto para ser verbalizado donde explica la distancia entre esos 2 puntos.
   se debe pasar cual va a ser la distancia maxima a visualizar. """
-  if all(x>distancia for x in (sum(y) for y in zip(p1, p2))):
-    return "al {}".format(destino(p1,p2).name)
+  try:
+    ls=calcularDistancia(p1, p2, distancia)
+  except ValueError:
+    return "al {}".format(destino(p1, p2).name)
   else:
-    return "cerquita."
+    if len(ls) ==1:
+      return "{} metros al {}".format(*ls[0])
+    else:
+      return "{} metros al {}, y {} metros al {}".format(ls[0][0], ls[0][1], ls[1][0], ls[1][1])
+
+def calcularDistancia(p1, p2, distancia):
+  """ dado 2 puntos, retorna una lista de tuplas (pasos, destino) que ejemplifica la distancia entre esos 2 puntos.
+  """
+  p = tuple(abs(a-b) for a,b in zip(p1, p2))
+  if any(x>distancia for x in (p)):
+    raise ValueError("los puntos estan muy distantes.")
+  else:
+    d = destino(p1,p2)
+    try:
+      ds = descomponer(d)
+    except ValueError:
+      return [(sum(p), d.name)]
+    else:
+      return [(p[0], ds[0].name), (p[1], ds[1].name)]
   
