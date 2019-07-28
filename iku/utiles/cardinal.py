@@ -42,3 +42,55 @@ def mover(posicion, cardinal, pasos=1):
     y-=pasos
     x-=pasos
   return (x, y)
+
+def destino(p1, p2):
+  """ dado 2 puntos determina hacia que destino se encuentra el segundo tomando como origen el primero. """
+  x1, y1 = p1
+  x2, y2 = p2
+  if x1 == x2 and y1 < y2:
+    return Cardinal.norte
+  elif x1 == x2 and y1 > y2:
+    return Cardinal.sur
+  elif x1 < x2 and y1 == y2:
+    return Cardinal.este
+  elif x1 > x2 and y1 == y2:
+    return Cardinal.oeste
+  elif x1 < x2 and y1 < y2:
+    return Cardinal.noreste
+  elif x1 > x2 and y1 < y2:
+    return Cardinal.noroeste
+  elif x1 < x2 and y1 > y2:
+    return Cardinal.sureste
+  elif x1 > x2 and y1 > y2:
+    return Cardinal.suroeste
+  else:
+    raise ValueError("los puntos son iguales.")
+
+def esCompuesto(c):
+  """ dado un cardinal retorna True si es un cardinal compuesto. """
+  return (c.value % 2)==1
+
+def descomponer(c):
+  """ dado un cardinal compuesto lo descompone en simples. """
+  if c is Cardinal.noreste:
+    return (Cardinal.norte, Cardinal.este)
+  elif c is Cardinal.sureste:
+    return (Cardinal.sur, Cardinal.este)
+  elif c is Cardinal.suroeste:
+    return (Cardinal.sur, Cardinal.oeste)
+  elif c is Cardinal.noroeste:
+    return (Cardinal.norte, Cardinal.oeste)
+  else:
+    raise ValueError("'{}' No es un cardinal compuesto.".format(c))
+
+def puntosHacia(posicion, destino, pasos):
+  return [mover(posicion, destino, 1+n) for n in range(pasos)]
+
+def verbalizarDestino(p1, p2, distancia):
+  """ dado 2 puntos, retorna un texto para ser verbalizado donde explica la distancia entre esos 2 puntos.
+  se debe pasar cual va a ser la distancia maxima a visualizar. """
+  if all(x>distancia for x in (sum(y) for y in zip(p1, p2))):
+    return "al {}".format(destino(p1,p2).name)
+  else:
+    return "cerquita."
+  
