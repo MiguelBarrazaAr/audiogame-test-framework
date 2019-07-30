@@ -13,6 +13,7 @@ from .actorInvisible import ActorInvisible
 from .texto import Texto
 from .boton import Boton
 from .energia import Energia
+from .teclaRapida import TeclaRapida
 
 class Actores():
   """Representa la propiedad iku.actores
@@ -52,6 +53,7 @@ class Actores():
     
     # elementos:
     self.vincular(Energia)
+    self.vincular(TeclaRapida)
   
   def limpiar(self):
     """Elimina todos los actores personalizados."""
