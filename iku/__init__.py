@@ -74,7 +74,7 @@ class Iku(object):
     self.actores = Actores(self)
     self.complementos = Complementos(self, complementos)
     self.datos = AttrDict()
-    self.tareas = Tareas()
+    self.tareas = Tareas(self)
     self.teclado = Teclado()
     self.tts = ttsEngine.iniciar(tts)
     self.audio = iniciarAudio(self)
@@ -110,6 +110,7 @@ class Iku(object):
   def ejecutar(self):
     #self.loop.run_forever()
     while self._winLoop:
+      self._timestamp = time.time()
       # monitorizamos eventos:
       for event in pygame.event.get():
         self._procesarEvento(event)

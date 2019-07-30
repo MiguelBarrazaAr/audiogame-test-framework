@@ -9,15 +9,12 @@ class Tarea(object):
   def __init__(self, gestor, tiempo, demoraInicio, funcion, *args, **kwargs):
     self.gestor = gestor
     self.tiempo = tiempo
-    if demoraInicio == 0:
-      self.tiempoFaltante = tiempo
-    else:
-      self.tiempoFaltante = demoraInicio
+    self.demora = 0
     self.funcion = funcion
     self.args, self.kwargs = args, kwargs
   
   def ejecutar(self):
-    self.tiempoFaltante = self.tiempo
+    self.tiempo += self.demora
     return self.funcion(*self.args, **self.kwargs)
   
   def eliminar(self):

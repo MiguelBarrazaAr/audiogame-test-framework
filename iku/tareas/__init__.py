@@ -9,23 +9,31 @@ from .tarea import *
 
 class Tareas(object):
   """Gestor de tareas a ejecutar por tiempo."""
-  def __init__(self):
+  def __init__(self, iku):
     self.tareas = []
+    self.iku = iku
   
   def cantidadDeTareas(self):
     return len(self.tareas)
   
   def actualizar(self, tick):
+    #ejecutamos tareas:
     for tarea in self.tareas:
-      tarea.tiempoFaltante -= tick
-      if tarea.tiempoFaltante < 0:
+      if tarea.tiempo < self.iku._timestamp:
         tarea.ejecutar()
+      else:
+        break
   
   def _agregar(self, tarea):
     """Agrega una nueva tarea para ejecutarse luego.
     :param tarea: Referencia a la tarea que se debe agregar.
     """
-    self.tareas.append(tarea)
+    try:
+      id = next((id for id,t in enumerate(self.tareas) if t.tiempo > tarea.tiempo))
+    except StopIteration:
+      self.tareas.append(tarea)
+    else:
+      self.tareas.insert(id, tarea)
   
   def eliminar(self, tarea):
     self.tareas.remove(tarea)
@@ -36,7 +44,7 @@ class Tareas(object):
     :param funcion: Función a ejecutar para lanzar la tarea.
     :param parametros: Parámetros que tiene que recibir la función a ejecutar.
     """
-    tarea = TareaUnaVez(self, tiempo*1000, 0, funcion, *args, **kwargs)
+    tarea = TareaUnaVez(self, self.iku._timestamp+tiempo, 0, funcion, *args, **kwargs)
     self._agregar(tarea)
     return tarea
   
@@ -46,7 +54,7 @@ class Tareas(object):
     :param funcion: Función a ejecutar para lanzar la tarea.
     :param demora: La demora en segundos que tiene para ejecutarse por primera vez.
     """
-    tarea = Tarea(self, tiempo*1000, demora*1000, funcion, *args, **kwargs)
+    tarea = Tarea(self, self.iku._timestamp+tiempo, demora, funcion, *args, **kwargs)
     self._agregar(tarea)
     return tarea
   
@@ -57,7 +65,7 @@ class Tareas(object):
     :param funcion: Función a ejecutar para lanzar la tarea.
     :param demora: La demora en segundos que tiene para ejecutarse por primera vez.
     """
-    tarea = TareaCondicional(self, tiempo*1000, demora*1000, funcion, *args, **kwargs)
+    tarea = TareaCondicional(self, self.iku._timestamp+tiempo, demora, funcion, *args, **kwargs)
     self._agregar(tarea)
     return tarea
   
