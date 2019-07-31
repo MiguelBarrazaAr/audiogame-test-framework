@@ -69,6 +69,12 @@ class Tareas(object):
     self._agregar(tarea)
     return tarea
   
-  def eliminarTodas(self):
-    """Elimina todas las tareas."""
-    self.tareas = []
+  def eliminarTodas(self, forzar=False):
+    """Elimina todas las tareas eliminables.
+    si forzar esta a True, elimina todas las tareas."""
+    if forzar:
+      self.tareas.clear()
+    else:
+      lista = [t for t in self.tareas if t.eliminable == False]
+      self.tareas.clear()
+      self.tareas.extend(lista)

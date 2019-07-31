@@ -10,6 +10,7 @@ class Tarea(object):
     self.gestor = gestor
     self.tiempo = tiempo
     self.demora = 0
+    self.eliminable = kwargs.get("eliminable", True)
     self.funcion = funcion
     self.args, self.kwargs = args, kwargs
   
