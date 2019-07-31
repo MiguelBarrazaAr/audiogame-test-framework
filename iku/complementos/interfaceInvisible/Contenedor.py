@@ -57,7 +57,8 @@ class Contenedor(ElementoNavegable):
     self.leerElementoEnfocado()
   
   def limpiar(self):
-    self.deshabilitar()
+    if self.estaHabilitado:
+      self.deshabilitar()
     self.eliminarAnexados()
   
   def teclaRapida(self, tecla, funcion, *args, **kwargs):

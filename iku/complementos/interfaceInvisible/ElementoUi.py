@@ -27,6 +27,10 @@ class ElementoUi(iku.actores.Elemento):
   def texto(self):
     return self._texto
   
+  @texto.setter
+  def texto(self, nuevoTexto):
+    self._texto = nuevoTexto
+  
   @property
   def foco(self):
     return self._foco

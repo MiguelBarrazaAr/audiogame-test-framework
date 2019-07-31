@@ -16,10 +16,11 @@ class TeclaRapida(Elemento):
   
   def alPulsarTecla(self, evento):
     if evento.tecla.name in self._teclas:
-      self._teclas[evento.tecla.name]()
+      func, args, kwargs = self._teclas[evento.tecla.name]
+      func(*args, **kwargs)
   
-  def agregar(self, tecla, funcion):
-    self._teclas[tecla] = funcion
+  def agregar(self, tecla, funcion, *args, **kwargs):
+    self._teclas[tecla] = (funcion, args, kwargs)
   
   def borrar(self, tecla):
     del self._teclas[tecla]
