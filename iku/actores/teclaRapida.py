@@ -12,7 +12,6 @@ class TeclaRapida(Elemento):
   """ Actor que gestiona pulsaciones de teclas, util para lanzar informacion del juego. """
   def iniciar(self, *args, **kwargs):
     self._teclas = {}
-    self.habilitar()
   
   def alPulsarTecla(self, evento):
     if evento.tecla.name in self._teclas:
@@ -27,6 +26,10 @@ class TeclaRapida(Elemento):
   
   def borrarTodo(self):
     self._teclas.clear()
+  
+  def limpiar(self):
+    """ alias de borrar todo. """
+    self.borrarTodo()
   
   def tieneTecla(self, tecla):
     return tecla in self._tecla
