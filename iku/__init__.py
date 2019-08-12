@@ -7,6 +7,7 @@
 
 import asyncio
 import datetime
+import importlib
 import os
 import random
 import sys
@@ -85,6 +86,7 @@ class Iku(object):
   def     __iniciarPlugins__(self):
     for name, plug in plugins.items():
       plugins[name].iku = self
+      plugins[name]._modificarMotor()
       self.log("activo el complemento: '{}'".format(name))
   
   @property
@@ -250,9 +252,12 @@ def vincularComplemento(comp):
   if nombre in plugins:
     raise Exception("Error, ya existe un complemento vinculado con el nombre: " + nombre)
   else:
-    plugins[nombre]=comp(None)
+    plugins[nombre]=comp()
   #else:
   #raise Exception("se intento vincular {obj} como un complemento de iku.".format(obj=comp))
+
+def importarComplemento(nombre):
+  mod = importlib.import_module("iku.complementos."+nombre)
 
 def instancia():
   # retorna la instancia activa de iku engine, si hay alguna:

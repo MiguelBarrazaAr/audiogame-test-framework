@@ -5,13 +5,22 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2019 - Miguel Barraza
 
+import iku  as ikuEngine
 class ModuloIku():
   """de esta clase derivan todos los complementos que pueden ser vinculado al engine, como un engine plugin
   """
   
-  def __init__(self, iku):
-    self.iku = iku
-    self.iniciar()
+  def __init__(self, *args, **kwargs):
+    self.iku = None
+    self.iniciar(*args, **kwargs)
   
-  def iniciar(self):
+  def iniciar(self, *args, **kwargs):
     pass
+  
+  def _modificarMotor(self):
+    """ acciones que se realiza al motor de iku cuando se inicializa con este complemento. """
+    pass
+  
+  def requiereComplemento(self, nombre):
+    """ verifica si se puede cargar el siguiente complemento. """
+    ikuEngine.importarComplemento(nombre)
