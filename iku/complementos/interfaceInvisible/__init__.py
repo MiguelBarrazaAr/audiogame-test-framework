@@ -5,6 +5,7 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2019 - Miguel Barraza
 
+import iku
 from .UiBoton import UiBoton
 from .UiIngresaTexto import UiIngresaTexto
 from .UiLista import UiLista
@@ -14,13 +15,17 @@ from .Contenedor import Contenedor
 from .menu import Menu
 from .ejecutarConFlechas import EjecutarConFlechas
 
-class Complemento(object):
-  def __init__(self, iku):
-    iku.actores.vincular(EjecutarConFlechas)
-    iku.actores.vincular(Menu)
-    iku.actores.vincular(Contenedor)
-    iku.actores.vincular(UiBoton)
-    iku.actores.vincular(UiIngresaTexto)
-    iku.actores.vincular(UiLista)
-    iku.actores.vincular(UiSelector)
-    iku.actores.vincular(UiTexto)
+@iku.vincularComplemento
+class interfaceInvisible(iku.ModuloIku):
+  def __init__(self):
+    self.iku = None
+  
+  def _modificarMotor(self):
+    self.iku.actores.vincular(EjecutarConFlechas)
+    self.iku.actores.vincular(Menu)
+    self.iku.actores.vincular(Contenedor)
+    self.iku.actores.vincular(UiBoton)
+    self.iku.actores.vincular(UiIngresaTexto)
+    self.iku.actores.vincular(UiLista)
+    self.iku.actores.vincular(UiSelector)
+    self.iku.actores.vincular(UiTexto)

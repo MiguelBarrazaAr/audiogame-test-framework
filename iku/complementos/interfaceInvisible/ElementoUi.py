@@ -15,6 +15,7 @@ class ElementoUi(iku.actores.Elemento):
     self._texto = texto
     self._foco = False
     self.activarConTab = False
+    self.leerAlActualizar = False
     if respuesta is None:
       self._respuesta = lambda: None
     else:
@@ -30,6 +31,8 @@ class ElementoUi(iku.actores.Elemento):
   @texto.setter
   def texto(self, nuevoTexto):
     self._texto = nuevoTexto
+    if self.leerAlActualizar:
+      self.iku.leer(self._texto)
   
   @property
   def foco(self):
