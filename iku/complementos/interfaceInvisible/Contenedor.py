@@ -63,6 +63,10 @@ class Contenedor(ElementoNavegable):
       self.deshabilitar()
     self.eliminarAnexados()
   
+  def borrar(self, elemento):
+    self.desanexar(elemento)
+    elemento.eliminar()
+  
   def teclaRapida(self, tecla, funcion, *args, **kwargs):
     self._accessKey[tecla] = self.iku.llamadaAFuncion(funcion, *args, **kwargs)
   

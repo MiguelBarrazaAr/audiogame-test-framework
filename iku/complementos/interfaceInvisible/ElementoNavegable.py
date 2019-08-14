@@ -12,6 +12,7 @@ class ElementoNavegable(iku.actores.Elemento):
   def __init__(self, *k, **kv):
     iku.actores.Elemento.__init__(self)
     self._index=0
+    self.leerAlTomarFoco = True
   
   @property
   def elemento(self):
@@ -25,7 +26,8 @@ class ElementoNavegable(iku.actores.Elemento):
   def foco(self, elemento):
     self._index = self._anexados.index(elemento)
     self.elemento.focoConTab()
-    self.leerElementoEnfocado(False)
+    if self.leerAlTomarFoco:
+      self.leerElementoEnfocado(False)
   
   def total(self):
     return len(self._anexados)

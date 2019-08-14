@@ -61,6 +61,7 @@ class Iku(object):
     self._winLoop = False
     self.dimension = (ancho, alto)
     self.centro = (ancho/2, alto/2)
+    self._timestamp = 0
     
     if not self.modoTest:
       self.mensajesLog=habilitarMensajesLog
