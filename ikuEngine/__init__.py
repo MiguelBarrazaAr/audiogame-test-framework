@@ -19,7 +19,7 @@ from pygame.locals import *
 
 from .actores import Actores
 from .camara import Camara
-from .complementos import Complementos, ModuloIku
+from .complementos import Complementos, Complemento
 from .configuracion import *
 from .decoradores import SingletonDecorator
 from .escenas import *
@@ -258,7 +258,7 @@ def vincularComplemento(comp):
   #raise Exception("se intento vincular {obj} como un complemento de iku.".format(obj=comp))
 
 def importarComplemento(nombre):
-  mod = importlib.import_module("iku.complementos."+nombre)
+  mod = importlib.import_module("ikuEngine.complementos."+nombre)
 
 def instancia():
   # retorna la instancia activa de iku engine, si hay alguna:

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 # IkuEngine: Motor para videojuegos en python (3.7)
- #
+#
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 import libaudioverse
 

@@ -5,9 +5,9 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - Miguel Barraza
 
-import iku
+import ikuEngine
 
-class EjecutarConFlechas(iku.actores.ActorInvisible):
+class EjecutarConFlechas(ikuEngine.actores.Elemento):
   """Controla el movimiento de las flechas y ejecuta su acción."""
   def __init__(self, actor, *k, **kv):
     """Se debe pasar un actor que acepte los siguientes métodos: arriba, abajo, izquierda, derecha."""

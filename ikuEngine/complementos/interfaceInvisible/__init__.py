@@ -5,7 +5,7 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2019 - Miguel Barraza
 
-import iku
+import ikuEngine
 from .UiBoton import UiBoton
 from .UiIngresaTexto import UiIngresaTexto
 from .UiLista import UiLista
@@ -15,8 +15,8 @@ from .Contenedor import Contenedor
 from .menu import Menu
 from .ejecutarConFlechas import EjecutarConFlechas
 
-@iku.vincularComplemento
-class interfaceInvisible(iku.ModuloIku):
+@ikuEngine.vincularComplemento
+class interfaceInvisible(ikuEngine.Complemento):
   def __init__(self):
     self.iku = None
   

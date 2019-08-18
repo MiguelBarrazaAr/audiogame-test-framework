@@ -8,7 +8,7 @@ import weakref
 import types
 import inspect
 
-from iku.utiles import AttrDict
+from ikuEngine.utiles import AttrDict
 
 class Eventos(object):
   """Representa la propiedad iku.eventos

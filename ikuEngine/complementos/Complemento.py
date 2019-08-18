@@ -5,8 +5,9 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2019 - Miguel Barraza
 
-import iku  as ikuEngine
-class ModuloIku():
+import ikuEngine
+
+class Complemento():
   """de esta clase derivan todos los complementos que pueden ser vinculado al engine, como un engine plugin
   """
   

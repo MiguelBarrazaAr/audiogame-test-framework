@@ -4,7 +4,7 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - 2019: Miguel Barraza
-import iku
+import ikuEngine
 import libaudioverse
 from libaudioverse._lav import buffer_get_duration
 

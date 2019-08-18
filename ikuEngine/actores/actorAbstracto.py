@@ -5,7 +5,7 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2018 - Miguel Barraza
 
-import iku
+import ikuEngine
 from .elemento import Elemento
 
 class ActorAbstracto(Elemento):

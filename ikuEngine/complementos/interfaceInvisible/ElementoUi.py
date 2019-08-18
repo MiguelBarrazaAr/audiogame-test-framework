@@ -5,9 +5,9 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2019 - Miguel Barraza
 
-import iku
+import ikuEngine
 
-class ElementoUi(iku.actores.Elemento):
+class ElementoUi(ikuEngine.actores.Elemento):
   """elemento de interface de usuario invisible,.
   clase abstracta.
   """
@@ -22,7 +22,7 @@ class ElementoUi(iku.actores.Elemento):
       self._respuesta = respuesta
     self.args = args
     self.kwargs = kwargs
-    iku.actores.Elemento.__init__(self)
+    ikuEngine.actores.Elemento.__init__(self)
   
   @property
   def texto(self):

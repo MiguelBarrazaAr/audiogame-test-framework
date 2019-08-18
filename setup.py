@@ -5,9 +5,9 @@ import sys
 from setuptools import setup
 
 setup(
-        name='iku',
+        name='ikuEngine',
         zip_safe=False,
-        version="0.1",
+        version="0.3",
         description="""Iku Engine - un motor para realizar videojuegos y audiojuegos de manera rápida y sencilla.
 
 Es una herramienta orientada a desarrollar juegos accesibles para personas con discapacidad visual.
@@ -21,19 +21,18 @@ Es una herramienta orientada a desarrollar juegos accesibles para personas con d
             'accessible-output2',
             ],
         packages=[
-            'iku',
-            'iku.actores',
-            'iku.complementos',
-            'iku.escenas',
-            'iku.eventos',
-            'iku.sonido',
-            'iku.utiles',
+            'ikuEngine',
+            'ikuEngine.actores',
+            'ikuEngine.complementos',
+            'ikuEngine.escenas',
+            'ikuEngine.sonido',
+            'ikuEngine.utiles',
         ],
         url='http://www.iku-engine.com.ar',
         include_package_data = True,
 
         package_data = {
-            'images': [ 'iku/imagenes/*' ]
+            'images': [ 'ikuEngine/imagenes/*' ]
         },
 
         scripts=[]#['bin/iku'],

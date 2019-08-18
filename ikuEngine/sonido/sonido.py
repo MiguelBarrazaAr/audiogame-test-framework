@@ -3,7 +3,8 @@
 # IkuEngine: Motor para videojuegos en python (3.7)
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
-import iku
+
+import ikuEngine
 import sound_lib
 from sound_lib import output
 from sound_lib import stream

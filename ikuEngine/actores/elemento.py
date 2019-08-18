@@ -5,13 +5,13 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2019 - Miguel Barraza
 
-import iku
+import ikuEngine
 
 class Elemento(object):
   """Representa un elemento del juego que es parte de una escena, se actualiza en cada tick.
   """
   def __init__(self, actualizable=False, *k, **kv):
-    self.iku = iku.instancia()
+    self.iku = ikuEngine.instancia()
     self.actualizable = actualizable
     self._habilitado = False
     self._anexados = []

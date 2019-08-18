@@ -5,12 +5,12 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright 2019 - Miguel Barraza
 
-import iku
+import ikuEngine
 
-class ElementoNavegable(iku.actores.Elemento):
+class ElementoNavegable(ikuEngine.actores.Elemento):
   """elemento navegable, permite anexar actores y moverse entre esos anexados con el tab."""
   def __init__(self, *k, **kv):
-    iku.actores.Elemento.__init__(self)
+    ikuEngine.actores.Elemento.__init__(self)
     self._index=0
     self.leerAlTomarFoco = True
   

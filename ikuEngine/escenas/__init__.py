@@ -4,7 +4,7 @@
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
-import iku as ikuEngine
+import ikuEngine
 from .escena import Escena
 from .normal import EscenaNormal
 

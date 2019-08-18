@@ -9,7 +9,7 @@ import inspect
 import os.path
 import importlib
 
-from .ModuloIku import ModuloIku
+from .Complemento import Complemento
 
 
 class Complementos(object):

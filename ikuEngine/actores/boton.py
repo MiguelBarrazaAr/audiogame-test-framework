@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-from iku.actores.actor import Actor
+from ikuEngine.actores.actor import Actor
 
 class Boton(Actor):
     def __init__(self,accion):
