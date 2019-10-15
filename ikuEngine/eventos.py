@@ -103,7 +103,9 @@ class EventoControl(object):
     kwargs['tipo'] = self._tipo
     for respuesta in self.respuestas:
       try:
-        respuesta(Evento(kwargs))
+        if respuesta(Evento(kwargs)):
+          # si alguna respuesta responde True corta.
+          break
       except Exception as e:
         self.desconectar(respuesta)
         raise e

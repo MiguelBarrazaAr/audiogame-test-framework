@@ -155,6 +155,9 @@ class Iku(object):
     if event.type == pygame.MOUSEMOTION:
       self.eventos.mueveMouse.emitir(botones=event.buttons, posicion=event.pos, movimiento=event.rel)
   
+  def definirTitulo(self, titulo):
+    pygame.display.set_caption(titulo)
+  
   def definirSemilla(self, semilla):
     """ determina una semilla para una tirada de random aleatoria. """
     random.seed(semilla)

@@ -12,6 +12,7 @@ class Contenedor(ElementoNavegable):
     ElementoNavegable.__init__(self)
     self._accessKey = {}
     self.leerAlHabilitar = True
+    self.mostrar = self.habilitar
   
   def alPulsarTecla(self, evento):
     try:

@@ -42,12 +42,12 @@ class Complementos(object):
   def _cargarComplementosDe(self, ruta):
     for nombre in self.iku.listarDirectorio(ruta):
       if os.path.isdir(ruta+"/"+nombre) and nombre[0:2] != "__":
-        modulo = importlib.import_module("iku.complementos."+nombre)
+        modulo = importlib.import_module("ikuEngine.complementos."+nombre)
         self.activar(modulo)
   
   def instalar(self, complemento):
     if type(complemento) == str:
-      modulo = importlib.import_module("iku.complementos."+complemento)
+      modulo = importlib.import_module("ikuEngine.complementos."+complemento)
     else:
       modulo = complemento
     self.activar(modulo)
