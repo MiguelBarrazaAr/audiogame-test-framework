@@ -12,6 +12,7 @@ class Contenedor(ElementoNavegable):
     ElementoNavegable.__init__(self)
     self._accessKey = {}
     self.leerAlHabilitar = True
+    self.interrumpirLecturaAlHabilitar = True
     self.mostrar = self.habilitar
   
   def alPulsarTecla(self, evento):
@@ -57,7 +58,7 @@ class Contenedor(ElementoNavegable):
     self._index=0
     self.elemento.focoConTab()
     if self.leerAlHabilitar:
-      self.leerElementoEnfocado()
+      self.leerElementoEnfocado(self.interrumpirLecturaAlHabilitar)
   
   def limpiar(self):
     if self.estaHabilitado:
