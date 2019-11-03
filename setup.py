@@ -18,7 +18,13 @@ Es una herramienta orientada a desarrollar juegos accesibles para personas con d
             'setuptools',
             'pygame',
             'libaudioverse',
+            'pywin32',
             'accessible-output2',
+            'jsonpickle',
+            'request',
+            'platform-utils',
+            'libloader',
+            'sound-lib',
             ],
         packages=[
             'ikuEngine',

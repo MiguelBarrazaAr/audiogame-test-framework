@@ -1,4 +1,9 @@
 pygame
 libaudioverse
-accessible_output2
+accessible-output2
 pywin32
+jsonpickle
+libloader
+platform-utils
+request
+sound-lib
