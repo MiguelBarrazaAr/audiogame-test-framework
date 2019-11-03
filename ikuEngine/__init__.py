@@ -209,6 +209,18 @@ class Iku(object):
   def listarDirectorio(self, ruta):
     return os.listdir(ruta)
   
+  def listarArchivos(self, ruta, extension, nombreCompleto=True):
+    extension="."+extension
+    list = []
+    for f in os.listdir(ruta):
+      nom, ext  = os.path.splitext(f)
+      if ext == extension:
+        if nombreCompleto:
+          list.append(f)
+        else:
+          list.append(nom)
+    return list
+  
   def log(self, *mensaje):
     """Si mensajeLog está habilitado, muestra los mensajes por consola."""
     if self.mensajesLog:
