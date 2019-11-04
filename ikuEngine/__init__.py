@@ -1,12 +1,11 @@
 ﻿#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-# iku engine: Motor para videojuegos en python (3.7)
+# iku engine: Motor para videojuegos en python 3
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright    2018 - 2019: Miguel Barraza
 
 import asyncio
-import datetime
 import importlib
 import os
 import random
@@ -25,6 +24,7 @@ from .decoradores import SingletonDecorator
 from .escenas import *
 from .eventos import *
 from .juego import Juego
+from .Log import Log
 from .sonido import iniciar as iniciarAudio
 from .tareas import Tareas
 from .teclado import Teclado
@@ -63,6 +63,8 @@ class Iku(object):
     self.centro = (ancho/2, alto/2)
     self._timestamp = 0
     
+    self.eventos = Eventos(self)
+    self.log = Log(self)
     if not self.modoTest:
       self.mensajesLog=habilitarMensajesLog
       self.log("iniciando el motor 'iku'")
@@ -70,7 +72,6 @@ class Iku(object):
     
     self.loop = asyncio.new_event_loop()
     # cargamos los objetos de iku:
-    self.eventos = Eventos(self)
     self.camara = Camara(self)
     self.escenas = escenas.Escenas(self)
     self.actores = Actores(self)
@@ -220,14 +221,6 @@ class Iku(object):
         else:
           list.append(nom)
     return list
-  
-  def log(self, *mensaje):
-    """Si mensajeLog está habilitado, muestra los mensajes por consola."""
-    if self.mensajesLog:
-      hora = datetime.datetime.now().strftime("%H:%M:%S")
-      mensaje = map(lambda x: repr(x), mensaje)
-      texto = " ".join(mensaje)
-      print(":: %s :: %s " % (hora, texto))
   
   def vector(self, x=0, y=0, z=0):
     return Vector(x=x, y=y, z=z)
