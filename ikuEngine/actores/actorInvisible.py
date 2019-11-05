@@ -14,7 +14,7 @@ class ActorInvisible(ActorAbstracto):
   def __init__(self, *k, **kv):
     # generamos la figura:
     ActorAbstracto.__init__(self, **kv)
-    self.figura = iku.instancia().rectangulo(x=kv.get('x', 0),
+    self.figura = ikuEngine.instancia().rectangulo(x=kv.get('x', 0),
       y=kv.get('y', 0),
       alto=kv.get('alto', 1),
       ancho=kv.get('ancho', 1))

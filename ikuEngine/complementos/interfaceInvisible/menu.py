@@ -16,17 +16,17 @@ class Menu(ikuEngine.actores.ActorInvisible):
     self.mensajeBienvenida = mensaje
     self.cantOpciones = len(opciones)
     self.indice = 0
-    iku.actores.ActorInvisible.__init__(self)
+    ikuEngine.actores.ActorInvisible.__init__(self)
     if habilitado:
       self.habilitar()
   
-  def _alHabilitar(self):
+  def alHabilitar(self):
     """inicia el menú.
     este metodo puede ser llamado para reiniciar el menú y volverlo a presentar."""
     self.indice=0
     self.iku.leer(self.nombre+": "+self.mensajeBienvenida, False)
     self.iku.leer(self._opciones[self.indice][0], False)
-    self._acciones.emitir(tipo="iniciar",
+    self._acciones.emitir(accion="iniciar",
       actor=self,
       indice=self.indice,
       opcion=self._opciones[self.indice][0])
@@ -36,21 +36,21 @@ class Menu(ikuEngine.actores.ActorInvisible):
     self.opciones.append((texto, respuesta))
     self.cantOpciones+=1
   
-  def _alPulsarTecla(self, evento):
-    if evento.tecla == self.iku.tecla.arriba:
+  def alPulsarTecla(self, evento):
+    if evento.tecla == "arriba":
       self.seleccionar_anterior()
-      self._acciones.emitir(tipo="mover",
+      self._acciones.emitir(accion="mover",
         actor=self,
         indice=self.indice,
         opcion=self._opciones[self.indice][0])
-    elif evento.tecla == self.iku.tecla.abajo:
+    elif evento.tecla == "abajo":
       self.seleccionar_siguiente()
-      self._acciones.emitir(tipo="mover",
+      self._acciones.emitir(accion="mover",
         actor=self,
         indice=self.indice,
         opcion=self._opciones[self.indice][0])
-    elif evento.tecla == self.iku.tecla.enter:
-      self._acciones.emitir(tipo="seleccionar",
+    elif evento.tecla == "enter":
+      self._acciones.emitir(accion="seleccionar",
         actor=self,
         indice=self.indice,
         opcion=self._opciones[self.indice][0])
