@@ -24,6 +24,7 @@ class UiLista(UiNavegable):
     self.leer(self.opcion)
     if self.anunciarIndice:
       self.leer(self.anuncioDeIndice(), False)
+    self.emitir(accion='mover', opcion=self.opcion, actor=self)
   
   def izquierda(self):
     try:
@@ -33,6 +34,7 @@ class UiLista(UiNavegable):
     self.leer(self.opcion)
     if self.anunciarIndice:
       self.leer(self.anuncioDeIndice(), False)
+    self.emitir(accion='mover', opcion=self.opcion, actor=self)
   
   def abajo(self):
     if self._foco:
@@ -50,6 +52,8 @@ class UiLista(UiNavegable):
       self.leer(self.__str__())
     else:
       self.leer("{opcion} (seleccionado)".format(opcion=self.opcion))
+      self.emitir(accion='seleccionar', opcion=self.opcion, actor=self)
+      self._respuesta(*self.args, **self.kwargs)
   
   def anuncioDeIndice(self):
     return "({n} de {m})".format(n=self._index+1, m=self.cantidadDeOpciones())

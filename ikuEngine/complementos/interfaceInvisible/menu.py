@@ -10,12 +10,13 @@ import ikuEngine
 class Menu(ikuEngine.actores.ActorInvisible):
   """Representa un menu invisible de opciones navegable con flechas.
   """
-  def __init__(self, nombre="menú", opciones=[], mensaje= "(pulse flechas para navegar por el menú)", habilitado=True):
+  def __init__(self, nombre="menú", opciones=[], mensaje= "(pulse flechas para navegar por el menú)", habilitado=True, circular=True):
     self._opciones = opciones
     self.nombre = nombre
     self.mensajeBienvenida = mensaje
     self.cantOpciones = len(opciones)
     self.indice = 0
+    self.circular = circular
     ikuEngine.actores.ActorInvisible.__init__(self)
     if habilitado:
       self.habilitar()
@@ -43,12 +44,14 @@ class Menu(ikuEngine.actores.ActorInvisible):
         actor=self,
         indice=self.indice,
         opcion=self._opciones[self.indice][0])
+      return True
     elif evento.tecla == "abajo":
       self.seleccionar_siguiente()
       self._acciones.emitir(accion="mover",
         actor=self,
         indice=self.indice,
         opcion=self._opciones[self.indice][0])
+      return True
     elif evento.tecla == "enter":
       self._acciones.emitir(accion="seleccionar",
         actor=self,
@@ -58,16 +61,20 @@ class Menu(ikuEngine.actores.ActorInvisible):
         self._opciones[self.indice][1](*self._opciones[self.indice][2:])
       else:
         self._opciones[self.indice][1]()
+      return True
   
   def seleccionar_anterior(self):
     if self.indice > 0:
       self.indice -= 1
+    else:
+      if self.circular:
+        self.indice = self.cantOpciones-1
     self.leer_opcion_actual()
   
   def seleccionar_siguiente(self):
-    self.indice += 1
-    if self.indice == self.cantOpciones:
-      self.indice -= 1
+    self.indice = (self.indice+1) % self.cantOpciones
+    if not self.circular and self.indice == 0:
+        self.indice = self.cantOpciones-1
     self.leer_opcion_actual()
   
   def leer_opcion_actual(self):

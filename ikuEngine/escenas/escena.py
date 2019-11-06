@@ -28,6 +28,7 @@ class Escena():
     self.cuandoActualiza = iku.eventos.crear("cuandoActualiza")
     # conectamos el cerrar con escape
     self.pulsaEscape.conectar(self.alPulsarEscape)
+    self.nombre = self.__class__.__name__
   
   def __repr__(self):
     return self.nombre
@@ -51,10 +52,6 @@ class Escena():
   
   def noCerrarConEscape(self):
     self.pulsaEscape.desconectar(self.alPulsarEscape)
-  
-  @property
-  def nombre(self):
-    return self.__class__.__name__
   
   def actualizar(self, tick):
     for actor in self.actores:
