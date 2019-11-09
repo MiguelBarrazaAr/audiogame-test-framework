@@ -137,7 +137,7 @@ class Iku(object):
       # si pulsa escape, emitimos pulsaEscape
       if event.key == pygame.K_ESCAPE:
         self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type)
-      if event.key == pygame.K_F4 and self.tecla.altPulsado():
+      if event.key == pygame.K_F4 and self.teclado.altPulsado():
         self.eventos.usuario.emitir(accion="salir")
         self.finalizar()
       if event.key == pygame.K_F9:

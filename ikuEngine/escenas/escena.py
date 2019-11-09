@@ -27,6 +27,7 @@ class Escena():
     self.mueveMouse = iku.eventos.crear("mueveMouse")
     self.cuandoActualiza = iku.eventos.crear("cuandoActualiza")
     # conectamos el cerrar con escape
+    self._pulsaEscape = lambda iku: iku.finalizar()
     self.pulsaEscape.conectar(self.alPulsarEscape)
     self.nombre = self.__class__.__name__
   
@@ -48,10 +49,13 @@ class Escena():
       self._rutaFondo = ruta
   
   def alPulsarEscape(self, evento):
-    self.iku.finalizar()
+    self._pulsaEscape(self.iku)
+  
+  def cerrarConEscape(self):
+    self._pulsaEscape = lambda iku: iku.finalizar()
   
   def noCerrarConEscape(self):
-    self.pulsaEscape.desconectar(self.alPulsarEscape)
+    self._pulsaEscape = lambda iku: None
   
   def actualizar(self, tick):
     for actor in self.actores:
