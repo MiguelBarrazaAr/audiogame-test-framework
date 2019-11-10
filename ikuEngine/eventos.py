@@ -82,6 +82,10 @@ class EventoControl(object):
       if res.func == respuesta:
         self.eliminar(res)
   
+  def resetear(self):
+    """ resetea el evento y elimina toda sus respuestas. """
+    self.respuestas.clear()
+  
   def eliminar(self, respuesta):
     """Elimina una respuesta de este evento."""
     try:
