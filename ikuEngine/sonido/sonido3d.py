@@ -41,7 +41,7 @@ class Sonido3d(object):
       self.buffer.looping = continuo
       self.buffer.state = libaudioverse.NodeStates.playing
       if continuo:
-        iku.instancia().escenas.escenaActual.registrarPausable(self)
+        ikuEngine.instancia().escenas.escenaActual.registrarPausable(self)
   
   def _lanzarRespuesta(self, buffer):
     if self.respuesta is not None:
