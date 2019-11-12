@@ -18,6 +18,9 @@ class ElementoNavegable(ikuEngine.actores.Elemento):
   def elemento(self):
     return self._anexados[self._index]
   
+  def getElement(self, index):
+    return self._anexados[index]
+  
   @property
   def foco(self):
     return self._anexados[self._index]
@@ -34,19 +37,25 @@ class ElementoNavegable(ikuEngine.actores.Elemento):
   
   def alPulsarTecla(self, evento):
     if evento.tecla == 'tab':
-      if self.teclado.shiftPulsado():
-        try:
-          self.anterior()
-        except StopIteration:
-          self.ultimo()
+      try:
+        if self.teclado.shiftPulsado():
+          try:
+            self.anterior(tab=True)
+          except StopIteration:
+            self.anterior(tab=True, index=self.total())
+        else:
+          try:
+            self.siguiente(tab=True)
+          except StopIteration:
+            self.siguiente(tab=True, index=-1)
+      except StopIteration:
+        self.errorNoHayElementos()
+        if self.elemento.visibleConTab:
+          self.leerElementoEnfocado(False)
       else:
-        try:
-          self.siguiente()
-        except StopIteration:
-          self.primero()
-      
-      self.leerElementoEnfocado()
-      self.elemento.focoConTab()
+        self.elemento.focoConTab()
+        self.leerElementoEnfocado()
+      return True
   
   def leerElementoEnfocado(self, interrumpir=True):
     self.iku.leer(self.elemento, interrumpir)
@@ -54,20 +63,32 @@ class ElementoNavegable(ikuEngine.actores.Elemento):
   def ultimo(self):
     self._index = self.total()-1
   
-  def siguiente(self):
-    x = self._index+1
-    if x < self.total():
-      self._index = x  
-    else:
+  def siguiente(self, tab=False, index=None):
+    index = index if index is not None else self._index
+    index+=1
+    if index >= self.total():
       raise StopIteration("No hay siguiente elemento.")
+    
+    elemento = self.getElement(index)
+    if tab and not elemento.visibleConTab: # verificamos si es visible con tab:
+      self.siguiente(tab, index)
+    else:
+      self._index = index  
   
   def primero(self):
     self._index=0
   
-  def anterior(self):
-    x = self._index-1
-    if x >= 0:
-      self._index = x
-    else:
+  def anterior(self, tab=False, index=None):
+    index = index if index is not None else self._index
+    index-=1
+    if index < 0:
       raise StopIteration("No hay siguiente elemento.")
-  
+    
+    elemento = self.getElement(index)
+    if tab and not elemento.visibleConTab: # verificamos si es visible con tab:
+      self.anterior(tab, index)
+    else:
+      self._index = index
+
+  def errorNoHayElementos(self):
+    self.iku.leer("No hay mas elementos.")

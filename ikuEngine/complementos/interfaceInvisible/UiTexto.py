@@ -9,5 +9,11 @@ from .ElementoUi import ElementoUi
 
 class UiTexto(ElementoUi):
   """representa a un texto o etiqueta de la interface invisible. """
+  def __init__(self, *args, **kwargs):
+    ElementoUi.__init__(self, *args, **kwargs)
+    print(self.visibleConTab)
+    self.visibleConTab = False
+    print(self.visibleConTab)
+  
   def __str__(self):
     return self._texto

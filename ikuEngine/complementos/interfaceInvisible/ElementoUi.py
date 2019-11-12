@@ -14,6 +14,7 @@ class ElementoUi(ikuEngine.actores.Elemento):
   def __init__(self, texto, respuesta=None, *args, **kwargs):
     self._texto = texto
     self._foco = False
+    self.visibleConTab = True
     self.activarConTab = False
     self.leerAlActualizar = False
     if respuesta is None:

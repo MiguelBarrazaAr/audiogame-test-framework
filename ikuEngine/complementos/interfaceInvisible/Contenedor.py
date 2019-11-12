@@ -6,6 +6,7 @@
 # Copyright 2019 - Miguel Barraza
 
 from .ElementoNavegable import ElementoNavegable
+
 class Contenedor(ElementoNavegable):
   """Contenedor de elemetnos de interface de usuario."""
   def __init__(self, *k, **kv):
@@ -24,8 +25,10 @@ class Contenedor(ElementoNavegable):
       self.elemento.tecla(evento)
       if evento.tecla == 'enter':
         self.elemento.ejecutar()
+        return True
       elif evento.tecla == 'espacio':
         self.elemento.pulsaEspacio()
+        return True
       elif evento.tecla == 'abajo':
         if self.elemento.abajo():
           try:
@@ -34,6 +37,7 @@ class Contenedor(ElementoNavegable):
             self.leerElementoEnfocado()
           else:
             self.leerElementoEnfocado()
+        return True
       elif evento.tecla == 'arriba':
         if self.elemento.arriba():
           try:
@@ -42,12 +46,15 @@ class Contenedor(ElementoNavegable):
             self.leerElementoEnfocado()
           else:
             self.leerElementoEnfocado()
+        return True
       elif evento.tecla == 'derecha':
         self.elemento.derecha()
+        return True
       elif evento.tecla == 'izquierda':
         self.elemento.izquierda()
+        return True
       else:
-        super().alPulsarTecla(evento)
+        return super().alPulsarTecla(evento)
     except Warning as error:
       self.manejarAdvertencias(*error.args)
   
