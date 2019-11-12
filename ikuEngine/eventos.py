@@ -71,9 +71,9 @@ class EventoControl(object):
   
   def conectar(self, respuesta, id=None):
     if inspect.isfunction(respuesta):
-      self.respuestas.append(ProxyFuncion(respuesta, id))
+      self.respuestas.insert(0, ProxyFuncion(respuesta, id))
     elif inspect.ismethod(respuesta):
-      self.respuestas.append(ProxyMetodo(respuesta, id))
+      self.respuestas.insert(0, ProxyMetodo(respuesta, id))
     else:
       raise ValueError("Solo se permite conectar nombres de funciones o metodos.")
   
