@@ -14,6 +14,7 @@ from .UiTexto import UiTexto
 from .Contenedor import Contenedor
 from .menu import Menu
 from .ejecutarConFlechas import EjecutarConFlechas
+from .BarraDeMenu import BarraDeMenu
 
 @ikuEngine.vincularComplemento
 class interfaceInvisible(ikuEngine.Complemento):
@@ -23,6 +24,7 @@ class interfaceInvisible(ikuEngine.Complemento):
   def _modificarMotor(self):
     self.iku.actores.vincular(EjecutarConFlechas)
     self.iku.actores.vincular(Menu)
+    self.iku.actores.vincular(BarraDeMenu)
     self.iku.actores.vincular(Contenedor)
     self.iku.actores.vincular(UiBoton)
     self.iku.actores.vincular(UiIngresaTexto)
