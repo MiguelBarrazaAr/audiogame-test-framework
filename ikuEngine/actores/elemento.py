@@ -109,8 +109,6 @@ class Elemento(object):
       self._acciones.emitir(tipo="deshabilitar", actor=self)
       self.alDeshabilitar()
       self.iku.log("Actor {tipo} deshabilitado.".format(tipo=self.tipo))
-    else:
-      raise Exception("No se puede deshabilitar el elemento {tipo} porque no fue habilitado.".format(self.tipo))
   
   def alDeshabilitar(self):
     pass
