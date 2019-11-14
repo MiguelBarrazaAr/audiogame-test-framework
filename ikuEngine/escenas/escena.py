@@ -112,9 +112,13 @@ class Escena():
     self.iku.log("hay", len(self.actores), "actores en la escena", self)
   
   def eliminarActor(self, actor):
-    self.actores.remove(actor)
-    self.iku.log("se elimina en", self, "el actor", actor)
-    self.iku.log("hay", len(self.actores), "actores en la escena", self)
+    try:
+      self.actores.remove(actor)
+    except ValueError:
+      pass
+    else:
+      self.iku.log("se elimina en", self, "el actor", actor)
+      self.iku.log("hay", len(self.actores), "actores en la escena", self)
   
   def dibujarEn(self, ventana):
     ventana.fill(self.colorFondo)

@@ -137,7 +137,8 @@ class BarraDeMenu(ikuEngine.actores.Elemento):
     self.iku.escena.pulsaEscape.desconectar(self.alPulsarEscape)
     if self.opcion is None:
       self.cuandoDeshabilita()
-    print("opcion", self.opcion)
+    else:
+      self.iku.log.info("Opción elegida: '{}'.".format(self.opcion))
   
   def alPulsarEscape(self, evento):
     return self.modo.escape()
