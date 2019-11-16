@@ -66,7 +66,7 @@ class ElementoUi(ikuEngine.actores.Elemento):
     pass
   
   def tecla(self, tecla):
-    pass
+    return False
   
   def focoConTab(self):
     if self.activarConTab:

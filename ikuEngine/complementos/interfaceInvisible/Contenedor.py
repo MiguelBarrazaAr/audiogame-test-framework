@@ -20,7 +20,7 @@ class Contenedor(ElementoNavegable):
     try:
       # si tiene una tecla rápida la ejecutamos:
       if evento.tecla.name  in self._accessKey:
-        self._accessKey[evento.tecla.name]()
+        return self._accessKey[evento.tecla.name]()
       
       self.elemento.tecla(evento)
       if evento.tecla == 'enter':

@@ -215,3 +215,8 @@ class Teclado():
     """retorna si se pulso el blockeo numerico. """
     mod_bitmask = pygame.key.get_mods()
     return mod_bitmask == pygame.KMOD_NUM
+  
+  def tabPulsado(self):
+    """retorna si se pulso el tab. """
+    mod_bitmask = pygame.key.get_mods()
+    return mod_bitmask == pygame.K_TAB
