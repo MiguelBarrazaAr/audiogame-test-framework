@@ -15,21 +15,24 @@ class Menu():
   def total(self):
     return len(self.items)
   
-  def agregar(self, nombre, respuesta):
-    self.items.append(Item(nombre, respuesta))
+  def agregar(self, nombre, respuesta, *params):
+    self.items.append(Item(nombre, respuesta, *params))
   
   def get(self, id):
     return self.items[id]
 
 
 class Item():
-  def __init__(self, nombre, respuesta):
+  def __init__(self, nombre, respuesta, *params):
     self.nombre = nombre
     self.respuesta = respuesta
+    self.params = params
   
   def __str__(self):
     return self.nombre
-
+  
+  def __call__(self):
+    self.respuesta(*self.params)
 
 class Modo():
   def __init__(self, ctrl):
@@ -82,7 +85,7 @@ class NavegarMenu(Modo):
     self.menu.opcion = self.menu.get(self.index)
     self.ctrl.opcion = self.menu.opcion
     self.ctrl.deshabilitar()
-    self.menu.opcion.respuesta()
+    self.menu.opcion()
   
   def derecha(self):
     self.ctrl.siguiente()
