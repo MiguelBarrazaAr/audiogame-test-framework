@@ -83,9 +83,7 @@ class NavegarMenu(Modo):
   
   def enter(self):
     self.menu.opcion = self.menu.get(self.index)
-    self.ctrl.opcion = self.menu.opcion
-    self.ctrl.deshabilitar()
-    self.menu.opcion()
+    self.ctrl.opcionMarcada(self.menu.opcion)
   
   def derecha(self):
     self.ctrl.siguiente()
@@ -124,6 +122,7 @@ class BarraDeMenu(ikuEngine.actores.Elemento):
     self.modo = ModoBarra(self)
     self.menu = None # el menú seleccionado.
     self.opcion = None # la opcion que se dio click.
+    self.deshabilitarAlSeleccionar = True
     self.cuandoDeshabilita = lambda: None
   
   def alHabilitar(self):
@@ -201,3 +200,9 @@ class BarraDeMenu(ikuEngine.actores.Elemento):
   
   def anterior(self):
     self.index = (self.index+self.total-1) % self.total
+  
+  def opcionMarcada(self, opcion):
+    self.opcion = opcion
+    opcion()
+    if self.deshabilitarAlSeleccionar:
+      self.deshabilitar()
