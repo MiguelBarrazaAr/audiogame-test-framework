@@ -52,25 +52,27 @@ class Iku(object):
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, ancho=640, alto=480, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, tts=None, *k, **kv):
+  def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None, audio="openal", *k, **kv):
     # configuración:
-    self.capturarErrores = capturarErrores
-    self.modoTest=modoTest
-    self.mensajesLog=False
-    self.fps =fps
+    self.configuracion = AttrDict()
+    self.configuracion['capturarErrores'] = capturarErrores
+    self.configuracion['modoTest'] = modoTest
+    self.configuracion['mensajesLog'] = habilitarMensajesLog
+    self.configuracion['fps'] = fps
+    self.fps = fps
     self._winLoop = False
-    self.dimension = (ancho, alto)
+    self.configuracion['dimension'] = (ancho, alto)
     self.centro = (ancho/2, alto/2)
     self._timestamp = 0
     
     self.eventos = Eventos(self)
     self.log = Log(self)
-    if not self.modoTest:
+    if not modoTest:
       self.mensajesLog=habilitarMensajesLog
       self.log("iniciando el motor 'iku'")
       self._iniciarGrafica(titulo, ancho, alto)
     
-    self.loop = asyncio.new_event_loop()
+    #self.loop = asyncio.new_event_loop()
     # cargamos los objetos de iku:
     self.camara = Camara(self)
     self.escenas = escenas.Escenas(self)
@@ -81,9 +83,13 @@ class Iku(object):
     self.teclado = Teclado()
     self.tts = ttsEngine.iniciar(tts)
     self.audio = iniciarAudio(self)
+    self._configurarAtajos()
     self.__iniciarPlugins__()
     self.juego = Juego(self)
     self.log("motor 'iku' iniciado")
+  
+  def _configurarAtajos(self):
+    self.sonido = self.audio.sonido
   
   def     __iniciarPlugins__(self):
     for name, plug in plugins.items():
@@ -110,7 +116,7 @@ class Iku(object):
     
     # iniciamos el motor gráfico:
     pygame.display.set_caption(titulo)
-    self.ventana = pygame.display.set_mode(self.dimension)
+    self.ventana = pygame.display.set_mode(self.configuracion.dimension)
     pygame.display.flip()
     # cargamos una fuente default:
     self.fuente = pygame.font.Font("freesansbold.ttf", 30)
@@ -192,7 +198,7 @@ class Iku(object):
 
   def finalizar(self):
     """Finaliza la ejecución  de iku"""
-    self.loop.close()
+    #self.loop.close()
     pygame.quit()
     self.audio.finalizar()
     self.log("IkuEngine finalizado.")
@@ -232,21 +238,8 @@ class Iku(object):
   
   def rectangulo(self, x=0, y=0, ancho=1, alto=1):
     return pygame.Rect(x,y,ancho,alto)
-    
-  def sonido(self, ruta=None):
-    """ carga un archivo de sonido y devuelve un objeto sound
-    
-    :param ruta: se refiere a la ruta donde se encuentra el archivo *.ogg o *.wav
-    :type ruta: string
-    Si se pasa None o no se pasa ninguna devuelve un sonido nulo. que no ahce nada.
-    """
-    return self.audio.sonido(ruta)
   
-  def sonido3d(self, ruta, posicion, respuesta=None):
-    """ carga un archivo de sonido y devuelve un objeto sound3d"""
-    return self.audio.sonido3d(ruta, posicion, respuesta)
-  
-  def llamadaAFuncion(self, funcion, *args, **kwargs):
+  def retardarFuncion(self, funcion, *args, **kwargs):
     """ Crea una funcion que se puede llamar despues y llamará a la función pasada por parametro. """  
     def f():
       funcion(*args, **kwargs)
