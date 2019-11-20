@@ -200,8 +200,8 @@ class Iku(object):
   def finalizar(self):
     """Finaliza la ejecución  de iku"""
     #self.loop.close()
-    pygame.quit()
     self.audio.finalizar()
+    pygame.quit()
     self.log("IkuEngine finalizado.")
     self._winLoop = False
     sys.exit(0)
