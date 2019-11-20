@@ -27,7 +27,7 @@ from .juego import Juego
 from .Log import Log
 from .sonido import iniciar as iniciarAudio
 from .tareas import Tareas
-from .teclado import Teclado
+from .teclado import Teclado, Teclas
 from . import tts as ttsEngine
 from .utiles import *
 
@@ -95,6 +95,10 @@ class Iku(object):
   def escena(self):
     return self.escenas.escenaActual
   
+  @property
+  def timestamp(self):
+    return self._timestamp
+  
   def reproducir(self, *args, **kwargs):
     return self.audio.pool.reproducir(*args, **kwargs)
   
@@ -121,6 +125,7 @@ class Iku(object):
       
       # controlamos el tiempo de refresco.
       tick=self.reloj.tick(self.fps)
+      self.teclado.actualizar(pygame.key.get_pressed())
       self.tareas.actualizar(tick)
       self.escenas.escenaActual.actualizar(tick)
       self.escenas.escenaActual.dibujarEn(self.ventana)

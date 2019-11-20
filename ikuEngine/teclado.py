@@ -7,7 +7,7 @@
 from enum import Enum
 import pygame
 
-class KEY(Enum):
+class Teclas(Enum):
     """constantes de teclas"""
     abajo = pygame.K_DOWN
     arriba = pygame.K_UP
@@ -149,7 +149,7 @@ class Tecla():
     self.tecla = tecla
   
   def __eq__(self, obj):
-    return self.tecla.name == obj or self.tecla.value == obj
+    return self.tecla == obj or self.tecla.name == obj or self.tecla.value == obj
   
   def __hash__(self):
     return self.tecla
@@ -163,60 +163,67 @@ class Tecla():
     return self.tecla.value
 
 class Teclado():
+  def __init__(self):
+    self._teclas = [] # lista de teclas pulsadas.
+  
+  def actualizar(self, teclas):
+    self._teclas = teclas
+  
   def tecla(self, cod):
-    return Tecla(KEY(cod))
+    return Tecla(Teclas(cod))
+  
+  def estaPulsado(self, nombre):
+    try:
+      return self._teclas[Teclas[nombre].value]
+    except KeyError:
+      raise ValueError("'{tecla}' no es un codigo de tecla valido.".format(tecla=nombre))
   
   def shiftPulsado(self):
     """retorna True si se pulso alguno de los 2 shifts"""
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_LSHIFT or mod_bitmask == pygame.KMOD_RSHIFT
   
   def shiftIzqPulsado(self):
     """retorna si esta pulsado el shift izquierdo. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_LSHIFT
   
   def shiftDerPulsado(self):
     """retorna si esta pulsado el shift derecho. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_RSHIFT
   
   def controlPulsado(self):
     """retorna si se pulso algún control. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_LCTRL or mod_bitmask == pygame.KMOD_RCTRL
   
   def controlIzqPulsado(self):
     """retorna si esta pulsado el control izquierdo. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_LCTRL
   
   def controlDerPulsado(self):
     """retorna si esta pulsado el control derecho. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_RCTRL
   
   def altPulsado(self):
     """retorna si se pulso el alt. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_LALT
   
   def altGrPulsado(self):
     """retorna si se pulso el alt grafico o e(alt derecho). """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_RALT
   
   def mayusPulsado(self):
     """retorna si se pulso el blockeo de mayusculas. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_CAPS
   
   def numPulsado(self):
     """retorna si se pulso el blockeo numerico. """
-    mod_bitmask = pygame.key.get_mods()
+    mod_bitmask = pygame.Teclas.get_mods()
     return mod_bitmask == pygame.KMOD_NUM
-  
-  def tabPulsado(self):
-    """retorna si se pulso el tab. """
-    mod_bitmask = pygame.key.get_mods()
-    return mod_bitmask == pygame.K_TAB
