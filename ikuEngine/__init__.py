@@ -52,7 +52,7 @@ class Iku(object):
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None, audio="openal", *k, **kv):
+  def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None, audio="openal", *args, **kwargs):
     # configuración:
     self.configuracion = AttrDict()
     self.configuracion['capturarErrores'] = capturarErrores
@@ -60,6 +60,7 @@ class Iku(object):
     self.configuracion['mensajesLog'] = habilitarMensajesLog
     self.configuracion['fps'] = fps
     self.fps = fps
+    self.configuracion['audio'] = audio
     self._winLoop = False
     self.configuracion['dimension'] = (ancho, alto)
     self.centro = (ancho/2, alto/2)
@@ -82,7 +83,7 @@ class Iku(object):
     self.tareas = Tareas(self)
     self.teclado = Teclado()
     self.tts = ttsEngine.iniciar(tts)
-    self.audio = iniciarAudio(self)
+    self.audio = iniciarAudio(self, audio, *args, **kwargs)
     self._configurarAtajos()
     self.__iniciarPlugins__()
     self.juego = Juego(self)
