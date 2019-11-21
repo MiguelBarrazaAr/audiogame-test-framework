@@ -5,4 +5,4 @@
 # Copyright  2019 - Miguel Barraza
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
-VERSION = "0.3.2"
+VERSION = "0.4.0"
