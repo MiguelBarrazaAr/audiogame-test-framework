@@ -52,7 +52,7 @@ class Iku(object):
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None, audio="openal", *args, **kwargs):
+  def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None, audio="soundlib", *args, **kwargs):
     # configuración:
     self.configuracion = AttrDict()
     self.configuracion['capturarErrores'] = capturarErrores
@@ -201,10 +201,11 @@ class Iku(object):
     """Finaliza la ejecución  de iku"""
     #self.loop.close()
     self.audio.finalizar()
-    pygame.quit()
     self.log("IkuEngine finalizado.")
     self._winLoop = False
-    sys.exit(0)
+    pygame.quit()
+    sys.exit()
+    return True
   
   def escalarSuperficie(self,superficie, ancho, alto):
     return pygame.transform.scale(superficie, (int(ancho), int(alto)))

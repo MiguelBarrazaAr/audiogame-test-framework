@@ -12,19 +12,19 @@ class OpenAlEngine():
     # obtenemos el listener y le damos una orientación hacia adelante
     self.oyente = openal.oalGetListener().set_orientation((0, 0, -1, 0, 1, 0))
   
-  def sonido(self, ruta):
-    return Sonido3d(ruta)
+  def sonido(self, ruta, *args, **kwargs):
+    return Sonido(ruta, *args, **kwargs)
   
   def finalizar(self):
     openal.oalQuit()
 
 
-class Sonido3d():
-  def __init__(self,ruta):
+class Sonido():
+  def __init__(self,ruta, volumen=50.0, relativo=True, factor=10.0):
     fuente = openal.oalOpen(ruta)
-    fuente.relative = True
-    fuente.set_rolloff_factor(10.0)
-    fuente.set_gain(50.0)
+    fuente.relative = relativo
+    fuente.set_rolloff_factor(factor)
+    fuente.set_gain(volumen)
     self.fuente = fuente
     #super().__init__()
   
