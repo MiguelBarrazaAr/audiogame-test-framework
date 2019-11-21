@@ -77,7 +77,7 @@ class Contenedor(ElementoNavegable):
     elemento.eliminar()
   
   def teclaRapida(self, tecla, funcion, *args, **kwargs):
-    self._accessKey[tecla] = self.iku.llamadaAFuncion(funcion, *args, **kwargs)
+    self._accessKey[tecla] = self.iku.retardarFuncion(funcion, *args, **kwargs)
   
   # métodos constructores de elementos de la interface de usuario:
   def boton(self, texto, *args, **kwargs):
