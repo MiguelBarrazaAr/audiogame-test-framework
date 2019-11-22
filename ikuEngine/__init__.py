@@ -13,9 +13,6 @@ import sys
 import time
 import traceback
 
-import pygame
-from pygame.locals import *
-
 from .actores import Actores
 from .camara import Camara
 from .complementos import Complementos, Complemento
@@ -23,6 +20,7 @@ from .configuracion import *
 from .decoradores import SingletonDecorator
 from .escenas import *
 from .eventos import *
+from .grafica import iniciar as iniciarGrafica
 from .juego import Juego
 from .Log import Log
 from .sonido import iniciar as iniciarAudio
@@ -52,7 +50,8 @@ class Iku(object):
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None, audio="soundlib", *args, **kwargs):
+  def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None,
+    audio="soundlib", motorGrafico="pygame", *args, **kwargs):
     # configuración:
     self.configuracion = AttrDict()
     self.configuracion['capturarErrores'] = capturarErrores
@@ -65,15 +64,15 @@ class Iku(object):
     self.configuracion['dimension'] = (ancho, alto)
     self.centro = (ancho/2, alto/2)
     self._timestamp = 0
+    self.grafica = None
     
     self.eventos = Eventos(self)
     self.log = Log(self)
     if not modoTest:
       self.mensajesLog=habilitarMensajesLog
       self.log("iniciando el motor 'iku'")
-      self._iniciarGrafica(titulo, ancho, alto)
+      self.grafica=iniciarGrafica(iku=self, motor=motorGrafico, titulo=titulo, ancho=ancho, alto=alto)
     
-    #self.loop = asyncio.new_event_loop()
     # cargamos los objetos de iku:
     self.camara = Camara(self)
     self.escenas = escenas.Escenas(self)
@@ -91,6 +90,8 @@ class Iku(object):
   
   def _configurarAtajos(self):
     self.sonido = self.audio.sonido
+    self.definirTitulo = self.grafica.definirTitulo
+    self.cargarImagen = self.grafica.cargarImagen
   
   def     __iniciarPlugins__(self):
     for name, plug in plugins.items():
@@ -109,67 +110,6 @@ class Iku(object):
   def reproducir(self, *args, **kwargs):
     return self.audio.pool.reproducir(*args, **kwargs)
   
-  def _iniciarGrafica(self, titulo, ancho, alto):
-    # iniciamos el motor pygame:
-    pygame.init()
-    self.reloj = pygame.time.Clock()
-    self._winLoop = True
-    
-    # iniciamos el motor gráfico:
-    pygame.display.set_caption(titulo)
-    self.ventana = pygame.display.set_mode(self.configuracion.dimension)
-    pygame.display.flip()
-    # cargamos una fuente default:
-    self.fuente = pygame.font.Font("freesansbold.ttf", 30)
-  
-  def ejecutar(self):
-    #self.loop.run_forever()
-    while self._winLoop:
-      self._timestamp = time.time()
-      # monitorizamos eventos:
-      for event in pygame.event.get():
-        self._procesarEvento(event)
-      
-      # controlamos el tiempo de refresco.
-      tick=self.reloj.tick(self.fps)
-      self.teclado.actualizar(pygame.key.get_pressed())
-      self.tareas.actualizar(tick)
-      self.escenas.escenaActual.actualizar(tick)
-      self.escenas.escenaActual.dibujarEn(self.ventana)
-      pygame.display.flip()
-      tick=self.reloj.tick(self.fps)
-  
-  def _procesarEvento(self, event):
-    if event.type == pygame.QUIT:
-      self.eventos.usuario.emitir(accion="salir")
-      self.finalizar()
-    # pulsa una tecla:
-    if event.type == pygame.KEYDOWN:
-      self.eventos.pulsaTecla.emitir(tecla=self.teclado.tecla(event.key), representacion=event.unicode)
-      # si pulsa escape, emitimos pulsaEscape
-      if event.key == pygame.K_ESCAPE:
-        self.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type)
-      if event.key == pygame.K_F4 and self.teclado.altPulsado():
-        self.eventos.usuario.emitir(accion="salir")
-        self.finalizar()
-      if event.key == pygame.K_F9:
-        # si esta en modo desarrollador, se activa el depurador.
-        self.eventos.usuario.emitir(accion="depurador", escena=self.escena)
-    # suelta una tecla:
-    if event.type == pygame.KEYUP:
-      self.eventos.sueltaTecla.emitir(tecla=self.teclado.tecla(event.key))
-    # si algún botón del mouse es presionado
-    if event.type == pygame.MOUSEBUTTONDOWN:
-      self.eventos.clickMouse.emitir(boton=event.button, posicion=event.pos)
-    # si algún botón del mouse es soltado
-    if event.type == pygame.MOUSEBUTTONUP:
-      self.eventos.finalizaClickMouse.emitir(boton=event.button, posicion=event.pos)
-    # si el mouse es movido
-    if event.type == pygame.MOUSEMOTION:
-      self.eventos.mueveMouse.emitir(botones=event.buttons, posicion=event.pos, movimiento=event.rel)
-  
-  def definirTitulo(self, titulo):
-    pygame.display.set_caption(titulo)
   
   def definirSemilla(self, semilla):
     """ determina una semilla para una tirada de random aleatoria. """
@@ -185,6 +125,9 @@ class Iku(object):
         nums.append(random.randint(x, y))
       return nums
   
+  def ejecutar(self):
+    self.grafica.ejecutar()
+  
   def elegir(self, lista):
     """Elige un elemento aleatorio en una lista."""
     return random.choice(lista)
@@ -199,20 +142,11 @@ class Iku(object):
 
   def finalizar(self):
     """Finaliza la ejecución  de iku"""
-    #self.loop.close()
     self.audio.finalizar()
+    self.grafica.finalizar()
     self.log("IkuEngine finalizado.")
-    self._winLoop = False
-    pygame.quit()
-    sys.exit()
+    sys.exit(0)
     return True
-  
-  def escalarSuperficie(self,superficie, ancho, alto):
-    return pygame.transform.scale(superficie, (int(ancho), int(alto)))
-  
-  def imagen(self, rutaImagen):
-    """Carga una imagen y retorna una superficie."""
-    return pygame.image.load(rutaImagen)
   
   def leer(self, texto, interrumpir=True, registrar=True):
     """Envia un texto al tts para ser verbalizado"""
