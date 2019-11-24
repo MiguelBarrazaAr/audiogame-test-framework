@@ -22,6 +22,9 @@ class Tecla():
   @property
   def value(self):
     return self.tecla.value
+  
+  def __str__(self):
+    return "Tecla {} ({})".format(self.tecla.name, self.tecla.value)
 
 class Teclado():
   def __init__(self, iku):

@@ -68,11 +68,11 @@ class Iku(object):
     self.grafica = None
     
     self.eventos = Eventos(self)
-    self.log = Log(self)
     if not modoTest:
-      self.mensajesLog=habilitarMensajesLog
-      self.log("iniciando el motor 'iku'")
       self.grafica = iniciarGrafica(iku=self, motor=motorGrafico, titulo=titulo, ancho=ancho, alto=alto)
+      self.mensajesLog=habilitarMensajesLog
+      self.log = Log(self)
+      self.log("iniciando el motor 'iku'")
       self.tecla = self.grafica.codigoDeTeclas()
     
     # cargamos los objetos de iku:
