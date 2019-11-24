@@ -6,6 +6,7 @@
 # Copyright    2019: Miguel Barraza
 
 from enum import Enum
+import time
 import pyglet
 pyglet.options['shadow_window']=False
 from pyglet.window import key
@@ -54,6 +55,7 @@ class PygletEngine():
   
   def _actualizar(self, tick):
     # metodo que se llama al actualizar cada tick del reloj:
+    self.iku._timestamp = time.time()
     self.iku.teclado.actualizar(key.KeyStateHandler())
     self.iku.tareas.actualizar(tick)
     self.iku.escenas.escenaActual.actualizar(tick)
