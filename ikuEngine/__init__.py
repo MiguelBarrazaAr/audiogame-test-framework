@@ -175,6 +175,7 @@ class Iku(object):
     return Vector(x=x, y=y, z=z)
   
   def rectangulo(self, x=0, y=0, ancho=1, alto=1):
+    import pygame
     return pygame.Rect(x,y,ancho,alto)
   
   def retardarFuncion(self, funcion, *args, **kwargs):

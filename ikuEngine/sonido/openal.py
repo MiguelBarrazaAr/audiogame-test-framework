@@ -3,7 +3,7 @@
 # IkuEngine: Motor para videojuegos en python 3
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
-# 2019 - Alan Escola
+# 2019 - Alan Escola y Miguel Barraza
 
 import openal  
 
@@ -35,7 +35,7 @@ class Sonido():
     self.fuente.set_looping(continuo)
     self.fuente.play()
     if continuo:
-      iku.instancia().escenas.escenaActual.registrarPausable(self)
+      pass#iku.instancia().escenas.escenaActual.registrarPausable(self)
   
   def detener(self):
     self.fuente.stop()
@@ -56,9 +56,17 @@ class Sonido():
   
   @property
   def posicion(self):
-    return self._posicion
+    return self.fuente.position
   
   @posicion.setter
   def posicion(self, valor):
     self.fuente.set_position(valor)
-    self._posicion = valor
+    #self._posicion = valor
+  
+  @property
+  def continuo(self):
+    return self.fuente.looping
+  
+  @continuo.setter
+  def continuo(self, bool):
+    self.fuente.set_looping(bool)
