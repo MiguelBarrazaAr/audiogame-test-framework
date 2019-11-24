@@ -6,8 +6,9 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
 class Tecla():
-  def __init__(self, tecla):
+  def __init__(self, tecla, modificadores):
     self.tecla = tecla
+    self.modificadores = modificadores
   
   def __eq__(self, obj):
     return self.tecla == obj or self.tecla.name == obj or self.tecla.value == obj
@@ -34,8 +35,8 @@ class Teclado():
   def actualizar(self, teclas):
     self._teclas = teclas
   
-  def tecla(self, cod):
-    return Tecla(self.iku.tecla(cod))
+  def tecla(self, codigo, modificador):
+    return Tecla(self.iku.tecla(codigo), modificador)
   
   def estaPulsado(self, nombre):
     try:

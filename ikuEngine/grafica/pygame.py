@@ -54,18 +54,15 @@ class PygameEngine():
       # si pulsa escape, emitimos pulsaEscape
       if event.key == pygame.K_ESCAPE:
         self.iku.eventos.pulsaEscape.emitir(tecla=event.key, tipo=event.type)
-      if event.key == pygame.K_F4 and self.iku.teclado.altPulsado():
+      if event.key == pygame.K_F4 and self.altPulsado():
         self.iku.eventos.usuario.emitir(accion="salir")
         self.iku.finalizar()
       else:
         # emitimos el pulsa tecla:
-        self.iku.eventos.pulsaTecla.emitir(tecla=self.iku.teclado.tecla(event.key), representacion=event.unicode)
-      #if event.key == pygame.K_F9:
-      # si esta en modo desarrollador, se activa el depurador.
-      #self.iku.eventos.usuario.emitir(accion="depurador", escena=self.escena)
+        self.iku.eventos.pulsaTecla.emitir(tecla=self.iku.teclado.tecla(event.key, pygame.key.get_mods()), representacion=event.unicode)
     # suelta una tecla:
     if event.type == pygame.KEYUP:
-      self.iku.eventos.sueltaTecla.emitir(tecla=self.iku.teclado.tecla(event.key))
+      self.iku.eventos.sueltaTecla.emitir(tecla=self.iku.teclado.tecla(event.key, pygame.key.get_mods()))
     # si algún botón del mouse es presionado
     if event.type == pygame.MOUSEBUTTONDOWN:
       self.iku.eventos.clickMouse.emitir(boton=event.button, posicion=event.pos)
@@ -75,6 +72,11 @@ class PygameEngine():
     # si el mouse es movido
     if event.type == pygame.MOUSEMOTION:
       self.iku.eventos.mueveMouse.emitir(botones=event.buttons, posicion=event.pos, movimiento=event.rel)
+  
+  def altPulsado(self):
+    """retorna si se pulso el alt. """
+    mod_bitmask = pygame.key.get_mods()
+    return mod_bitmask == pygame.KMOD_LALT
   
   def definirTitulo(self, titulo):
     pygame.display.set_caption(titulo)

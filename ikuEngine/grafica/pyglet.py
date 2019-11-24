@@ -30,12 +30,12 @@ class PygletEngine():
   
   def _on_key_press(self, symbol, modifiers):
     if symbol == key.ESCAPE:
-      self.iku.eventos.pulsaEscape.emitir(tecla=self.iku.teclado.tecla(symbol), tipo="pulsaEscape")
+      self.iku.eventos.pulsaEscape.emitir(tecla=self.iku.teclado.tecla(symbol, modifiers), tipo="pulsaEscape")
     else:
-      self.iku.eventos.pulsaTecla.emitir(tecla=self.iku.teclado.tecla(symbol), representacion=self.symbolToChar(symbol))
+      self.iku.eventos.pulsaTecla.emitir(tecla=self.iku.teclado.tecla(symbol, modifiers), representacion=self.symbolToChar(symbol))
   
   def _on_key_release(self, symbol, modifiers):
-    self.iku.eventos.sueltaTecla.emitir(tecla=self.iku.teclado.tecla(symbol), representacion=self.symbolToChar(symbol))
+    self.iku.eventos.sueltaTecla.emitir(tecla=self.iku.teclado.tecla(symbol, modifiers), representacion=self.symbolToChar(symbol))
   
   def _on_close(self):
     self.iku.eventos.usuario.emitir(accion="salir")
