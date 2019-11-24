@@ -25,7 +25,7 @@ from .juego import Juego
 from .Log import Log
 from .sonido import iniciar as iniciarAudio
 from .tareas import Tareas
-from .teclado import Teclado, Teclas
+from .teclado import Teclado
 from . import tts as ttsEngine
 from .utiles import *
 
@@ -60,6 +60,7 @@ class Iku(object):
     self.configuracion['fps'] = fps
     self.fps = fps
     self.configuracion['audio'] = audio
+    self.configuracion['grafico'] = motorGrafico
     self._winLoop = False
     self.configuracion['dimension'] = (ancho, alto)
     self.centro = (ancho/2, alto/2)
@@ -71,7 +72,8 @@ class Iku(object):
     if not modoTest:
       self.mensajesLog=habilitarMensajesLog
       self.log("iniciando el motor 'iku'")
-      self.grafica=iniciarGrafica(iku=self, motor=motorGrafico, titulo=titulo, ancho=ancho, alto=alto)
+      self.grafica = iniciarGrafica(iku=self, motor=motorGrafico, titulo=titulo, ancho=ancho, alto=alto)
+      self.tecla = self.grafica.codigoDeTeclas()
     
     # cargamos los objetos de iku:
     self.camara = Camara(self)
@@ -80,7 +82,7 @@ class Iku(object):
     self.complementos = Complementos(self, complementos)
     self.datos = AttrDict()
     self.tareas = Tareas(self)
-    self.teclado = Teclado()
+    self.teclado = Teclado(self)
     self.tts = ttsEngine.iniciar(tts)
     self.audio = iniciarAudio(self, audio, *args, **kwargs)
     self._configurarAtajos()
