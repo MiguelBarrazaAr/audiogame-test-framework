@@ -20,6 +20,7 @@ class PygletEngine():
     self.ventana.on_key_press = self._on_key_press
     self.ventana.on_key_release = self._on_key_release
     self.ventana.on_close = self._on_close
+    self.ventana.on_text_motion = self._on_text_motion
   
   def codigoDeTeclas(self):
     return Teclas
@@ -36,6 +37,9 @@ class PygletEngine():
   
   def _on_key_release(self, symbol, modifiers):
     self.iku.eventos.sueltaTecla.emitir(tecla=self.iku.teclado.tecla(symbol, modifiers), representacion=self.symbolToChar(symbol))
+  
+  def _on_text_motion(self, motion):
+    pass
   
   def _on_close(self):
     self.iku.eventos.usuario.emitir(accion="salir")
