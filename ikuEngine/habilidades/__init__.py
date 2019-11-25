@@ -6,8 +6,10 @@
 # Copyright    2019: Miguel Barraza
 
 from .moverConFlechas import MoverConFlechas
+from .emitirSonido import emitirSonido
 
-skills = {'moverconflechas':MoverConFlechas}
+skills = {'emitirsonido':emitirSonido,
+  'moverconflechas':MoverConFlechas}
 
 class Habilidades():
   """ Gestor de habilidades disponibles para actores en ikuEngine.

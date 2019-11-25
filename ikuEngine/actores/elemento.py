@@ -140,6 +140,13 @@ class Elemento(object):
     self.iku.habilidades.get(nombre)(self, *args, **kwargs)
     self.log.info("el actor '{type}' aprende la ahbilidad '{name}'.".format(type=repr(self), name=nombre))
   
+  def alternarHabilitado(self):
+    """ alterna el ahbilitado del actor. """
+    if self._habilitado:
+      self.deshabilitar()
+    else:
+      self.habilitar()
+  
   def __getattr__(self, nombre):
     try:
       return eval(f"self.iku.{nombre}")
