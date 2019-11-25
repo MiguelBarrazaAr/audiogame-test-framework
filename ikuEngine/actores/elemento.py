@@ -10,7 +10,7 @@ import ikuEngine
 class Elemento(object):
   """Representa un elemento del juego que es parte de una escena, se actualiza en cada tick.
   """
-  def __init__(self, actualizable=False, *k, **kv):
+  def __init__(self, actualizable=False, *args, **kwargs):
     self.iku = ikuEngine.instancia()
     self.actualizable = actualizable
     self._habilitado = False
@@ -20,7 +20,7 @@ class Elemento(object):
     self.conectar = self._acciones.conectar
     self.desconectar = self._acciones.desconectar
     self.emitir= self._acciones.emitir
-    self._iniciar(*k, **kv)
+    self._iniciar(*args, **kwargs)
   
   def __repr__(self):
     """ es la información que se utiliza para imprimir el actor en el log. """
@@ -119,6 +119,11 @@ class Elemento(object):
   
   def alPulsarTecla(self, evento):
     pass
+  
+  @property
+  def tecla(self):
+    """ acceso directo al atributo iku.tecla """
+    return self.iku.tecla
   
   def __getattr__(self, nombre):
     try:

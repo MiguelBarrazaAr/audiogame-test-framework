@@ -9,9 +9,8 @@ import inspect
 
 from .elemento import Elemento
 from .actor import Actor
-from .actorInvisible import ActorInvisible
-from .texto import Texto
-from .boton import Boton
+#from .texto import Texto
+#from .boton import Boton
 from .energia import Energia
 from .teclaRapida import TeclaRapida
 
@@ -47,8 +46,8 @@ class Actores():
       cls.nombresDeActoresPersonalizados.append(nombre)
   
   def iniciarActoresDefault(self):
-    self.vincular(Texto)
-    self.vincular(Boton)
+    #self.vincular(Texto)
+    #self.vincular(Boton)
     #self.vincular(Menu)
     
     # elementos:

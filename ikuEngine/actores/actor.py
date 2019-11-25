@@ -6,55 +6,51 @@
 # Copyright 2018 - Miguel Barraza
 
 import ikuEngine
-from .actorAbstracto  import ActorAbstracto
+from .elemento import Elemento
 
-class Actor(ActorAbstracto):
-  """Representa un objeto del juego que es parte de una escena, algo que se puede interactuar y tiene una posicion.
+class Actor(Elemento):
   """
-  def __init__(self,   visible=True, actualizable=False, colisionable=False, *k, **kv):
-    self.iku = iku.instancia()
-    self.visible = visible
-    self.actualizable = actualizable
-    self.colisionable = colisionable
-    # cargamos la imagen:
-    self.imagen = kv.get('imagen', "")
-    # ajustamos el posicionamiento:
-    self.posicionar(x=kv.get('x', 0),
-      y=kv.get('y', 0),
-      absoluto=kv.get('absoluto', False))
-    self._escala = 1 
+  Representa un objeto del juego que es parte de una escena, algo que se puede interactuar y tiene una posicion.
+  """
+  def __init__(self, *args, **kwargs):
+    Elemento.__init__(self, *args, **kwargs)
+    self._posicion = self.iku.vector(x=kwargs.get("x", 0),
+      y=kwargs.get("y", 0),
+      z=kwargs.get("z", 0))
   
   @property
-  def imagen(self):
-    return self._surface
-  
-  @imagen.setter
-  def imagen(self, img):
-    try:
-      posicion=self.figura.center
-    except:
-      posicion=(0,0)
-    
-    if type(img) == str:
-      self._surface = iku.instancia().imagen(img)
-    else:
-      self._surface=img
-    self.figura = self._surface.get_rect()
-    self.figura.center = posicion
-  
-  def dibujarEn(self, superficie):
-    if self.visible:
-      superficie.blit(self._surface, self.figura)
+  def x(self):
+    return self._posicion.x
   
   @property
-  def escala(self):
-    return self._escala
+  def y(self):
+    return self._posicion.y
   
-  @escala.setter
-  def escala(self, x):
-    ancho=self.figura.w*x
-    alto=self.figura.h*x
-    self.figura.w*=x
-    self.figura.h*=x
-    self._escala*=x
-    self.redimensionar(ancho, alto)
+  @property
+  def z(self):
+    return self._posicion.z
+  
+  @property
+  def posicion2d(self):
+    return self._posicion.xy
+  
+  @property
+  def posicion(self):
+    return self._posicion.xyz
+  
+  @posicion.setter
+  def posicion(self, tupla):
+    self._posicion.posicionar(*tupla)
+    self.alCambiarPosicion()
+  
+  def mover(self, x=0, y=0, z=0):
+    self._posicion.mover(x, y, z)
+    self.alCambiarPosicion()
+  
+  def coordenadaAlMover(self, x=0, y=0, z=0):
+    """Retorna a que coordenada estaría el actor si se le sumaría tantos pasos en x, y, z."""
+    return (self.x+x, self.y+y, self.z+z)
+  
+  def alCambiarPosicion(self):
+    """ metodo que se ejecuta cuando la posicion se cambia. """
+    pass

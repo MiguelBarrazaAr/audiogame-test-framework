@@ -6,7 +6,7 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
 import datetime
-from .Conectable import Conectable
+from .utiles.Conectable import Conectable
 
 class Log(Conectable):
   def __init__(self, iku):
