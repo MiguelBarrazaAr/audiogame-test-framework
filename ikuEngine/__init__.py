@@ -5,7 +5,6 @@
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 # Copyright    2018 - 2019: Miguel Barraza
 
-import asyncio
 import importlib
 import os
 import random
@@ -21,6 +20,7 @@ from .decoradores import SingletonDecorator
 from .escenas import *
 from .eventos import *
 from .grafica import iniciar as iniciarGrafica
+from .habilidades import Habilidades
 from .juego import Juego
 from .Log import Log
 from .sonido import iniciar as iniciarAudio
@@ -81,6 +81,7 @@ class Iku(object):
     self.actores = Actores(self)
     self.complementos = Complementos(self, complementos)
     self.datos = AttrDict()
+    self.habilidades = Habilidades()
     self.tareas = Tareas(self)
     self.teclado = Teclado(self)
     self.tts = ttsEngine.iniciar(tts)
