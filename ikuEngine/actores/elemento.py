@@ -68,17 +68,23 @@ class Elemento(object):
     del self
   
   def anexar(self, elemento):
-    self._anexados.append(elemento)
-    return elemento
+    if isinstance(elemento, self.__class__):
+      self._anexados.append(elemento)
+      self.log.info("Se anexa a '{type}', el actor: '{actor}'.".format(type=repr(self), actor=repr(elemento)))
+      return elemento
+    else:
+      raise Exception("Error: a los actores solo se pueden anexar otros actores, en su lugar se recibió un elemento de tipo: '{}'.".format(elemento.__class__.__name__))
   
   def desanexar(self, elemento):
     self._anexados.remove(elemento)
+    self.log.info("Se desanexa de '{type}', el actor: '{actor}'.".format(type=repr(self), actor=repr(elemento)))
     return elemento
   
   def eliminarAnexados(self):
     for x in reversed(self._anexados):
       x.eliminar()
     self._anexados = []
+    self.log.info("Se borra todos los anexados de '{type}'.".format(type=repr(self)))
   
   def buscarAnexado(self, filtro):
     for actor in self._anexados:
@@ -93,7 +99,7 @@ class Elemento(object):
       self._habilitado = True
       self._acciones.emitir(tipo="habilitar", actor=self)
       self.alHabilitar()
-      self.iku.log("Actor {tipo} habilitado.".format(tipo=self.tipo))
+      self.iku.log.info("Actor {tipo} habilitado.".format(tipo=self.tipo))
     else:
       raise Exception("{tipo} no se puede habilitar porque ya está habilitado.".format(tipo=self.tipo))
   
@@ -108,7 +114,7 @@ class Elemento(object):
       self._habilitado = False
       self._acciones.emitir(tipo="deshabilitar", actor=self)
       self.alDeshabilitar()
-      self.iku.log("Actor {tipo} deshabilitado.".format(tipo=self.tipo))
+      self.iku.log.info("Actor {tipo} deshabilitado.".format(tipo=self.tipo))
   
   def alDeshabilitar(self):
     pass
@@ -125,8 +131,17 @@ class Elemento(object):
     """ acceso directo al atributo iku.tecla """
     return self.iku.tecla
   
+  @property
+  def log(self):
+    """ acceso directo al atributo iku.log. """
+    return self.iku.log
+  
+  def aprenderHabilidad(self, nombre, *args, **kwargs):
+    self.iku.habilidades.get(nombre)(self, *args, **kwargs)
+    self.log.info("el actor '{type}' aprende la ahbilidad '{name}'.".format(type=repr(self), name=nombre))
+  
   def __getattr__(self, nombre):
     try:
       return eval(f"self.iku.{nombre}")
     except AttributeError:
-      raise AttributeError("el elemento '{type}' no conoce el atributo '{name}'".format(type=repr(self), name=nombre))    
+      raise AttributeError("el actor '{type}' no conoce el atributo '{name}'".format(type=repr(self), name=nombre))
