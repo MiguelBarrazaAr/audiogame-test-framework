@@ -46,6 +46,7 @@ class Actores():
       cls.nombresDeActoresPersonalizados.append(nombre)
   
   def iniciarActoresDefault(self):
+    self.vincular(Actor)
     #self.vincular(Texto)
     #self.vincular(Boton)
     #self.vincular(Menu)
