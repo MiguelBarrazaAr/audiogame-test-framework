@@ -15,7 +15,7 @@ class PygletEngine():
   def __init__(self, iku, titulo, ancho, alto):
     self.iku = iku
     # iniciamos el motor pyglet:
-    self.ventana= pyglet.window.Window(1280, 720, "mi juego", resizable=True, style=pyglet.window.Window.WINDOW_STYLE_DIALOG)
+    self.ventana= pyglet.window.Window(ancho, alto, titulo, resizable=True, style=pyglet.window.Window.WINDOW_STYLE_DIALOG)
     self.ventana.set_minimum_size(400,300)
     self.ventana.on_key_press = self._on_key_press
     self.ventana.on_key_release = self._on_key_release
