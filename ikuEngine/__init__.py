@@ -17,6 +17,7 @@ from .camara import Camara
 from .complementos import Complementos, Complemento
 from .configuracion import *
 from .decoradores import SingletonDecorator
+from .efectos  import Efectos
 from .escenas import *
 from .eventos import *
 from .grafica import iniciar as iniciarGrafica
@@ -51,7 +52,7 @@ class Iku(object):
   """
   
   def __init__(self, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, ancho=640, alto=480, tts=None,
-    audio="soundlib", motorGrafico="pygame", *args, **kwargs):
+    audio="openal", motorGrafico="pyglet", *args, **kwargs):
     # configuración:
     self.configuracion = AttrDict()
     self.configuracion['capturarErrores'] = capturarErrores
@@ -82,6 +83,7 @@ class Iku(object):
     self.complementos = Complementos(self, complementos)
     self.datos = AttrDict()
     self.habilidades = Habilidades()
+    self.efecto = Efectos(self)
     self.tareas = Tareas(self)
     self.teclado = Teclado(self)
     self.tts = ttsEngine.iniciar(tts)
@@ -113,6 +115,8 @@ class Iku(object):
   def reproducir(self, *args, **kwargs):
     return self.audio.pool.reproducir(*args, **kwargs)
   
+  def posicionarEscucha(self, posicion):
+    self.audio.motor.posicionarEscucha(posicion)  
   
   def definirSemilla(self, semilla):
     """ determina una semilla para una tirada de random aleatoria. """

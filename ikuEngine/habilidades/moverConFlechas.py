@@ -13,10 +13,10 @@ def mover(self, ev, func):
     self.mover(x=self._mf_paso)
     return True
   elif ev.tecla == self.tecla.arriba:
-    self.mover(y=self._mf_paso)
+    self.mover(z=-self._mf_paso)
     return True
   elif ev.tecla == self.tecla.abajo:
-    self.mover(y=-self._mf_paso)
+    self.mover(z=self._mf_paso)
     return True
   else:
     func(ev)
