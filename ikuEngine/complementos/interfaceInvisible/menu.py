@@ -7,7 +7,7 @@
 
 import ikuEngine
 
-class Menu(ikuEngine.actores.ActorInvisible):
+class Menu(ikuEngine.actores.Elemento):
   """Representa un menu invisible de opciones navegable con flechas.
   """
   def __init__(self, nombre="menú", opciones=[], mensaje= "(pulse flechas para navegar por el menú)", habilitado=True, circular=True):
@@ -17,7 +17,7 @@ class Menu(ikuEngine.actores.ActorInvisible):
     self.cantOpciones = len(opciones)
     self.indice = 0
     self.circular = circular
-    ikuEngine.actores.ActorInvisible.__init__(self)
+    ikuEngine.actores.Elemento.__init__(self)
     if habilitado:
       self.habilitar()
   

@@ -17,7 +17,7 @@ from .camara import Camara
 from .complementos import Complementos, Complemento
 from .configuracion import *
 from .decoradores import SingletonDecorator
-from .efectos  import Efectos
+#from .efectos  import Efectos
 from .escenas import *
 from .eventos import *
 from .grafica import iniciar as iniciarGrafica
@@ -83,7 +83,7 @@ class Iku(object):
     self.complementos = Complementos(self, complementos)
     self.datos = AttrDict()
     self.habilidades = Habilidades()
-    self.efecto = Efectos(self)
+    #self.efecto = Efectos(self)
     self.tareas = Tareas(self)
     self.teclado = Teclado(self)
     self.tts = ttsEngine.iniciar(tts)
