@@ -1,15 +1,22 @@
 ﻿#!/usr/bin/env python
 # -*- encoding: utf-8 -*-
-# IkuEngine: Motor para videojuegos en python (3.7)
+# IkuEngine: Motor para videojuegos en python 3
 #
 # licencia: LGPLv3 (see http://www.gnu.org/licenses/lgpl.html)
 
-import ikuEngine
 import sound_lib
 from sound_lib import output
 from sound_lib import stream
 
 o=output.Output()
+
+class SoundLibEngine():
+  def sonido(self, ruta):
+    return Sonido(ruta)
+  
+  def finalizar(self):
+    pass
+
 
 class Sonido(object):
   """Objeto que permite contorlar a un audio utilizando la librería soundLib."""

@@ -52,7 +52,7 @@ class Iku(object):
   Internamente, este objeto es el que representa el motor de la aplicación. Es quien mantiene con "vida" el juego completo.
   """
   
-  def __init__(self, ancho=640, alto=480, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, tts=None, *k, **kv):
+  def __init__(self, ancho=640, alto=480, titulo='Iku engine', fps=25, capturarErrores=True, habilitarMensajesLog=True, complementos=False, modoTest=False, tts=None, audio="openal", *args, **kwargs):
     # configuración:
     self.capturarErrores = capturarErrores
     self.modoTest=modoTest
@@ -80,7 +80,7 @@ class Iku(object):
     self.tareas = Tareas(self)
     self.teclado = Teclado()
     self.tts = ttsEngine.iniciar(tts)
-    self.audio = iniciarAudio(self)
+    self.audio = iniciarAudio(self, audio, *args, **kwargs)
     self.__iniciarPlugins__()
     self.juego = Juego(self)
     self.log("motor 'iku' iniciado")
@@ -97,6 +97,9 @@ class Iku(object):
   
   def reproducir(self, *args, **kwargs):
     return self.audio.pool.reproducir(*args, **kwargs)
+  
+  def posicionarEscucha(self, posicion):
+    self.audio.motor.posicionarEscucha(posicion)  
   
   def _iniciarGrafica(self, titulo, ancho, alto):
     # iniciamos el motor pygame:
